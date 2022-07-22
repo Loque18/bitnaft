@@ -1,0 +1,11 @@
+We are using a three layer architecture for the app
+
+We don't use reducers for all server calls, only for the data that needs to be shared across all pages 
+like the session and user data.
+
+Is important to import pages and components dinamically in order to keep a good performance
+
+images must be in webp format when possible, or jpg. and their size must be specified always 
+
+
+
