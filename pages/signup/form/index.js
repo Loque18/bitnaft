@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import Link from 'next/link';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+
+import api from 'src/api';
 
 import styles from './form.module.scss';
 
@@ -32,8 +35,12 @@ const Form = () => {
                 .oneOf([yup.ref('password'), null], 'Passwords must match')
                 .required('confirm your password'),
         }),
-        onSubmit: values => {
-            console.log(values);
+        onSubmit: async values => {
+            const { email, password } = values;
+
+            const res = await api.post('/signup', { email, password });
+
+            console.log(res);
         },
     });
 
@@ -42,7 +49,7 @@ const Form = () => {
     };
 
     return (
-        <div style={{ paddingLeft: '3rem', paddingRight: '3rem' }}>
+        <div>
             <section id="sign_up_title mb-6">
                 <h1 className="title is-4 has-text-hblue has-text-centered">Ready to get started ?</h1>
                 <p className="has-text-centered">
@@ -91,7 +98,7 @@ const Form = () => {
                             />
 
                             <span className="icon is-small is-left">
-                                <i className="fas fa-at" />
+                                <i className="fa-solid fa-lock" />
                             </span>
 
                             {formik.touched.password && formik.errors.password ? (
@@ -126,7 +133,7 @@ const Form = () => {
                             />
 
                             <span className="icon is-small is-left">
-                                <i className="fas fa-at" />
+                                <i className="fa-solid fa-lock" />
                             </span>
 
                             {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
@@ -156,9 +163,11 @@ const Form = () => {
                         <br />
                         <div className="has-text-centered">
                             Already have an account?{' '}
-                            <a className="has-text-md-source-primary">
-                                <u>Log in</u>
-                            </a>
+                            <Link href="/login" passHref>
+                                <a href="replace" className="has-text-md-source-primary">
+                                    <u>Log in</u>
+                                </a>
+                            </Link>
                         </div>
                     </div>
                 </form>

@@ -4,15 +4,19 @@ import { getLayout as usePageTitleLayout } from 'src/layouts/page-title';
 
 import SignupForm from './form';
 
+import styles from './box.module.scss';
+
+const { box_container, box_column } = styles;
+
 const SignUpPage = () => {
     return (
         <div className="has-bg-md-ref-primary-10-oa-9" style={{ height: '100vh' }}>
-            <div className="container is-max-desktop py-6" style={{ height: '100%' }}>
-                <div
-                    className="box is-flex is-flex-direction-row has-border-radius-20 p-0"
-                    style={{ height: '100%', overflow: 'hidden' }}
-                >
-                    <div className=" has-bg-md-ref-primary-30 p-5" style={{ height: '100%', flexBasis: '50%' }}>
+            <div
+                className="container is-max-desktop py-6 px-5"
+                style={{ height: '100%', display: 'grid', placeItems: 'center' }}
+            >
+                <div className={`box  p-0 ${box_container}`} style={{ height: '100%' }}>
+                    <div className={`has-bg-md-ref-primary-30 p-5 ${box_column}`}>
                         <div
                             className="col-container "
                             style={{ height: '100%', display: 'grid', placeItems: 'center' }}
@@ -26,10 +30,9 @@ const SignUpPage = () => {
                         </div>
                     </div>
                     <div
-                        className="p-5"
+                        className={` p-5 ${box_column}`}
                         style={{
                             height: '100%',
-                            flexBasis: '50%',
                             display: 'grid',
                             placeItems: 'center',
                         }}
