@@ -11,7 +11,7 @@
 
     overflow: hidden;
 
-    height: unset !important;
+    // height: unset !important;
 
     .box_column {
         flex-basis: 50%;
@@ -21,6 +21,8 @@
 
     @include until($tablet) {
         flex-direction: column;
+
+        height: unset !important;
 
         .box_column {
             &:first-child {

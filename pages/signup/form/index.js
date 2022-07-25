@@ -5,8 +5,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { Store as NotificationsStore } from 'react-notifications-component';
 
 import api from 'src/api';
+
+import { errorNotification } from 'src/static/notifications';
 
 import styles from './form.module.scss';
 
@@ -17,6 +20,7 @@ const EyeSlash = () => <i className="fa-solid fa-eye-slash has-text-md-ref-prima
 
 const Form = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -36,11 +40,19 @@ const Form = () => {
                 .required('confirm your password'),
         }),
         onSubmit: async values => {
+            setLoading(true);
             const { email, password } = values;
 
-            const res = await api.post('/signup', { email, password });
-
-            console.log(res);
+            try {
+                const res = await api.post.signup({ email, password });
+                if (res.status === 200) {
+                    window.location.href = '/login';
+                }
+            } catch (err) {
+                NotificationsStore.addNotification(errorNotification('Signup failed', 'Please try again'));
+            } finally {
+                setLoading(false);
+            }
         },
     });
 
@@ -156,7 +168,10 @@ const Form = () => {
 
                     <div className="field">
                         <div className="control">
-                            <button className="button is-hblue is-fullwidth" type="submit">
+                            <button
+                                className={`button is-hblue is-fullwidth ${loading ? 'is-loading' : ''}`}
+                                type="submit"
+                            >
                                 Sign up
                             </button>
                         </div>

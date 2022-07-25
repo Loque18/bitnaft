@@ -1,25 +1,42 @@
-$notification-bg: #080808;
+$notification-bg: #f2f2f2;
+$notification-color: #15195b;
 
 .notification__item__success {
     background: $notification-bg !important;
     border-left: 10px solid #00e4a2 !important;
-    color: #efd0ff !important;
+    color: $notification-color !important;
+
+    div {
+        color: $notification-color !important;
+    }
 }
 
 .notification__item__error {
     background: $notification-bg !important;
     border-left: 10px solid #eb004e !important;
-    color: #efd0ff !important;
+    color: $notification-color !important;
+
+    div {
+        color: $notification-color !important;
+    }
 }
 
 .notification__item__info {
     background: $notification-bg !important;
     border-left: 10px solid #4e83ff !important;
-    color: #efd0ff !important;
+    color: $notification-color !important;
+
+    div {
+        color: $notification-color !important;
+    }
 }
 
-.notification__item_warning{
+.notification__item_warning {
     background: $notification-bg !important;
     border-left: 10px solid #ffb400 !important;
-    color: #efd0ff !important;
+    color: $notification-color !important;
+
+    div {
+        color: $notification-color !important;
+    }
 }

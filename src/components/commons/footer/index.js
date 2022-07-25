@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const Footer = () => {
     return (
-        <footer className="footer pb-5 has-background-hdarkblue2-o-10">
+        <footer className="footer pb-5" style={{ background: '#111223' }}>
             <div className="content has-text-centered">
                 <div className="columns">
                     <div className="column">
@@ -109,8 +109,8 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <hr className="is-hgray2" />
-                <p className="has-text-hgray has-font-roboto">BITNAFT © 2022</p>
+                <hr className="has-bg-md-ref-primary-70-o-25" />
+                <p className="has-text-hgray has-font-roboto has-text-md-white">BITNAFT © {new Date().getFullYear()}</p>
             </div>
         </footer>
     );

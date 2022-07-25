@@ -7,7 +7,7 @@ const genericNotification = {
     animationIn: ['animate__animated', 'animate__fadeIn'],
     animationOut: ['animate__animated', 'animate__fadeOut'],
     dismiss: {
-        duration: 1000 * 10,
+        duration: 100000 * 10,
         onScreen: false,
     },
 };

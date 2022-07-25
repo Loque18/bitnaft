@@ -15,7 +15,7 @@ const SignUpPage = () => {
                 className="container is-max-desktop py-6 px-5"
                 style={{ height: '100%', display: 'grid', placeItems: 'center' }}
             >
-                <div className={`box  p-0 ${box_container}`} style={{ height: '100%' }}>
+                <div className={`box  p-0 ${box_container}`} style={{ height: '100%', maxHeight: '100%' }}>
                     <div className={`has-bg-md-ref-primary-30 p-5 ${box_column}`}>
                         <div
                             className="col-container "

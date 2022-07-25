@@ -1,0 +1,33 @@
+@import '~bulma/sass/utilities/mixins';
+@import '~bulma/sass/utilities/initial-variables';
+@import 'src/scss/_variables';
+
+.container {
+    height: calc(100vh - 75px);
+    background-image: url(../../public/media/pages/404/bg.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    @include until($tablet) {
+        background-size: cover;
+    }
+}
+
+.title {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+
+    color: $md-source-primary;
+
+    @include until($tablet) {
+        font-size: 5rem;
+    }
+}
+
+.button {
+    position: absolute;
+    bottom: 50px;
+}
