@@ -8,7 +8,7 @@
 
 /* Track */
 .coolscroll::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.8);
+    background: $md-ref-neutral-90;
 }
 
 /* Handle */
@@ -19,7 +19,7 @@
 
 /* Handle on hover */
 .coolscroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(rgba(255, 255, 255, 0.2), 0.6);
+    background: $md-ref-neutral-70;
 }
 
 .coolscroll-small::-webkit-scrollbar {
@@ -38,5 +38,5 @@
 }
 
 .coolscroll-small::-webkit-scrollbar-thumb:hover {
-    background: rgba(rgba(255, 255, 255, 0.2), 0.6);
+    background: $md-ref-neutral-70;
 }

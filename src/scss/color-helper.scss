@@ -61,6 +61,10 @@ $corners: 'top', 'right', 'bottom', 'left';
     @include generate-color-classes($color, $colorName);
 }
 
+@each $colorName, $color in $hcolors {
+    @include generate-color-classes($color, $colorName);
+}
+
 .has-background-transparent {
     background: rgba(0, 0, 0, 0) !important;
 }
