@@ -6,12 +6,16 @@ module.exports = {
     // },
     env: {
         FONT_AWESOME_KEY: '8d70729523',
+        ENDPOINT: 'https://orcanialabs.com',
+    },
+    images: {
+        domains: ['img.freepik.com'],
     },
     async redirects() {
         return [
             {
                 source: '/',
-                destination: '/dashboard',
+                destination: '/home',
                 permanent: true,
             },
         ];

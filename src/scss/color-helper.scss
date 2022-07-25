@@ -5,6 +5,7 @@
 
 $levels: 10;
 $corners: 'top', 'right', 'bottom', 'left';
+$add-levels: 25, 75;
 
 @mixin bg-blur-list {
     @for $i from 1 through 4 {
@@ -28,9 +29,58 @@ $corners: 'top', 'right', 'bottom', 'left';
         color: black !important;
     }
 
+    .input.is-#{$colorName} {
+        background: unset !important;
+        border-color: rgba($color, 0.5) !important;
+
+        &:focus {
+            border-color: $color !important;
+            box-shadow: 0 0 0 0.125em rgba($color, 0.25);
+        }
+    }
+
+    .button.is-#{$colorName} {
+        background: $color !important;
+        border-color: $color !important;
+        color: white !important;
+
+        &:hover:enabled {
+            background-color: lighten($color, 10) !important;
+            box-shadow: 0 0 0 0.125em rgba($color, 0.25) !important;
+        }
+
+        &:active:enabled {
+            background-color: lighten($color, 20) !important;
+            box-shadow: 0 0 0 0.125em rgba($color, 0.25) !important;
+        }
+
+        &:focus {
+            background-color: lighten($color, 10) !important;
+            box-shadow: 0 0 0 0.125em rgba(rgb(0, 255, 213), 0.5) !important;
+        }
+    }
+
+    .has-text-#{$colorName} {
+        color: $color !important;
+    }
+
     @for $i from 1 through $levels {
         .has-bg-#{$colorName}-o-#{$i} {
             background-color: rgba($color, $i/10) !important;
+        }
+
+        .has-text-#{$colorName}-o-#{$i} {
+            color: rgba($color, $i/10) !important;
+        }
+    }
+
+    @each $lvl in $add-levels {
+        .has-bg-#{$colorName}-o-#{$lvl} {
+            background-color: rgba($color, $lvl/100) !important;
+        }
+
+        .has-text-#{$colorName}-o-#{$lvl} {
+            color: rgba($color, $lvl/100) !important;
         }
     }
 
@@ -46,10 +96,6 @@ $corners: 'top', 'right', 'bottom', 'left';
         .has-#{$corner}-border-#{$colorName} {
             border-#{$corner}: 1px solid $color;
         }
-    }
-
-    .has-text-#{$colorName} {
-        color: $color !important;
     }
 }
 
