@@ -14,7 +14,6 @@ const Navbar = () => {
 
     //  router
     const router = useRouter();
-    console.log(router.pathname);
 
     const handleHamburgerClick = () => {
         const newValue = !mobileActive;
@@ -52,7 +51,10 @@ const Navbar = () => {
                 <div className="navbar-brand">
                     <Link href="/">
                         <a className="navbar-item" onClick={handleNavbarItemClick} role="button" tabIndex={0}>
-                            <h1 className="title is-italic is-size-4  has-text-hdarkblue" style={{ fontWeight: '700' }}>
+                            <h1
+                                className="navbar-item title is-italic is-size-4  has-text-hdarkblue"
+                                style={{ fontWeight: '700' }}
+                            >
                                 Bitnaft
                             </h1>
                         </a>
@@ -76,7 +78,7 @@ const Navbar = () => {
                         <Link href="/">
                             <a
                                 className={`navbar-item is-size-6 has-font-roboto ${
-                                    router.pathname === '/home' ? 'is-active' : ''
+                                    router.pathname === '/dashboard' ? 'is-active' : ''
                                 }`}
                                 onClick={handleNavbarItemClick}
                                 role="button"
@@ -111,7 +113,6 @@ const Navbar = () => {
                         </Link>
                     </div>
                     <div className="navbar-end">
-                        {/* user profile, user name and dropdown icon */}
                         <div className="navbar-item has-dropdown is-hoverable">
                             <a className="navbar-link has-font-roboto has-font-hdark">
                                 <Image src="/media/user.png" alt="user" width={64} height={64} className="is-rounded" />
