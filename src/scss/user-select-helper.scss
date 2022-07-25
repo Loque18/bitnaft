@@ -1,6 +1,6 @@
 @import './vars';
 
 *::selection {
-    background: rgba($hpurple, 0.5);
-    color: white;
+    background: rgba($hblue, 0.5);
+    color: $hlight;
 }

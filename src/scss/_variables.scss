@@ -1,0 +1,170 @@
+// Do not edit directly
+// Generated on Mon, 25 Jul 2022 16:32:36 GMT
+
+$md-white: #ffffffff;
+$md-black: #000000ff;
+$md-source-seed: #15195bff;
+$md-source-primary: #15195bff;
+$md-source-secondary: #f2f2f2ff;
+$md-ref-error-0: #000000ff;
+$md-ref-error-10: #410002ff;
+$md-ref-error-20: #690005ff;
+$md-ref-error-30: #93000aff;
+$md-ref-error-40: #ba1a1aff;
+$md-ref-error-50: #de3730ff;
+$md-ref-error-60: #ff5449ff;
+$md-ref-error-70: #ff897dff;
+$md-ref-error-80: #ffb4abff;
+$md-ref-error-90: #ffdad6ff;
+$md-ref-error-95: #ffedeaff;
+$md-ref-error-99: #fffbffff;
+$md-ref-error-100: #ffffffff;
+$md-ref-error-25: #7e0007ff;
+$md-ref-error-35: #a80710ff;
+$md-ref-error-98: #fff8f7ff;
+$md-ref-error-5: #2d0001ff;
+$md-ref-error-15: #540003ff;
+$md-ref-primary-0: #000000ff;
+$md-ref-primary-10: #050865ff;
+$md-ref-primary-20: #202578ff;
+$md-ref-primary-30: #383e8fff;
+$md-ref-primary-40: #5056a9ff;
+$md-ref-primary-50: #696fc4ff;
+$md-ref-primary-60: #8389e0ff;
+$md-ref-primary-70: #9ea4fdff;
+$md-ref-primary-80: #bfc2ffff;
+$md-ref-primary-90: #e0e0ffff;
+$md-ref-primary-95: #f1efffff;
+$md-ref-primary-99: #fffbffff;
+$md-ref-primary-100: #ffffffff;
+$md-ref-primary-25: #2c3183ff;
+$md-ref-primary-35: #444a9cff;
+$md-ref-primary-98: #fbf8ffff;
+$md-ref-primary-5: #0f1300ff;
+$md-ref-primary-15: #232800ff;
+$md-ref-secondary-0: #000000ff;
+$md-ref-secondary-10: #001f24ff;
+$md-ref-secondary-20: #00363dff;
+$md-ref-secondary-30: #004f58ff;
+$md-ref-secondary-40: #006874ff;
+$md-ref-secondary-50: #008391ff;
+$md-ref-secondary-60: #00a0b0ff;
+$md-ref-secondary-70: #22bccfff;
+$md-ref-secondary-80: #4fd8ebff;
+$md-ref-secondary-90: #97f0ffff;
+$md-ref-secondary-95: #d0f8ffff;
+$md-ref-secondary-99: #f6feffff;
+$md-ref-secondary-100: #ffffffff;
+$md-ref-secondary-25: #00424aff;
+$md-ref-secondary-35: #005b66ff;
+$md-ref-secondary-98: #edfcffff;
+$md-ref-secondary-5: #101201ff;
+$md-ref-secondary-15: #242810ff;
+$md-ref-neutral-0: #000000ff;
+$md-ref-neutral-10: #1b1b1fff;
+$md-ref-neutral-20: #303034ff;
+$md-ref-neutral-30: #47464aff;
+$md-ref-neutral-40: #5f5e62ff;
+$md-ref-neutral-50: #78767aff;
+$md-ref-neutral-60: #929094ff;
+$md-ref-neutral-70: #adaaafff;
+$md-ref-neutral-80: #c8c5caff;
+$md-ref-neutral-90: #e5e1e6ff;
+$md-ref-neutral-95: #f3eff4ff;
+$md-ref-neutral-99: #fffbffff;
+$md-ref-neutral-100: #ffffffff;
+$md-ref-neutral-25: #3c3b3fff;
+$md-ref-neutral-35: #535256ff;
+$md-ref-neutral-98: #fcf8fdff;
+$md-ref-neutral-5: #11110dff;
+$md-ref-neutral-15: #262621ff;
+$md-key-colors-primary: #15195bff;
+$md-key-colors-secondary: #f2f2f2ff;
+$md-key-colors-error: #ba1a1aff;
+$md-key-colors-neutral: #5f5e62ff;
+$md-key-colors-neutral-variant: #5e5d67ff;
+
+$md-colors: (
+    md-white: $md-white,
+    md-black: $md-black,
+    md-source-seed: $md-source-seed,
+    md-source-primary: $md-source-primary,
+    md-source-secondary: $md-source-secondary,
+    md-ref-error-0: $md-ref-error-0,
+    md-ref-error-10: $md-ref-error-10,
+    md-ref-error-20: $md-ref-error-20,
+    md-ref-error-30: $md-ref-error-30,
+    md-ref-error-40: $md-ref-error-40,
+    md-ref-error-50: $md-ref-error-50,
+    md-ref-error-60: $md-ref-error-60,
+    md-ref-error-70: $md-ref-error-70,
+    md-ref-error-80: $md-ref-error-80,
+    md-ref-error-90: $md-ref-error-90,
+    md-ref-error-95: $md-ref-error-95,
+    md-ref-error-99: $md-ref-error-99,
+    md-ref-error-100: $md-ref-error-100,
+    md-ref-error-25: $md-ref-error-25,
+    md-ref-error-35: $md-ref-error-35,
+    md-ref-error-98: $md-ref-error-98,
+    md-ref-error-5: $md-ref-error-5,
+    md-ref-error-15: $md-ref-error-15,
+    md-ref-primary-0: $md-ref-primary-0,
+    md-ref-primary-10: $md-ref-primary-10,
+    md-ref-primary-20: $md-ref-primary-20,
+    md-ref-primary-30: $md-ref-primary-30,
+    md-ref-primary-40: $md-ref-primary-40,
+    md-ref-primary-50: $md-ref-primary-50,
+    md-ref-primary-60: $md-ref-primary-60,
+    md-ref-primary-70: $md-ref-primary-70,
+    md-ref-primary-80: $md-ref-primary-80,
+    md-ref-primary-90: $md-ref-primary-90,
+    md-ref-primary-95: $md-ref-primary-95,
+    md-ref-primary-99: $md-ref-primary-99,
+    md-ref-primary-100: $md-ref-primary-100,
+    md-ref-primary-25: $md-ref-primary-25,
+    md-ref-primary-35: $md-ref-primary-35,
+    md-ref-primary-98: $md-ref-primary-98,
+    md-ref-primary-5: $md-ref-primary-5,
+    md-ref-primary-15: $md-ref-primary-15,
+    md-ref-secondary-0: $md-ref-secondary-0,
+    md-ref-secondary-10: $md-ref-secondary-10,
+    md-ref-secondary-20: $md-ref-secondary-20,
+    md-ref-secondary-30: $md-ref-secondary-30,
+    md-ref-secondary-40: $md-ref-secondary-40,
+    md-ref-secondary-50: $md-ref-secondary-50,
+    md-ref-secondary-60: $md-ref-secondary-60,
+    md-ref-secondary-70: $md-ref-secondary-70,
+    md-ref-secondary-80: $md-ref-secondary-80,
+    md-ref-secondary-90: $md-ref-secondary-90,
+    md-ref-secondary-95: $md-ref-secondary-95,
+    md-ref-secondary-99: $md-ref-secondary-99,
+    md-ref-secondary-100: $md-ref-secondary-100,
+    md-ref-secondary-25: $md-ref-secondary-25,
+    md-ref-secondary-35: $md-ref-secondary-35,
+    md-ref-secondary-98: $md-ref-secondary-98,
+    md-ref-secondary-5: $md-ref-secondary-5,
+    md-ref-secondary-15: $md-ref-secondary-15,
+    md-ref-neutral-0: $md-ref-neutral-0,
+    md-ref-neutral-10: $md-ref-neutral-10,
+    md-ref-neutral-20: $md-ref-neutral-20,
+    md-ref-neutral-30: $md-ref-neutral-30,
+    md-ref-neutral-40: $md-ref-neutral-40,
+    md-ref-neutral-50: $md-ref-neutral-50,
+    md-ref-neutral-60: $md-ref-neutral-60,
+    md-ref-neutral-70: $md-ref-neutral-70,
+    md-ref-neutral-80: $md-ref-neutral-80,
+    md-ref-neutral-90: $md-ref-neutral-90,
+    md-ref-neutral-95: $md-ref-neutral-95,
+    md-ref-neutral-99: $md-ref-neutral-99,
+    md-ref-neutral-100: $md-ref-neutral-100,
+    md-ref-neutral-25: $md-ref-neutral-25,
+    md-ref-neutral-35: $md-ref-neutral-35,
+    md-ref-neutral-98: $md-ref-neutral-98,
+    md-ref-neutral-5: $md-ref-neutral-5,
+    md-ref-neutral-15: $md-ref-neutral-15,
+    md-key-colors-primary: $md-key-colors-primary,
+    md-key-colors-secondary: $md-key-colors-secondary,
+    md-key-colors-error: $md-key-colors-error,
+    md-key-colors-neutral: $md-key-colors-neutral,
+    md-key-colors-neutral-variant: $md-key-colors-neutral-variant,
+);

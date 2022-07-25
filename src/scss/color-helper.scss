@@ -1,13 +1,14 @@
 @use 'sass:color';
 @use 'sass:map';
 @import './vars';
+@import '_variables.scss';
 
 $levels: 10;
 $corners: 'top', 'right', 'bottom', 'left';
 
 @mixin bg-blur-list {
     @for $i from 1 through 4 {
-        .has-bg-blur-#{$i} {            
+        .has-bg-blur-#{$i} {
             -webkit-backdrop-filter: blur(#{$i * 5}px);
             backdrop-filter: blur(#{$i * 5}px);
         }
@@ -17,7 +18,7 @@ $corners: 'top', 'right', 'bottom', 'left';
 @include bg-blur-list;
 
 @mixin generate-color-classes($color, $colorName) {
-    .has-background-#{$colorName} {
+    .has-bg-#{$colorName} {
         background: $color !important;
     }
 
@@ -28,7 +29,7 @@ $corners: 'top', 'right', 'bottom', 'left';
     }
 
     @for $i from 1 through $levels {
-        .has-background-#{$colorName}-o-#{$i} {
+        .has-bg-#{$colorName}-o-#{$i} {
             background-color: rgba($color, $i/10) !important;
         }
     }
@@ -52,7 +53,11 @@ $corners: 'top', 'right', 'bottom', 'left';
     }
 }
 
-@each $colorName, $color in $hcolors {
+@function shade($color, $percentage) {
+    @return mix(#000, $color, $percentage);
+}
+
+@each $colorName, $color in $md-colors {
     @include generate-color-classes($color, $colorName);
 }
 
