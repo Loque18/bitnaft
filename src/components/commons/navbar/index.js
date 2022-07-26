@@ -77,7 +77,7 @@ const Navbar = () => {
                     <div className="navbar-start">
                         <Link href="/">
                             <a
-                                className={`navbar-item is-size-6 has-font-roboto-medium ${
+                                className={`navbar-item is-size-6 has-font-roboto ${
                                     router.pathname === '/dashboard' ? 'is-active' : ''
                                 }`}
                                 onClick={handleNavbarItemClick}
@@ -89,7 +89,7 @@ const Navbar = () => {
                         </Link>
                         <Link href="/earn">
                             <a
-                                className={`navbar-item is-size-6 has-font-roboto-medium ${
+                                className={`navbar-item is-size-6 has-font-roboto ${
                                     router.pathname === '/earn' ? 'is-active' : ''
                                 }`}
                                 onClick={handleNavbarItemClick}
@@ -101,7 +101,7 @@ const Navbar = () => {
                         </Link>
                         <Link href="/borrow">
                             <a
-                                className={`navbar-item is-size-6 has-font-roboto-medium ${
+                                className={`navbar-item is-size-6 has-font-roboto ${
                                     router.pathname === '/borrow' ? 'is-active' : ''
                                 }`}
                                 onClick={handleNavbarItemClick}
@@ -114,10 +114,10 @@ const Navbar = () => {
                     </div>
                     <div className="navbar-end">
                         <div className="navbar-item has-dropdown is-hoverable">
-                            <a className="navbar-link has-font-roboto-medium has-text-md-black">
+                            <div className="navbar-link has-font-roboto has-text-md-black">
                                 <Image src="/media/user.png" alt="user" width={64} height={64} className="is-rounded" />
-                                <span className="has-text-md-black has-font-roboto-medium">username@email.com</span>
-                            </a>
+                                <span className="has-text-md-black has-font-roboto">username@email.com</span>
+                            </div>
                         </div>
                     </div>
                 </div>

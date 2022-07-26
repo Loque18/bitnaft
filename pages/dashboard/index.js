@@ -21,6 +21,7 @@ const Dashboard = () => {
                     <div className="column is-3">
                         <OwnedAssetsCard
                             title="Wallet"
+                            to="/dashboard/wallet"
                             icon="fas fa-wallet"
                             amount={8800.003}
                             cryptoIcons={[
@@ -32,7 +33,25 @@ const Dashboard = () => {
                             numberOfAssets={15}
                         />
                     </div>
+                    <div className="column is-3">
+                        <OwnedAssetsCard
+                            title="Savings"
+                            to="/dashboard/savings"
+                            icon="fa-solid fa-sack-dollar"
+                            amount={50523.001}
+                            cryptoIcons={[
+                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
+                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
+                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
+                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
+                            ]}
+                            numberOfAssets={4}
+                        />
+                    </div>
                 </div>
+                {/* <div className="columns pt-6">
+                    <div className="column"></div>
+                </div> */}
             </div>
         </section>
     );
