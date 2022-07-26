@@ -15,7 +15,7 @@ const Page404 = () => {
                 <p className="title has-text-centered">The page you are looking for does not exist.</p>
                 <div style={{ display: 'grid', placeItems: 'center' }}>
                     <Link href="/home" passHref>
-                        <a href="replace" className={`button is-hblue is-large  ${button}`}>
+                        <a href="replace" className={`button is-hblue is-medium  ${button}`}>
                             Go to home
                         </a>
                     </Link>
