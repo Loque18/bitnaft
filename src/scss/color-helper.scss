@@ -1,6 +1,6 @@
 @use 'sass:color';
 @use 'sass:map';
-@import './vars';
+@import './vars.scss';
 @import '_variables.scss';
 
 $levels: 10;

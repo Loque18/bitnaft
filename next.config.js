@@ -1,5 +1,8 @@
 module.exports = {
     reactStrictMode: true,
+    images: {
+        domains: ['bitcoin.org'],
+    },
     // i18n: {
     //     locales: ['en'],
     //     defaultLocale: null,

@@ -1,6 +1,6 @@
 // import your fonts here and create a font-face rule for them
 
-@import url('https://fonts.googleapis.com/css2?family=PT+Mono&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Mono&family=Roboto:wght@400;500&display=swap');
 
 .has-font-pt-mono {
     font-family: 'PT Mono', monospace;
@@ -8,4 +8,9 @@
 
 .has-font-roboto{
     font-family: 'Roboto', sans-serif;
+}
+
+.has-font-roboto-medium{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
 }
