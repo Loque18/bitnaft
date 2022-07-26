@@ -45,11 +45,13 @@ const Form = () => {
 
             try {
                 const res = await api.post.signup({ email, password });
-                if (res.status === 200) {
-                    window.location.href = '/login';
+                if (res.data.success) {
+                    window.location.href = `/verifyemail?email=${email}`;
+                } else {
+                    throw new Error(res.data.message);
                 }
             } catch (err) {
-                NotificationsStore.addNotification(errorNotification('Signup failed', 'Please try again'));
+                NotificationsStore.addNotification(errorNotification('Signup failed', err.message));
             } finally {
                 setLoading(false);
             }
@@ -118,6 +120,7 @@ const Form = () => {
                             ) : null}
 
                             <button
+                                aria-label={passwordVisible ? 'Hide password' : 'Show password'}
                                 className={`unstyled-button ${eye_button}`}
                                 type="button"
                                 onClick={changePasswordVisibility}
@@ -155,6 +158,7 @@ const Form = () => {
                             )}
 
                             <button
+                                aria-label={passwordVisible ? 'Hide password' : 'Show password'}
                                 className={`unstyled-button ${eye_button}`}
                                 type="button"
                                 onClick={changePasswordVisibility}
@@ -169,6 +173,7 @@ const Form = () => {
                     <div className="field">
                         <div className="control">
                             <button
+                                aria-label="Sign up"
                                 className={`button is-hblue is-fullwidth ${loading ? 'is-loading' : ''}`}
                                 type="submit"
                             >

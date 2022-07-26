@@ -12,6 +12,13 @@ const api = {
                 url: `${endpoint}/signup/${params}`,
             });
         },
+        resendVerificationEmail: ({ email }) => {
+            const params = `?email=${email}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/resendverificationemail/${params}`,
+            });
+        },
     },
     put: {},
     delete: {},

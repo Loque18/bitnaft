@@ -49,7 +49,7 @@ const Navbar = () => {
         >
             <div className="container is-fluid">
                 <div className="navbar-brand">
-                    <Link href="/">
+                    <Link href="/home">
                         <a className="navbar-item" onClick={handleNavbarItemClick} role="button" tabIndex={0}>
                             <h1
                                 className="navbar-item title is-italic is-size-4  has-text-md-ref-primary-10"
