@@ -1,13 +1,18 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-// const endpoint = process.env.ENDPOINT1;
-// const endpoint1 = process.env.ENDPOINT;
+const endpoint = process.env.ENDPOINT;
 
 const api = {
-    get: {
-        items: () => [{ id: 1 }, { id: 2 }, { id: 3 }],
+    get: {},
+    post: {
+        signup: ({ email, password }) => {
+            const params = `?email=${email}&pass=${password}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/signup/${params}`,
+            });
+        },
     },
-    post: {},
     put: {},
     delete: {},
 };

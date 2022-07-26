@@ -1,0 +1,49 @@
+@import '~bulma/sass/utilities/mixins.sass';
+@import '~bulma/sass/utilities/initial-variables.sass';
+
+@import 'src/scss/_variables';
+
+.box_container {
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    position: relative;
+
+    overflow: hidden;
+
+    // height: unset !important;
+
+    .box_column {
+        &:first-child {
+            flex-basis: 60%;
+        }
+
+        &:last-child {
+            flex-basis: 40%;
+        }
+
+        padding: 0 3rem;
+    }
+
+    @include until($tablet) {
+        flex-direction: column;
+
+        height: unset !important;
+
+        .box_column {
+            &:first-child {
+                display: none;
+                position: absolute;
+            }
+
+            &:last-child {
+                flex-basis: 100%;
+                background-color: $md-ref-primary-90;
+            }
+        }
+    }
+
+    @include between($tablet, $desktop) {
+        // width: 380px;
+    }
+}

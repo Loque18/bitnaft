@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const Footer = () => {
     return (
-        <footer className="footer pb-5 has-bg-md-source-footer">
+        <footer className="footer pb-5" style={{ background: '#111223' }}>
             <div className="content has-text-centered">
                 <div className="columns">
                     <div className="column">
