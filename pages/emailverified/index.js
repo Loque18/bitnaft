@@ -5,9 +5,9 @@ import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
 import useCountdown from 'src/hooks/useCountdown';
 
-import styles from './box.module.scss';
+import styles from 'src/scss/common_modules/box.module.scss';
 
-const { box_container } = styles;
+const { box_container_v } = styles;
 
 const VerifyEmailPage = () => {
     // if not email provided redirect to signup
@@ -26,7 +26,7 @@ const VerifyEmailPage = () => {
                 className="container is-max-desktop py-6 px-5"
                 style={{ height: '100%', display: 'grid', placeItems: 'center' }}
             >
-                <div className={`box ${box_container}`}>
+                <div className={`box ${box_container_v}`}>
                     <section className="has-text-centered">
                         <img src="media/pages/verifyemail/email_ok.webp" alt="" width="40%" />
                     </section>

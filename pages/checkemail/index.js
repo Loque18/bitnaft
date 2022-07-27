@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
@@ -8,9 +9,9 @@ import api from 'src/api';
 
 import { successNotification, errorNotification } from 'src/static/notifications';
 
-import styles from './box.module.scss';
+import styles from 'src/scss/common_modules/box.module.scss';
 
-const { box_container } = styles;
+const { box_container_v } = styles;
 
 const VerifyEmailPage = () => {
     const router = useRouter();
@@ -41,25 +42,27 @@ const VerifyEmailPage = () => {
                 className="container is-max-desktop py-6 px-5"
                 style={{ height: '100%', display: 'grid', placeItems: 'center' }}
             >
-                <div className={`box ${box_container}`} style={{ height: '100%', maxHeight: '100%' }}>
-                    <section id="verify_email_title mb-6">
-                        <h1 className="title is-4 has-text-hblue has-text-centered">Verify your email</h1>
-                        <p className="has-text-centered">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.{' '}
-                        </p>
-                    </section>
-                    <section className="has-text-centered">
-                        <img src="media/pages/verifyemail/bg.webp" alt="" width="60%" />
-                    </section>
-                    <section className="has-text-centered">
-                        <button
-                            className={`button is-md-ref-primary-30 ${loading ? 'is-loading' : ''}`}
-                            type="button"
-                            onClick={handleResendEmail}
-                        >
-                            Resend email
-                        </button>
-                    </section>
+                <div className={`box ${box_container_v}`} style={{ height: '100%', maxHeight: '100%' }}>
+                    <div className="is-flex is-flex-direction-column">
+                        <section id="verify_email_title mb-6">
+                            <h1 className="title is-4 has-text-hblue has-text-centered">Verify your email</h1>
+                            <p className="has-text-centered">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.{' '}
+                            </p>
+                        </section>
+                        <section className="has-text-centered is-flex-grow-1">
+                            <img src="media/pages/verifyemail/bg.webp" alt="" width="60%" />
+                        </section>
+                        <section className="has-text-centered">
+                            <button
+                                className={`button is-md-ref-primary-30 ${loading ? 'is-loading' : ''}`}
+                                type="button"
+                                onClick={handleResendEmail}
+                            >
+                                Resend email
+                            </button>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>

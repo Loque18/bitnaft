@@ -22,7 +22,7 @@ const VerifyEmailPage = () => {
 
                 window.location.href = '/emailverified';
             } catch (err) {
-                window.location.href = `/verifyerror`;
+                window.location.href = `/verifyerror?message=${err.message}`;
             }
         })();
     }, [query]);

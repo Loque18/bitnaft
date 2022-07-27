@@ -11,9 +11,7 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "prepare": "husky install",
-        "scripts": "node ./scripts",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
+        "scripts": "node ./scripts"
     },
     "dependencies": {
         "axios": "^0.27.2",

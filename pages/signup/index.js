@@ -3,9 +3,9 @@
 
 import { getLayout as usePageTitleLayout } from 'src/layouts/page-title';
 
-import SignupForm from './form';
+import SignupForm from 'src/sub-components/signup/form';
 
-import styles from './box.module.scss';
+import styles from 'src/scss/common_modules/box.module.scss';
 
 const { box_container, box_column } = styles;
 

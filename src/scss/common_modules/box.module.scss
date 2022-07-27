@@ -5,7 +5,7 @@
 
 .box_container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     border-radius: 20px;
     position: relative;
 
@@ -26,6 +26,8 @@
     }
 
     @include until($tablet) {
+        flex-direction: column;
+
         height: unset !important;
 
         .box_column {
@@ -39,5 +41,18 @@
                 background-color: $md-ref-primary-90;
             }
         }
+    }
+}
+
+.box_container_v {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    position: relative;
+
+    overflow: hidden;
+
+    @include until($tablet) {
+        height: unset !important;
     }
 }

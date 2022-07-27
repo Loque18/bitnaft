@@ -11,7 +11,7 @@ import api from 'src/api';
 
 import { errorNotification } from 'src/static/notifications';
 
-import styles from './form.module.scss';
+import styles from 'src/scss/common_modules/form_utils.module.scss';
 
 const { eye_button } = styles;
 
