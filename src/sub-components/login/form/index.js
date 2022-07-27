@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
+import api from 'src/api';
+
 import styles from 'src/scss/common_modules/form_utils.module.scss';
 
 const { eye_button } = styles;
@@ -21,11 +23,22 @@ const Form = () => {
             password: '',
         },
         validationSchema: yup.object({
-            email: yup.string().email().required(),
-            password: yup.string().required(),
+            email: yup.string().email().required('Please enter your email'),
+            password: yup.string().required('Please enter your password'),
         }),
-        onSubmit: values => {
-            console.log(values);
+        onSubmit: async values => {
+            setLoading(true);
+
+            const { email, password } = values;
+
+            try {
+                const res = await api.post.login({ email, password });
+                console.log(res);
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setLoading(false);
+            }
         },
     });
 
