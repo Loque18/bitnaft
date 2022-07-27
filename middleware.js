@@ -3,8 +3,6 @@ import { NextResponse } from 'next/server';
 
 import * as yup from 'yup';
 
-import api from 'src/api';
-
 export async function middleware(req) {
     const { origin } = req.nextUrl;
 

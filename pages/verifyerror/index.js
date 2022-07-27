@@ -1,11 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
-import useCountdown from 'src/hooks/useCountdown';
-
 import styles from './box.module.scss';
-import Link from 'next/link';
-import { useEffect } from 'react';
 
 const { box_container } = styles;
 

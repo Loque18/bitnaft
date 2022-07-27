@@ -14,7 +14,6 @@ const api = {
         },
         verifyEmail: ({ email, verificationToken }) => {
             const params = `?email=${email}&verificationToken=${verificationToken}`;
-            console.log(params);
             return axios({
                 method: 'post',
                 url: `${endpoint}/verifyEmail/${params}`,
