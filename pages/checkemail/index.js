@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import { Store as NotificationsStore } from 'react-notifications-component';
 
@@ -10,7 +10,7 @@ import { successNotification, errorNotification } from 'src/static/notifications
 
 import styles from './box.module.scss';
 
-const { box_container, box_column } = styles;
+const { box_container } = styles;
 
 const VerifyEmailPage = () => {
     const router = useRouter();
@@ -63,22 +63,6 @@ const VerifyEmailPage = () => {
                             Resend email
                         </button>
                     </section>
-                    {/* <div className={`has-bg-md-ref-primary-30 p-5 `}>
-                        <div
-                            className="col-container "
-                            style={{ height: '100%', display: 'grid', placeItems: 'center' }}
-                        >
-                        </div>
-                    </div>
-                    <div
-                        className={` p-5 `}
-                        style={{
-                            height: '100%',
-                            display: 'grid',
-                            placeItems: 'center',
-                        }}
-                    >
-                    </div> */}
                 </div>
             </div>
         </div>

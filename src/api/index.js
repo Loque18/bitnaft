@@ -12,6 +12,13 @@ const api = {
                 url: `${endpoint}/signup/${params}`,
             });
         },
+        verifyEmail: ({ email, token }) => {
+            const params = `?email=${email}&verificationToken=${token}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/verifyemail/${params}`,
+            });
+        },
         resendVerificationEmail: ({ email }) => {
             const params = `?email=${email}`;
             return axios({

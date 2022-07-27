@@ -3,8 +3,12 @@ import { NextResponse } from 'next/server';
 
 import * as yup from 'yup';
 
+import api from 'src/api';
+
 export function middleware(req) {
-    if (req.nextUrl.pathname.startsWith('/verifyemail')) {
+    const { origin } = req.nextUrl;
+
+    if (req.nextUrl.pathname.startsWith('/checkemail')) {
         const email = req.nextUrl.searchParams.get('email');
 
         const schema = yup.object().shape({
@@ -13,10 +17,29 @@ export function middleware(req) {
 
         const isValid = schema.isValidSync({ email });
 
-        const { origin } = req.nextUrl;
         if (!isValid) {
             return NextResponse.redirect(`${origin}/signup`);
         }
+    }
+
+    if (req.nextUrl.pathname.startsWith('/verifyemail')) {
+        const email = req.nextUrl.searchParams.get('email');
+        const token = req.nextUrl.searchParams.get('verificationToken');
+
+        const schema = yup.object().shape({
+            email: yup.string().email().required('required'),
+            token: yup.string().required('required'),
+        });
+
+        const isValid = schema.isValidSync({ email, token });
+
+        if (!isValid) {
+            return NextResponse.redirect(`${origin}/404`);
+        }
+
+        api.post.verifyEmail({ email, token }).then(() => {
+            return NextResponse.redirect(`${origin}/signup`);
+        });
     }
 
     return NextResponse.next();
