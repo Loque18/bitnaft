@@ -19,7 +19,6 @@ const VerifyEmailPage = () => {
     const [loading, setLoading] = useState(false);
 
     const handleResendEmail = async () => {
-        // verify email
         setLoading(true);
         try {
             const res = await api.post.resendVerificationEmail({ email });
@@ -35,8 +34,6 @@ const VerifyEmailPage = () => {
             setLoading(false);
         }
     };
-
-    // if not email provided redirect to signup
 
     return (
         <div className="has-bg-md-ref-primary-10-oa-9" style={{ height: '100vh' }}>

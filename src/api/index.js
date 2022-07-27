@@ -26,6 +26,13 @@ const api = {
                 url: `${endpoint}/resendverificationemail/${params}`,
             });
         },
+        login: ({ email, password }) => {
+            const params = `?email=${email}&pass=${password}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/login/${params}`,
+            });
+        },
     },
     put: {},
     delete: {},
