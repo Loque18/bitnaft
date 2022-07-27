@@ -5,7 +5,7 @@ import * as yup from 'yup';
 
 import api from 'src/api';
 
-export function middleware(req) {
+export async function middleware(req) {
     const { origin } = req.nextUrl;
 
     if (req.nextUrl.pathname.startsWith('/checkemail')) {
@@ -36,10 +36,6 @@ export function middleware(req) {
         if (!isValid) {
             return NextResponse.redirect(`${origin}/404`);
         }
-
-        api.post.verifyEmail({ email, token }).then(() => {
-            return NextResponse.redirect(`${origin}/signup`);
-        });
     }
 
     return NextResponse.next();

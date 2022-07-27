@@ -46,7 +46,7 @@ const Form = () => {
             try {
                 const res = await api.post.signup({ email, password });
                 if (res.data.success) {
-                    window.location.href = `/verifyemail?email=${email}`;
+                    window.location.href = `/checkemail?email=${email}`;
                 } else {
                     throw new Error(res.data.message);
                 }
