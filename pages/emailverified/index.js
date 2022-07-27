@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from 'next/link';
+import { useEffect } from 'react';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
 import useCountdown from 'src/hooks/useCountdown';
 
-import Link from 'next/link';
-import { useEffect } from 'react';
 import styles from './box.module.scss';
 
 const { box_container } = styles;
@@ -42,7 +42,6 @@ const VerifyEmailPage = () => {
                             page in {timeLeft} seconds.
                         </p>
                     </section>
-                    <section className="has-text-centered" />
                 </div>
             </div>
         </div>

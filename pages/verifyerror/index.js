@@ -1,8 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
-// import Link from 'next/link';
-// import { useEffect } from 'react';
 import styles from './box.module.scss';
 
 const { box_container } = styles;
