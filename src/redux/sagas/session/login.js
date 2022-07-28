@@ -3,7 +3,8 @@ import api from 'src/api';
 
 import cookieManager from 'src/utils/cookies';
 
-import { LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE } from '../../constants';
+import { log_in_success, log_in_failure } from 'src/redux/actions';
+import { LOG_IN_REQUEST } from '../../constants';
 
 function* login(action) {
     const { email, password } = action.payload;
@@ -17,12 +18,12 @@ function* login(action) {
             // save token to cookies
             cookieManager.set('session', JSON.stringify({ token }));
 
-            yield put({ type: LOG_IN_SUCCESS, payload: { token } });
+            yield put(log_in_success({ sessionData: { token } }));
         } else {
-            yield put({ type: LOG_IN_FAILURE });
+            throw new Error(res.data.message);
         }
     } catch (err) {
-        yield put({ type: LOG_IN_FAILURE });
+        yield put(log_in_failure({ errorMessage: err.message }));
     }
 }
 

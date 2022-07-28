@@ -4,13 +4,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { log_out_request } from 'src/redux/actions';
 
 const Navbar = () => {
     // app state
-    const { sessionReducer } = useSelector(state => state);
+    const dispatch = useDispatch();
+    const { isLoggedIn } = useSelector(state => state.sessionReducer);
 
-    const { isLoggedIn, sessionData } = sessionReducer;
+    console.log('navbar isLoggedIn', isLoggedIn);
 
     //  local state
     const [mobileActive, setMobileActive] = useState(false);
@@ -30,6 +33,10 @@ const Navbar = () => {
 
     const handleNavbarItemClick = () => {
         handleHamburgerClick();
+    };
+
+    const handleLogoutClick = () => {
+        dispatch(log_out_request());
     };
 
     useEffect(() => {
@@ -130,6 +137,14 @@ const Navbar = () => {
                                         className="is-rounded"
                                     />
                                     <span className="has-text-md-black has-font-roboto">username@email.com</span>
+                                </div>
+                                <div className="navbar-dropdown">
+                                    <div className="navbar-item">Overview</div>
+                                    <Link href="/home">
+                                        <a href="/replace" className="navbar-item" onClick={handleLogoutClick}>
+                                            Log out
+                                        </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

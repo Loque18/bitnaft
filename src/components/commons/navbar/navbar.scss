@@ -1,25 +1,25 @@
 @import 'src/scss/_variables.scss';
 
-.custom-navbar{
-    transition: .5s;
+.custom-navbar {
+    transition: 0.5s;
 
-    .navbar-menu{
+    .navbar-menu {
         height: 4.7rem !important;
-        .navbar-item{
+        .navbar-item {
             color: $md-black !important;
             margin-left: 1.5rem !important;
             margin-right: 1.5rem !important;
 
-            &:hover{
-                background: rgba(0,0,0,0) !important;
+            &:hover {
+                background: rgba(0, 0, 0, 0) !important;
                 color: $md-ref-primary-10 !important;
             }
 
-            &.is-active{
+            &.is-active {
                 border-bottom: 3px solid $md-ref-primary-10 !important;
             }
 
-            &:focus{
+            &:focus {
                 background: rgba($md-black, 0) !important;
             }
         }
@@ -35,7 +35,7 @@
     }
 
     .navbar-dropdown {
-        background: $md-ref-primary-10 !important;
+        background: white !important;
         border: none;
     }
 

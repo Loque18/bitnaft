@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
-import { Store as NotificationsStore } from 'react-notifications-component';
+import { toast } from 'react-toastify';
 
 import api from 'src/api';
 
@@ -25,12 +25,10 @@ const VerifyEmailPage = () => {
             const res = await api.post.resendVerificationEmail({ email });
 
             if (res.data.success) {
-                NotificationsStore.addNotification(
-                    successNotification('Verification email sent', 'Please check your email')
-                );
+                toast.success('Verification email sent again');
             }
         } catch (err) {
-            NotificationsStore.addNotification(errorNotification('Verification email failed', err.message));
+            toast.success(err.message);
         } finally {
             setLoading(false);
         }

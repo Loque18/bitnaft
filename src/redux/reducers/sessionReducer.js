@@ -7,14 +7,16 @@ import {
     LOG_IN_SUCCESS,
     LOG_IN_FAILURE,
     LOG_OUT_REQUEST,
+    LOG_OUT_SUCCESS,
 } from '../constants';
 
 const defaultState = {
-    sessionData: {},
+    session: {},
     isLoggedIn: false,
     loading: false,
+    failure: false,
     success: false,
-    error: false,
+    errorMessage: false,
 };
 
 const reducer = (state = defaultState, action) => {
@@ -22,7 +24,7 @@ const reducer = (state = defaultState, action) => {
         case RECOVER_SESSION_SUCCESS:
             return {
                 ...state,
-                sessionData: action.payload,
+                session: action.payload,
                 isLoggedIn: true,
             };
 
@@ -48,7 +50,13 @@ const reducer = (state = defaultState, action) => {
         case LOG_IN_FAILURE:
             return {
                 ...defaultState,
-                error: true,
+                failure: true,
+                errorMessage: action.payload,
+            };
+
+        case LOG_OUT_SUCCESS:
+            return {
+                ...defaultState,
             };
 
         case LOG_OUT_REQUEST:

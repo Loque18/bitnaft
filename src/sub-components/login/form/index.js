@@ -15,11 +15,9 @@ const EyeSlash = () => <i className="fa-solid fa-eye-slash has-text-md-ref-prima
 
 const Form = () => {
     const dispatch = useDispatch();
-    const { sessionReducer } = useSelector(state => state);
+    const { loading, success, failure, errorMessage } = useSelector(state => state.sessionReducer);
 
     const [passwordVisible, setPasswordVisible] = useState(false);
-
-    const { loading, success } = sessionReducer;
 
     const formik = useFormik({
         initialValues: {
@@ -27,7 +25,7 @@ const Form = () => {
             password: '',
         },
         validationSchema: yup.object({
-            email: yup.string().email().required('Enter your email'),
+            email: yup.string().email('invalid email').required('Enter your email'),
             password: yup.string().required('Enter your password'),
         }),
         onSubmit: async values => {
@@ -51,6 +49,11 @@ const Form = () => {
 
     return (
         <form onSubmit={formik.handleSubmit}>
+            {loading ? null : failure ? (
+                <div className="notification animate__animated animate__fadeInDown is-danger has-text-centered p-2">
+                    {errorMessage}
+                </div>
+            ) : null}
             <div className="field">
                 <label className="label is-size-7">Email</label>
                 <div className="control has-icons-left">
@@ -98,7 +101,7 @@ const Form = () => {
                             '⠀'
                         )}
                         <Link href="/recover-password">
-                            <a>
+                            <a href="/replace">
                                 <u>Forgot password ?</u>
                             </a>
                         </Link>
