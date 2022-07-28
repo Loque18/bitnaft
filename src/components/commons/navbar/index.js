@@ -4,8 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+    // app state
+    const { sessionReducer } = useSelector(state => state);
+
+    const { isLoggedIn, sessionData } = sessionReducer;
+
     //  local state
     const [mobileActive, setMobileActive] = useState(false);
     const [burgerActive, setBurgerActive] = useState(false);
@@ -112,14 +118,45 @@ const Navbar = () => {
                             </a>
                         </Link>
                     </div>
-                    <div className="navbar-end">
-                        <div className="navbar-item has-dropdown is-hoverable">
-                            <div className="navbar-link has-font-roboto has-text-md-black">
-                                <Image src="/media/user.png" alt="user" width={64} height={64} className="is-rounded" />
-                                <span className="has-text-md-black has-font-roboto">username@email.com</span>
+                    {isLoggedIn ? (
+                        <div className="navbar-end">
+                            <div className="navbar-item has-dropdown is-hoverable">
+                                <div className="navbar-link has-font-roboto has-text-md-black">
+                                    <Image
+                                        src="/media/user.png"
+                                        alt="user"
+                                        width={64}
+                                        height={64}
+                                        className="is-rounded"
+                                    />
+                                    <span className="has-text-md-black has-font-roboto">username@email.com</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className="navbar-end">
+                            <Link href="/login">
+                                <a
+                                    href="/replace"
+                                    className="navbar-item is-size-6 has-font-roboto "
+                                    role="button"
+                                    tabIndex={0}
+                                >
+                                    Login
+                                </a>
+                            </Link>
+                            <Link href="/signup">
+                                <a
+                                    href="/replace"
+                                    className="navbar-item is-size-6 has-font-roboto "
+                                    role="button"
+                                    tabIndex={0}
+                                >
+                                    Signup
+                                </a>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>

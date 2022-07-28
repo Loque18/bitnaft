@@ -5,11 +5,13 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 
 import modalReducer from './reducers/modalReducer';
+import sessionReducer from './reducers/sessionReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const reducer = combineReducers({
     modalReducer,
+    sessionReducer,
 });
 
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));

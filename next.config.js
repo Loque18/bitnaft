@@ -1,5 +1,5 @@
 module.exports = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     images: {
         domains: ['bitcoin.org', 'img.freepik.com', 'flagcdn.com'],
     },
