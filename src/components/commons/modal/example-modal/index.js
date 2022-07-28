@@ -18,10 +18,10 @@ const ExampleModal = () => {
 
     return (
         <Modal isOpen={exampleModal.isOpen}>
-            <div className="box has-background-dark p-5 has-border-2-hblue-o-2">
+            <div className="box has-bg-dark p-5 has-border-2-hblue-o-2">
                 <div className="container">
                     <h1 className="subtitle has-text-hpurple">Modal</h1>
-                    <hr className="has-background-hblue-o-2" style={{ margin: '0 -24px 0 -24px' }} />
+                    <hr className="has-bg-hblue-o-2" style={{ margin: '0 -24px 0 -24px' }} />
                     <section className="pt-5 mb-6">
                         <p className="has-text-hpurple">{data && data.msg}</p>
                     </section>

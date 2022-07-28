@@ -2,12 +2,13 @@
 import Head from 'next/head';
 // import dynamic from 'next/dynamic';
 import Script from 'next/script';
-
 import { Provider } from 'react-redux';
-import store from 'src/redux/store';
 
-import { ReactNotifications } from 'react-notifications-component';
-import { custom_notification_types } from 'src/static/notifications';
+import { ToastContainer } from 'react-toastify';
+
+import TryRecoveringSessionComponent from 'src/components/commons/recover-sesion';
+
+import store from 'src/redux/store';
 
 import appConfig from 'src/static/app.config';
 
@@ -25,10 +26,12 @@ function MyApp({ Component, pageProps }) {
                 <meta name="description" content={appConfig.description} />
             </Head>
 
-            <ReactNotifications types={custom_notification_types} />
+            <ToastContainer />
 
             <Provider store={store}>
                 <Script src={`https://kit.fontawesome.com/${FONT_AWESOME_KEY}.js`} />
+                <TryRecoveringSessionComponent />
+
                 {getLayout(<Component {...pageProps} />)}
             </Provider>
         </>

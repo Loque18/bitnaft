@@ -1,0 +1,29 @@
+@import 'src/scss/_variables.scss';
+
+.eye_button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 40px;
+    width: 40px;
+
+    display: grid;
+    place-items: center;
+
+    &:hover {
+        color: $md-white !important;
+        &::before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background: $md-ref-primary-80;
+            border-radius: 50%;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+        }
+    }
+}

@@ -1,15 +1,14 @@
-// @import './font-helper';
-// @import './color-helper';
-// @import './gradient-helper';
-// @import './z-index-helper';
-// @import './custom-notifications';
+@import './font-helper';
+@import './color-helper';
+@import './gradient-helper';
+@import './z-index-helper';
+@import './customs';
 @import './scroll-helper';
-// @import './size-helper';
-// @import './issues-helper';
-// @import './user-select-helper';
+@import './size-helper';
+@import './user-select-helper';
 @import './globals.scss';
-// @import './button-helper';
-// @import './border-helper';
+@import './button-helper';
+@import './border-helper';
 @import './vars';
 @import './bulma-helper';
 @import './bulma-custom-vars';
@@ -22,6 +21,7 @@ body,
     width: 100%;
     margin: 0;
     padding: 0;
+    background-color: #f9f9fd;
 }
 
 body {
