@@ -10,7 +10,7 @@ const Navbar = () => {
     // app state
     const { sessionReducer } = useSelector(state => state);
 
-    const { isLoggedIn, sessionData } = sessionReducer;
+    const { isLoggedIn } = sessionReducer;
 
     //  local state
     const [mobileActive, setMobileActive] = useState(false);

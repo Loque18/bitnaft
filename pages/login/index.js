@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
 import LoginForm from 'src/sub-components/login/form';

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { try_recovering_session } from 'src/redux/actions';
@@ -12,6 +13,7 @@ const RecoverSessionComponent = () => {
 
     useEffect(() => {
         console.log('sessionReducer', sessionReducer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sessionReducer.isLoggedIn, sessionReducer.sessionData]);
 
     return null;
