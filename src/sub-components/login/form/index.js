@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Link from 'next/link';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import api from 'src/api';
-
 import styles from 'src/scss/common_modules/form_utils.module.scss';
+import { log_in_request } from 'src/redux/actions';
 
 const { eye_button } = styles;
 
@@ -14,8 +14,12 @@ const Eye = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
 const EyeSlash = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
 
 const Form = () => {
+    const dispatch = useDispatch();
+    const { sessionReducer } = useSelector(state => state);
+
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const [loading, setLoading] = useState(false);
+
+    const { loading } = sessionReducer;
 
     const formik = useFormik({
         initialValues: {
@@ -27,18 +31,11 @@ const Form = () => {
             password: yup.string().required('Please enter your password'),
         }),
         onSubmit: async values => {
-            setLoading(true);
+            // setLoading(true);
 
             const { email, password } = values;
 
-            try {
-                const res = await api.post.login({ email, password });
-                console.log(res);
-            } catch (err) {
-                console.log(err);
-            } finally {
-                setLoading(false);
-            }
+            dispatch(log_in_request({ email, password }));
         },
     });
 
