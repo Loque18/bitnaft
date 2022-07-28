@@ -38,7 +38,6 @@ const SignUpPage = () => {
                             placeItems: 'center',
                         }}
                     >
-                        {/* <div className="col-container has-background-primary">asd</div> */}
                         <SignupForm />
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="WVVvVa14LHBOuxjfh97P" name="Page-1">
-        <mxGraphModel dx="1856" dy="2162" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="759" dy="1535" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -47,25 +47,25 @@
                     <mxGeometry x="620" y="210" width="100" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="19" value="Login reducer" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#ffffff;fillColor=#D843A6;strokeColor=#A50040;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="990" y="-10" width="340" height="270" as="geometry"/>
+                    <mxGeometry x="990" y="-10" width="340" height="210" as="geometry"/>
                 </mxCell>
                 <mxCell id="20" value="session data" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="1020" y="30" width="110" height="50" as="geometry"/>
+                    <mxGeometry x="1105" y="40" width="110" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="21" value="sucess" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="1020" y="90" width="110" height="50" as="geometry"/>
+                    <mxGeometry x="1380" y="-180" width="110" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="23" value="error" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="1020" y="150" width="110" height="50" as="geometry"/>
+                <mxCell id="23" value="errorData" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1105" y="110" width="110" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="24" value="recover_last_session" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#ffffff;fillColor=#1ba1e2;strokeColor=#006EAF;" parent="1" vertex="1">
-                    <mxGeometry x="1155" y="25" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="1410" y="-130" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="25" value="log_in_request" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#ffffff;fillColor=#1ba1e2;strokeColor=#006EAF;" parent="1" vertex="1">
-                    <mxGeometry x="1155" y="90" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="1420" y="-60" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="26" value="log_out_request" style="rounded=1;whiteSpace=wrap;html=1;fontColor=#ffffff;fillColor=#1ba1e2;strokeColor=#006EAF;" parent="1" vertex="1">
-                    <mxGeometry x="1155" y="160" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="1550" y="-170" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="27" value="saga" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
                     <mxGeometry x="1450" y="-10" width="410" height="350" as="geometry"/>

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -19,7 +19,7 @@ const Form = () => {
 
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    const { loading } = sessionReducer;
+    const { loading, success } = sessionReducer;
 
     const formik = useFormik({
         initialValues: {
@@ -27,8 +27,8 @@ const Form = () => {
             password: '',
         },
         validationSchema: yup.object({
-            email: yup.string().email().required('Please enter your email'),
-            password: yup.string().required('Please enter your password'),
+            email: yup.string().email().required('Enter your email'),
+            password: yup.string().required('Enter your password'),
         }),
         onSubmit: async values => {
             // setLoading(true);
@@ -42,6 +42,12 @@ const Form = () => {
     const changePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
+
+    useEffect(() => {
+        if (success) {
+            window.location.href = '/dashboard';
+        }
+    }, [success]);
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -85,11 +91,20 @@ const Form = () => {
                         <i className="fa-solid fa-lock" />
                     </span>
 
-                    {formik.touched.password && formik.errors.password ? (
-                        <p className="help is-danger">{formik.errors.password}</p>
-                    ) : (
-                        '⠀'
-                    )}
+                    <p className="help is-flex is-flex-direction-row is-justify-content-space-between">
+                        {formik.touched.password && formik.errors.password ? (
+                            <span className="has-text-danger">{formik.errors.password}</span>
+                        ) : (
+                            '⠀'
+                        )}
+                        <Link href="/recover-password">
+                            <a>
+                                <u>Forgot password ?</u>
+                            </a>
+                        </Link>
+                    </p>
+
+                    <br />
 
                     <button
                         aria-label={passwordVisible ? 'Hide password' : 'Show password'}
@@ -118,8 +133,8 @@ const Form = () => {
                 <div className="has-text-centered">
                     Not a member yet?{' '}
                     <Link href="/signup" passHref>
-                        <a href="replace" className="has-text-md-source-primary">
-                            <u>Create an account</u>
+                        <a href="replace">
+                            <u>Sign up</u>
                         </a>
                     </Link>
                 </div>

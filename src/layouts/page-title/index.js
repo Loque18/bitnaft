@@ -7,7 +7,7 @@ const PageTitleLayout = ({ pageName, children }) => {
     return (
         <>
             <Head>
-                <title>{`${appName} | ${pageName}`}</title>
+                <title>{`${pageName} | ${appName}`}</title>
             </Head>
             {children}
         </>

@@ -5,11 +5,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Store as NotificationsStore } from 'react-notifications-component';
+import { toast } from 'react-toastify';
 
 import api from 'src/api';
-
-import { errorNotification } from 'src/static/notifications';
 
 import styles from 'src/scss/common_modules/form_utils.module.scss';
 
@@ -51,7 +49,7 @@ const Form = () => {
                     throw new Error(res.data.message);
                 }
             } catch (err) {
-                NotificationsStore.addNotification(errorNotification('Signup failed', err.message));
+                toast.error(err.message);
             } finally {
                 setLoading(false);
             }
@@ -176,6 +174,7 @@ const Form = () => {
                                 aria-label="Sign up"
                                 className={`button is-hblue is-fullwidth ${loading ? 'is-loading' : ''}`}
                                 type="submit"
+                                disabled={Object.keys(formik.errors).length > 0}
                             >
                                 Sign up
                             </button>
@@ -184,7 +183,7 @@ const Form = () => {
                         <div className="has-text-centered">
                             Already have an account?{' '}
                             <Link href="/login" passHref>
-                                <a href="replace" className="has-text-md-source-primary">
+                                <a href="replace">
                                     <u>Log in</u>
                                 </a>
                             </Link>
