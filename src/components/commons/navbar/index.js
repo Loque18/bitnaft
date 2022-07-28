@@ -13,8 +13,6 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const { isLoggedIn } = useSelector(state => state.sessionReducer);
 
-    console.log('navbar isLoggedIn', isLoggedIn);
-
     //  local state
     const [mobileActive, setMobileActive] = useState(false);
     const [burgerActive, setBurgerActive] = useState(false);

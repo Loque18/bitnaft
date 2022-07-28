@@ -1,10 +1,12 @@
+/* eslint-disable @next/next/no-img-element */
+import Link from 'next/link';
+
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
 import LoginForm from 'src/sub-components/login/form';
 
 import styles from 'src/scss/common_modules/box.module.scss';
 import localStyles from './login.module.scss';
-import Link from 'next/link';
 
 const { box_container, box_column, is_reverse } = styles;
 const { bg } = localStyles;
@@ -57,7 +59,9 @@ const LoginPage = () => {
                             </div>
                             <div className="has-text-centered is-size-6">
                                 <Link href="/home">
-                                    <a href="/replace">back to home</a>
+                                    <a href="/replace">
+                                        <u>back to home</u>
+                                    </a>
                                 </Link>
                             </div>
                         </div>

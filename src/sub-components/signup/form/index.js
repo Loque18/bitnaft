@@ -13,8 +13,8 @@ import styles from 'src/scss/common_modules/form_utils.module.scss';
 
 const { eye_button } = styles;
 
-const Eye = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
-const EyeSlash = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
+const Eye = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
+const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
 
 const Form = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);

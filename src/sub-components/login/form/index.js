@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -10,8 +11,8 @@ import { log_in_request } from 'src/redux/actions';
 
 const { eye_button } = styles;
 
-const Eye = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
-const EyeSlash = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
+const Eye = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
+const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
 
 const Form = () => {
     const dispatch = useDispatch();
