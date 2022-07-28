@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -5,7 +7,7 @@ import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
+// import { Button } from 'primereact/button';
 
 const AssetsTable = () => {
     const [assets, setAssets] = useState([]);
@@ -67,22 +69,27 @@ const AssetsTable = () => {
     const renderHeader = () => {
         return (
             <div className="flex justify-content-between">
-                <span className="p-input-icon-left">
-                    <i className="pi pi-search" />
+                <div className="control has-icons-left has-icons-right">
                     <InputText
                         value={globalFilterValue}
                         onChange={onGlobalFilterChange}
                         placeholder="Search Assets"
-                        className="has-font-roboto"
+                        className="input has-font-roboto"
+                        onKeyUp={e => {
+                            if (e.key === 'Escape') {
+                                clearFilter();
+                            }
+                        }}
                     />
-                </span>
-                <Button
-                    type="button"
-                    icon="pi pi-filter-slash"
-                    label="Clear"
-                    className="button p-button-outlined has-font-roboto has-text-md-ref-primary-30"
-                    onClick={clearFilter}
-                />
+                    <span className="icon is-left">
+                        <i className="fas fa-search" />
+                    </span>
+                    {globalFilterValue.length > 0 ? (
+                        <span className="icon is-right">
+                            <i className="fas fa-times is-clickable" onClick={clearFilter} />
+                        </span>
+                    ) : null}
+                </div>
             </div>
         );
     };
@@ -143,38 +150,40 @@ const AssetsTable = () => {
     const header = renderHeader();
 
     return (
-        <DataTable
-            value={assets}
-            paginator
-            className="p-datatable-customers"
-            removableSort
-            rows={10}
-            dataKey="name.official"
-            filters={filter}
-            filterDisplay="menu"
-            loading={loading}
-            responsiveLayout="scroll"
-            globalFilterFields={['name.official', 'name.cca3', 'name.population']}
-            header={header}
-            emptyMessage="No assets available."
-        >
-            <Column
-                sortable
-                field="name.official"
-                header="Assets"
-                filter
-                filterPlaceholder="Search by assets"
-                body={assetsNameTemplate}
-            />
-            <Column
-                sortable
-                field="population"
-                header="Balance"
-                body={balanceBodyTemplate}
-                style={{ verticalAlign: 'middle' }}
-            />
-            <Column header="Actions" body={actionsBodyTemplate} style={{ verticalAlign: 'middle' }} />
-        </DataTable>
+        <div className="box">
+            <DataTable
+                value={assets}
+                paginator
+                className="p-datatable-customers"
+                removableSort
+                rows={10}
+                dataKey="name.official"
+                filters={filter}
+                filterDisplay="menu"
+                loading={loading}
+                responsiveLayout="scroll"
+                globalFilterFields={['name.official', 'name.cca3', 'name.population']}
+                header={header}
+                emptyMessage="No assets available."
+            >
+                <Column
+                    sortable
+                    field="name.official"
+                    header="Assets"
+                    filter
+                    filterPlaceholder="Search by assets"
+                    body={assetsNameTemplate}
+                />
+                <Column
+                    sortable
+                    field="population"
+                    header="Balance"
+                    body={balanceBodyTemplate}
+                    style={{ verticalAlign: 'middle' }}
+                />
+                <Column header="Actions" body={actionsBodyTemplate} style={{ verticalAlign: 'middle' }} />
+            </DataTable>
+        </div>
     );
 };
 
