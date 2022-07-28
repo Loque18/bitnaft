@@ -3,6 +3,8 @@ import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
 import AssetsTable from 'src/components/tables/assets-table';
+import SavingsTable from 'src/components/tables/savings-table';
+import LoansTable from 'src/components/tables/loans-table';
 
 const Dashboard = () => {
     return (
@@ -53,6 +55,16 @@ const Dashboard = () => {
                 <div className="columns pt-5">
                     <div className="column">
                         <AssetsTable />
+                    </div>
+                </div>
+                <div className="columns pt-5">
+                    <div className="column">
+                        <SavingsTable />
+                    </div>
+                </div>
+                <div className="columns pt-5">
+                    <div className="column">
+                        <LoansTable />
                     </div>
                 </div>
             </div>

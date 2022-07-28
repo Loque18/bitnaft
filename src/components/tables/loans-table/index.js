@@ -1,18 +1,21 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
-const AssetsTable = () => {
+const LoansTable = () => {
     const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [loading, setLoading] = useState(true);
+
+    // const [expandedRows, setExpandedRows] = useState(null);
+
+    const isMounted = useRef(false);
 
     const initFilter = () => {
         setFilter({
@@ -56,6 +59,7 @@ const AssetsTable = () => {
     };
 
     useEffect(() => {
+        isMounted.current = true;
         fetch('https://restcountries.com/v3.1/all')
             .then(response => response.json())
             .then(data => {
@@ -64,6 +68,23 @@ const AssetsTable = () => {
             });
         initFilter();
     }, []);
+
+    // const expandAll = () => {
+    //     const newExpandedRows = {};
+    //     assets.forEach(asset => {
+    //         newExpandedRows[`${asset.name.official}`] = true;
+    //     });
+
+    //     setExpandedRows(newExpandedRows);
+    // };
+
+    // const collapseAll = () => {
+    //     setExpandedRows(null);
+    // };
+
+    // const rowExpansionTemplate = (data) => {
+    //     return null;
+    // };
 
     const renderHeader = () => {
         return (
@@ -97,7 +118,7 @@ const AssetsTable = () => {
         return (
             <div className="media is-flex is-align-items-center">
                 <div className="media-left">
-                    <figure className="image is-48x48">
+                    <figure className="image is-24x24">
                         <Image className="is-rounded shadowed-logos" src={rowData.flags.png} layout="fill" alt="" />
                     </figure>
                 </div>
@@ -118,8 +139,7 @@ const AssetsTable = () => {
             </div>
         );
     };
-
-    const balanceBodyTemplate = rowData => {
+    const loanAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
                 {rowData.population}
@@ -127,43 +147,29 @@ const AssetsTable = () => {
         );
     };
 
-    const actionsBodyTemplate = () => {
-        return (
-            <div className="buttons is-flex is-align-items-center">
-                <button
-                    type="button"
-                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6"
-                    style={{ borderBottom: '1px dashed #15195B' }}
-                >
-                    Withdraw
-                </button>
-                <button
-                    type="button"
-                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-3"
-                    style={{ borderBottom: '1px dashed #15195B' }}
-                >
-                    Deposit
-                </button>
-            </div>
-        );
+    const collateralAmountTemplate = rowData => {
+        return <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.area}</p>;
     };
 
     const header = renderHeader();
-
     return (
         <div className="box">
             <DataTable
                 value={assets}
                 paginator
+                // expandedRows={rowExpansionTemplate}
                 className="p-datatable-customers"
                 removableSort
+                // onRowToggle={e => {
+                //     setExpandedRows(e.data);
+                // }}
                 rows={10}
                 dataKey="name.official"
                 filters={filter}
                 filterDisplay="menu"
                 loading={loading}
                 responsiveLayout="scroll"
-                globalFilterFields={['name.official', 'name.cca3', 'name.population']}
+                globalFilterFields={['name.official']}
                 header={header}
                 emptyMessage="No assets available."
             >
@@ -178,14 +184,20 @@ const AssetsTable = () => {
                 <Column
                     sortable
                     field="population"
-                    header="Balance"
-                    body={balanceBodyTemplate}
+                    header="Loan Amount"
+                    body={loanAmountTemplate}
                     style={{ verticalAlign: 'middle' }}
                 />
-                <Column header="Actions" body={actionsBodyTemplate} style={{ verticalAlign: 'middle' }} />
+                <Column
+                    sortable
+                    field="area"
+                    header="Collateral Amount"
+                    body={collateralAmountTemplate}
+                    style={{ verticalAlign: 'middle' }}
+                />
             </DataTable>
         </div>
     );
 };
 
-export default AssetsTable;
+export default LoansTable;

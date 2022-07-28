@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
@@ -8,7 +7,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
-const AssetsTable = () => {
+const SavingsTable = () => {
     const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
@@ -127,24 +126,9 @@ const AssetsTable = () => {
         );
     };
 
-    const actionsBodyTemplate = () => {
+    const apyBodyTemplate = rowData => {
         return (
-            <div className="buttons is-flex is-align-items-center">
-                <button
-                    type="button"
-                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6"
-                    style={{ borderBottom: '1px dashed #15195B' }}
-                >
-                    Withdraw
-                </button>
-                <button
-                    type="button"
-                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-3"
-                    style={{ borderBottom: '1px dashed #15195B' }}
-                >
-                    Deposit
-                </button>
-            </div>
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.area} %</p>
         );
     };
 
@@ -163,7 +147,7 @@ const AssetsTable = () => {
                 filterDisplay="menu"
                 loading={loading}
                 responsiveLayout="scroll"
-                globalFilterFields={['name.official', 'name.cca3', 'name.population']}
+                globalFilterFields={['name.official']}
                 header={header}
                 emptyMessage="No assets available."
             >
@@ -182,10 +166,9 @@ const AssetsTable = () => {
                     body={balanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
                 />
-                <Column header="Actions" body={actionsBodyTemplate} style={{ verticalAlign: 'middle' }} />
+                <Column sortable field="area" header="APY" body={apyBodyTemplate} style={{ verticalAlign: 'middle' }} />
             </DataTable>
         </div>
     );
 };
-
-export default AssetsTable;
+export default SavingsTable;
