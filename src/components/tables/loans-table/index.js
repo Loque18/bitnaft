@@ -13,7 +13,7 @@ const LoansTable = () => {
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [loading, setLoading] = useState(true);
 
-    // const [expandedRows, setExpandedRows] = useState(null);
+    const [expandedRows, setExpandedRows] = useState(null);
 
     const isMounted = useRef(false);
 
@@ -82,9 +82,9 @@ const LoansTable = () => {
     //     setExpandedRows(null);
     // };
 
-    // const rowExpansionTemplate = (data) => {
-    //     return null;
-    // };
+    const rowExpansionTemplate = () => {
+        return null;
+    };
 
     const renderHeader = () => {
         return (
@@ -157,17 +157,19 @@ const LoansTable = () => {
             <DataTable
                 value={assets}
                 paginator
-                // expandedRows={rowExpansionTemplate}
+                expandedRows={expandedRows}
+                onRowExpand
                 className="p-datatable-customers"
                 removableSort
-                // onRowToggle={e => {
-                //     setExpandedRows(e.data);
-                // }}
+                onRowToggle={e => {
+                    setExpandedRows(e.data);
+                }}
                 rows={10}
                 dataKey="name.official"
                 filters={filter}
                 filterDisplay="menu"
                 loading={loading}
+                rowExpansionTemplate={rowExpansionTemplate}
                 responsiveLayout="scroll"
                 globalFilterFields={['name.official']}
                 header={header}

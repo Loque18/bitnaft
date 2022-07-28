@@ -1,6 +1,7 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -10,16 +11,14 @@ import { log_in_request } from 'src/redux/actions';
 
 const { eye_button } = styles;
 
-const Eye = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
-const EyeSlash = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
+const Eye = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
+const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
 
 const Form = () => {
     const dispatch = useDispatch();
-    const { sessionReducer } = useSelector(state => state);
+    const { loading, success, failure, errorMessage } = useSelector(state => state.sessionReducer);
 
     const [passwordVisible, setPasswordVisible] = useState(false);
-
-    const { loading } = sessionReducer;
 
     const formik = useFormik({
         initialValues: {
@@ -27,8 +26,8 @@ const Form = () => {
             password: '',
         },
         validationSchema: yup.object({
-            email: yup.string().email().required('Please enter your email'),
-            password: yup.string().required('Please enter your password'),
+            email: yup.string().email('invalid email').required('Enter your email'),
+            password: yup.string().required('Enter your password'),
         }),
         onSubmit: async values => {
             // setLoading(true);
@@ -43,8 +42,19 @@ const Form = () => {
         setPasswordVisible(!passwordVisible);
     };
 
+    useEffect(() => {
+        if (success) {
+            window.location.href = '/dashboard';
+        }
+    }, [success]);
+
     return (
         <form onSubmit={formik.handleSubmit}>
+            {loading ? null : failure ? (
+                <div className="notification animate__animated animate__fadeInDown is-danger has-text-centered p-2">
+                    {errorMessage}
+                </div>
+            ) : null}
             <div className="field">
                 <label className="label is-size-7">Email</label>
                 <div className="control has-icons-left">
@@ -85,11 +95,20 @@ const Form = () => {
                         <i className="fa-solid fa-lock" />
                     </span>
 
-                    {formik.touched.password && formik.errors.password ? (
-                        <p className="help is-danger">{formik.errors.password}</p>
-                    ) : (
-                        '⠀'
-                    )}
+                    <p className="help is-flex is-flex-direction-row is-justify-content-space-between">
+                        {formik.touched.password && formik.errors.password ? (
+                            <span className="has-text-danger">{formik.errors.password}</span>
+                        ) : (
+                            '⠀'
+                        )}
+                        <Link href="/recover-password">
+                            <a href="/replace">
+                                <u>Forgot password ?</u>
+                            </a>
+                        </Link>
+                    </p>
+
+                    <br />
 
                     <button
                         aria-label={passwordVisible ? 'Hide password' : 'Show password'}
@@ -118,8 +137,8 @@ const Form = () => {
                 <div className="has-text-centered">
                     Not a member yet?{' '}
                     <Link href="/signup" passHref>
-                        <a href="replace" className="has-text-md-source-primary">
-                            <u>Create an account</u>
+                        <a href="replace">
+                            <u>Sign up</u>
                         </a>
                     </Link>
                 </div>

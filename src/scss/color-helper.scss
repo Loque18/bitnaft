@@ -60,6 +60,30 @@ $add-levels: 25, 75;
         }
     }
 
+    .button.is-#{$colorName}.outlined {
+        background-color: rgba($color, 0.25) !important;
+        border-color: $color !important;
+        color: lighten($color, 10) !important;
+
+        &:hover:enabled {
+            background-color: $color !important;
+            box-shadow: 0 0 0 0.125em rgba($color, 0.25) !important;
+            color: white !important;
+        }
+
+        &:active:enabled {
+            background-color: lighten($color, 20) !important;
+            box-shadow: 0 0 0 0.125em rgba($color, 0.25) !important;
+            color: white !important;
+        }
+
+        &:focus {
+            background-color: $color !important;
+            box-shadow: 0 0 0 0.125em rgba(rgb(0, 255, 213), 0.5) !important;
+            color: white !important;
+        }
+    }
+
     .has-text-#{$colorName} {
         color: $color !important;
     }
