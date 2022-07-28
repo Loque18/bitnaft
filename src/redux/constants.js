@@ -15,3 +15,11 @@ export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+
+/* *~~*~~*~~*~~*~~* DATA *~~*~~*~~*~~*~~* */
+
+export const HTTP_REQUEST = 'HTTP_REQUEST';
+
+export const FETCH_DATA_LOADING = 'FETCH_DATA_LOADING';
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
+export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';

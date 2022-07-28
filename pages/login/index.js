@@ -4,6 +4,7 @@ import LoginForm from 'src/sub-components/login/form';
 
 import styles from 'src/scss/common_modules/box.module.scss';
 import localStyles from './login.module.scss';
+import Link from 'next/link';
 
 const { box_container, box_column, is_reverse } = styles;
 const { bg } = localStyles;
@@ -36,21 +37,28 @@ const LoginPage = () => {
                             className={` p-5 ${box_column}`}
                             style={{
                                 height: '100%',
-                                display: 'grid',
-                                placeItems: 'center',
+                                display: 'flex',
+                                flexDirection: 'column',
                             }}
                         >
-                            <div>
-                                <section className="mb-5">
-                                    <h1 className="title is-4 has-text-hblue has-text-centered">Welcome back!</h1>
-                                    {/* <p className="has-text-centered">
+                            <div className="is-flex-grow-1" style={{ display: 'grid', placeItems: 'center' }}>
+                                <div>
+                                    <section className="mb-5">
+                                        <h1 className="title is-4 has-text-hblue has-text-centered">Welcome back!</h1>
+                                        {/* <p className="has-text-centered">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis
                                         mauris.{' '}
                                     </p> */}
-                                </section>
-                                <section>
-                                    <LoginForm />
-                                </section>
+                                    </section>
+                                    <section>
+                                        <LoginForm />
+                                    </section>
+                                </div>
+                            </div>
+                            <div className="has-text-centered is-size-6">
+                                <Link href="/home">
+                                    <a href="/replace">back to home</a>
+                                </Link>
                             </div>
                         </div>
                     </div>
