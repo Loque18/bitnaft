@@ -11,7 +11,9 @@ import { log_out_request } from 'src/redux/actions';
 const Navbar = () => {
     // app state
     const dispatch = useDispatch();
-    const { isLoggedIn } = useSelector(state => state.sessionReducer);
+    const { isLoggedIn, session } = useSelector(state => state.sessionReducer);
+
+    const { email } = session;
 
     //  local state
     const [mobileActive, setMobileActive] = useState(false);
@@ -86,7 +88,7 @@ const Navbar = () => {
                 </div>
                 <div className={`navbar-menu ${mobileActive ? 'is-active' : ''}`}>
                     <div className="navbar-start">
-                        <Link href="/">
+                        <Link href="/dashboard">
                             <a
                                 className={`navbar-item is-size-6 has-font-roboto ${
                                     router.pathname === '/dashboard' ? 'is-active' : ''
@@ -134,10 +136,13 @@ const Navbar = () => {
                                         height={64}
                                         className="is-rounded"
                                     />
-                                    <span className="has-text-md-black has-font-roboto">username@email.com</span>
+                                    <span className="has-text-md-black has-font-roboto">{email}</span>
                                 </div>
                                 <div className="navbar-dropdown">
                                     <div className="navbar-item">Overview</div>
+                                    <a href="profile/settings" className="navbar-item">
+                                        User Settings
+                                    </a>
                                     <Link href="/home">
                                         <a href="/replace" className="navbar-item" onClick={handleLogoutClick}>
                                             Log out

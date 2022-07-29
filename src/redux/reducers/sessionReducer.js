@@ -44,7 +44,7 @@ const reducer = (state = defaultState, action) => {
                 ...defaultState,
                 isLoggedIn: true,
                 success: true,
-                sessionData: action.payload,
+                session: action.payload,
             };
 
         case LOG_IN_FAILURE:
