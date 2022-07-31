@@ -1,5 +1,4 @@
 import styles from './styles.module.scss';
-// import PropTypes from 'prop-types';
 
 const { card_layout, header_s, content_s, footer_s } = styles;
 
@@ -15,11 +14,5 @@ const TokenSearchModalLayout = props => {
         </div>
     );
 };
-
-// TokenSearchModalLayout.propTypes = {
-//     header: PropTypes.node,
-//     content: PropTypes.node,
-//     footer: PropTypes.node
-// };
 
 export default TokenSearchModalLayout;

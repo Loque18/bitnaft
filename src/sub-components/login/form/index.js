@@ -101,9 +101,9 @@ const Form = () => {
                         ) : (
                             '⠀'
                         )}
-                        <a href="/login/resetpassword">
+                        <Link href="/login/resetpassword">
                             <u>Forgot password ?</u>
-                        </a>
+                        </Link>
                     </p>
 
                     <br />

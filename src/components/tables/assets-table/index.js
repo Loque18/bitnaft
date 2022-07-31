@@ -17,7 +17,7 @@ const AssetsTable = () => {
     const initFilter = () => {
         setFilter({
             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-            'name.official': {
+            'name.common': {
                 operator: FilterOperator.AND,
                 constraints: [
                     {
@@ -105,7 +105,7 @@ const AssetsTable = () => {
                     <div className="columns">
                         <div className="column is-3 is-flex is-flex-direction-flex-start is-align-items-center">
                             <p className="title has-text-md-black is-size-6 has-text-weight-medium">
-                                {rowData.name.official}
+                                {rowData.name.common}
                             </p>
                         </div>
                         <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
@@ -158,18 +158,18 @@ const AssetsTable = () => {
                 className="p-datatable-customers"
                 removableSort
                 rows={10}
-                dataKey="name.official"
+                dataKey="name.common"
                 filters={filter}
                 filterDisplay="menu"
                 loading={loading}
                 responsiveLayout="scroll"
-                globalFilterFields={['name.official', 'name.cca3', 'name.population']}
+                globalFilterFields={['name.common', 'name.cca3', 'name.population']}
                 header={header}
                 emptyMessage="No assets available."
             >
                 <Column
                     sortable
-                    field="name.official"
+                    field="name.common"
                     header="Assets"
                     filter
                     filterPlaceholder="Search by assets"

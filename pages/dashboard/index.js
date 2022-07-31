@@ -1,10 +1,10 @@
 import { getLayout as getMainLayout } from 'src/layouts/main';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
-// import { useSelector, useDispatch } from 'react-redux';
-// import { open_modal } from 'src/redux/actions';
+import { useDispatch } from 'react-redux';
+import { open_modal } from 'src/redux/actions';
 
-// import modals from 'src/static/app.modals';
+import modals from 'src/static/app.modals';
 
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
 import AssetsTable from 'src/components/tables/assets-table';
@@ -12,7 +12,15 @@ import SavingsTable from 'src/components/tables/savings-table';
 import LoansTable from 'src/components/tables/loans-table';
 
 const Dashboard = () => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+
+    const handleModalOpen = () => {
+        dispatch(
+            open_modal({
+                modalName: modals.coinManagerModal,
+            })
+        );
+    };
 
     return (
         <section className="hero p-5">
@@ -72,6 +80,13 @@ const Dashboard = () => {
                 <div className="columns pt-5">
                     <div className="column">
                         <LoansTable />
+                    </div>
+                </div>
+                <div className="columns pt-5">
+                    <div className="column">
+                        <button type="button" className="button is-primary is-fullwidth" onClick={handleModalOpen}>
+                            Manage Coins
+                        </button>
                     </div>
                 </div>
             </div>

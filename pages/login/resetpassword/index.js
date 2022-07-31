@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import ResetPasswordForm from 'src/sub-components/resetpassword/form';
 
