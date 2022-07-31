@@ -121,6 +121,9 @@ const LoansTable = () => {
                     <figure className="image is-24x24">
                         <Image className="is-rounded shadowed-logos" src={rowData.flags.png} layout="fill" alt="" />
                     </figure>
+                    <figure className="image is-24x24">
+                        <Image className="is-rounded shadowed-logos" src={rowData.flags.png} layout="fill" alt="" />
+                    </figure>
                 </div>
                 <div className="media-content">
                     <div className="columns">

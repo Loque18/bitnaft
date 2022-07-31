@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 
 import { ToastContainer } from 'react-toastify';
 
+// import CoinManagerModal from 'src/components/modals/coin-manager-modal';
+
 import TryRecoveringSessionComponent from 'src/components/commons/recover-sesion';
 
 import store from 'src/redux/store';
@@ -31,6 +33,8 @@ function MyApp({ Component, pageProps }) {
             <Provider store={store}>
                 <Script src={`https://kit.fontawesome.com/${FONT_AWESOME_KEY}.js`} />
                 <TryRecoveringSessionComponent />
+
+                {/* <CoinManagerModal /> */}
 
                 {getLayout(<Component {...pageProps} />)}
             </Provider>

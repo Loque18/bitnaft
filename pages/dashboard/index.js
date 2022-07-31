@@ -1,12 +1,19 @@
 import { getLayout as getMainLayout } from 'src/layouts/main';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
+// import { useSelector, useDispatch } from 'react-redux';
+// import { open_modal } from 'src/redux/actions';
+
+// import modals from 'src/static/app.modals';
+
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
 import AssetsTable from 'src/components/tables/assets-table';
 import SavingsTable from 'src/components/tables/savings-table';
 import LoansTable from 'src/components/tables/loans-table';
 
 const Dashboard = () => {
+    // const dispatch = useDispatch();
+
     return (
         <section className="hero p-5">
             <div className="hero-body">
