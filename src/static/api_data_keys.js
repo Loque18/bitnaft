@@ -1,5 +1,5 @@
 const externalDataKeys = {
-    assets: 'assets',
+    resetPassword: 'resetPassword',
 };
 
 export default externalDataKeys;

@@ -15,10 +15,12 @@ function* login(action) {
         if (res.data.success) {
             const { token } = res.data;
 
-            // save token to cookies
-            cookieManager.set('session', JSON.stringify({ token }));
+            const sessionData = { email, token };
 
-            yield put(log_in_success({ sessionData: { token } }));
+            // save token to cookies
+            cookieManager.set('session', JSON.stringify(sessionData));
+
+            yield put(log_in_success({ sessionData }));
         } else {
             throw new Error(res.data.message);
         }

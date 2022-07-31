@@ -33,6 +33,13 @@ const api = {
                 url: `${endpoint}/login/${params}`,
             });
         },
+        requestPasswordReset: ({ email }) => {
+            const params = `?email=${email}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/requestpassreset/${params}`,
+            });
+        },
     },
     put: {},
     delete: {},
