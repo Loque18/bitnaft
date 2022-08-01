@@ -98,10 +98,10 @@ const AssetsTable = () => {
             <div className="media is-flex is-align-items-center">
                 <div className="media-left">
                     <figure className="image is-48x48">
-                        <Image className="is-rounded shadowed-logos" src={rowData.flags.png} layout="fill" alt="" />
+                        <Image className="is-rounded shadowed-logo" src={rowData.flags.png} layout="fill" alt="" />
                     </figure>
                 </div>
-                <div className="media-content">
+                <div className="media-content is-clipped">
                     <div className="columns">
                         <div className="column is-3 is-flex is-flex-direction-flex-start is-align-items-center">
                             <p className="title has-text-md-black is-size-6 has-text-weight-medium">
@@ -129,7 +129,7 @@ const AssetsTable = () => {
 
     const actionsBodyTemplate = () => {
         return (
-            <div className="buttons is-flex is-align-items-center">
+            <div className="buttons is-flex is-justify-content-flex-start is-align-items-center">
                 <button
                     type="button"
                     className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6"
@@ -139,7 +139,7 @@ const AssetsTable = () => {
                 </button>
                 <button
                     type="button"
-                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-3"
+                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-5"
                     style={{ borderBottom: '1px dashed #15195B' }}
                 >
                     Deposit
@@ -157,6 +157,7 @@ const AssetsTable = () => {
                 paginator
                 className="p-datatable-customers"
                 removableSort
+                sortMode="multiple"
                 rows={10}
                 dataKey="name.common"
                 filters={filter}
@@ -174,6 +175,7 @@ const AssetsTable = () => {
                     filter
                     filterPlaceholder="Search by assets"
                     body={assetsNameTemplate}
+                    className="min-w-250"
                 />
                 <Column
                     sortable
@@ -182,7 +184,12 @@ const AssetsTable = () => {
                     body={balanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
                 />
-                <Column header="Actions" body={actionsBodyTemplate} style={{ verticalAlign: 'middle' }} />
+                <Column
+                    header="Actions"
+                    body={actionsBodyTemplate}
+                    style={{ verticalAlign: 'middle' }}
+                    className="min-w-200"
+                />
             </DataTable>
         </div>
     );
