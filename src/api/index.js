@@ -7,7 +7,7 @@ const api = {
         getQRCode: ({ userAddress }) => {
             return axios({
                 method: 'get',
-                url: `$https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${userAddress}&choe=UTF-8`,
+                url: `https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${userAddress}&choe=UTF-8`,
             });
         },
     },

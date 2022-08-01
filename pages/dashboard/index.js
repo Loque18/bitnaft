@@ -14,10 +14,18 @@ import LoansTable from 'src/components/tables/loans-table';
 const Dashboard = () => {
     const dispatch = useDispatch();
 
-    const handleModalOpen = () => {
+    const handleCoinManagerModal = () => {
         dispatch(
             open_modal({
                 modalName: modals.coinManagerModal,
+            })
+        );
+    };
+
+    const handleQRCodeGeneratorModal = () => {
+        dispatch(
+            open_modal({
+                modalName: modals.qrCodeGeneratorModal,
             })
         );
     };
@@ -84,8 +92,23 @@ const Dashboard = () => {
                 </div>
                 <div className="columns pt-5">
                     <div className="column">
-                        <button type="button" className="button is-primary is-fullwidth" onClick={handleModalOpen}>
+                        <button
+                            type="button"
+                            className="button is-primary is-fullwidth"
+                            onClick={handleCoinManagerModal}
+                        >
                             Manage Coins
+                        </button>
+                    </div>
+                </div>
+                <div className="columns pt-5">
+                    <div className="column">
+                        <button
+                            type="button"
+                            className="button is-primary is-fullwidth"
+                            onClick={handleQRCodeGeneratorModal}
+                        >
+                            Generate QR Code
                         </button>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import CoinManagerModal from 'src/components/modals/coin-manager-modal';
+import QRCodeGeneratorModal from 'src/components/modals/qr-code-generator-modal';
 
 import TryRecoveringSessionComponent from 'src/components/commons/recover-sesion';
 
@@ -35,6 +36,7 @@ function MyApp({ Component, pageProps }) {
                 <TryRecoveringSessionComponent />
 
                 <CoinManagerModal />
+                <QRCodeGeneratorModal />
 
                 {getLayout(<Component {...pageProps} />)}
             </Provider>

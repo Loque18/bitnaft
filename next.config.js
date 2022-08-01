@@ -1,7 +1,7 @@
 module.exports = {
     reactStrictMode: false,
     images: {
-        domains: ['bitcoin.org', 'img.freepik.com', 'flagcdn.com'],
+        domains: ['bitcoin.org', 'img.freepik.com', 'flagcdn.com', 'chart.googleapis.com'],
     },
     // i18n: {
     //     locales: ['en'],
