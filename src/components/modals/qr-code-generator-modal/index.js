@@ -100,7 +100,7 @@ const QRCodeGeneratorModal = () => {
                                     <div className="columns is-centered">
                                         <div className="column">
                                             <button
-                                                className="button has-bg-md-ref-primary-95 has-text-md-key-colors-primary is-fullwidth"
+                                                className="button has-bg-hperiwinkle has-text-md-key-colors-primary is-fullwidth"
                                                 type="button"
                                                 onClick={closeModal}
                                             >

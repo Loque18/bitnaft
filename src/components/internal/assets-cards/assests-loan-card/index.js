@@ -17,23 +17,18 @@ const LoanedAssetsCard = props => {
                         <h1 className="subtitle is-size-5 has-text-md-source-primary has-font-roboto pl-2">{title}</h1>
                     </div>
                 </div>
-                <div className="columns mb-0 is-gapless">
-                    <div className="column is-flex is-narrow">
-                        <p className="has-text-md-black has-font-roboto is-size-6" style={{ opacity: '75%' }}>
-                            Last Asset Borrowed
-                        </p>
+                <div className="columns mb-0 is-gapless is-mobile">
+                    <div className="column is-narrow is-flex is-narrow">
+                        <p className="has-text-md-black-o-7 has-font-roboto is-size-6">Last Asset Borrowed</p>
                     </div>
-                    <div className="column is-flex is-flex-direction-column is-align-items-flex-end">
-                        <p
-                            className="is-size-7 is-underlined has-text-md-black has-text-weight-light has-font-roboto pb-2"
-                            style={{ opacity: '75%' }}
-                        >
+                    <div
+                        className="column is-narrow is-flex is-flex-direction-column is-align-items-flex-end"
+                        style={{ marginLeft: '-0.5rem' }}
+                    >
+                        <p className="is-size-7 is-underlined has-text-md-black-o-7 has-text-weight-light has-font-roboto pb-2">
                             Pay Before
                         </p>
-                        <p
-                            className="is-size-6 has-text-md-black has-text-weight-light has-font-roboto"
-                            style={{ opacity: '75%', letterSpacing: '0.5px' }}
-                        >
+                        <p className="is-size-6 has-text-md-black-o-7 has-text-weight-light has-font-roboto">
                             {formatDate(payBeforeDate)}
                         </p>
                     </div>
@@ -46,34 +41,18 @@ const LoanedAssetsCard = props => {
                         <figure className="image is-24x24">
                             <Image className="is-rounded shadowed-logo" src={cryptoIcon} layout="fill" alt="" />
                         </figure>
-                        <h1
-                            className="subtitle is-size-5 has-text-md-black has-font-pt-mono pl-2"
-                            style={{ opacity: '75%' }}
-                        >
-                            {amount}
-                        </h1>
+                        <h1 className="subtitle is-size-5 has-text-md-black-o-7 has-font-pt-mono pl-2">{amount}</h1>
                     </div>
                 </div>
-                <div className="columns is-mobile pt-1">
+                <div className="columns is-mobile pt-2">
                     {numberOfLoanedAssets === 0 ? (
-                        <p
-                            className="is-size-7 has-text-md-black has-text-weight-bold has-font-roboto"
-                            style={{ opacity: '75%' }}
-                        >
-                            No loans
-                        </p>
+                        <p className="is-size-7 has-text-md-black-o-7 has-text-weight-bold has-font-roboto">No loans</p>
                     ) : (
-                        <div className="column is-flex is-justify-content-flex-start is-align-items-center">
-                            <p
-                                className="is-size-7 has-text-md-black has-text-weight-bold has-font-roboto"
-                                style={{ opacity: '75%' }}
-                            >
+                        <div className="column is-flex is-justify-content-flex-start">
+                            <p className="is-size-7 has-text-md-black-o-7 has-text-weight-bold has-font-roboto">
                                 Current loans
                             </p>
-                            <p
-                                className="is-size-7 has-text-md-black has-text-weight-bold has-font-pt-mono pl-3"
-                                style={{ opacity: '75%' }}
-                            >
+                            <p className="is-size-7 has-text-md-black-o-7 has-text-weight-bold has-font-pt-mono pl-3">
                                 {numberOfLoanedAssets}
                                 <span className="has-font-roboto"> asset(s)</span>
                             </p>

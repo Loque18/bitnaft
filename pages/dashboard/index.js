@@ -33,16 +33,14 @@ const Dashboard = () => {
     };
 
     return (
-        <section className="hero p-5">
-            <div className="hero-body">
+        <section className="section">
+            <div>
                 <h1 className="subtitle is-size-3 has-text-md-source-primary has-font-roboto-medium">
                     Welcome back, user@email.com !
                 </h1>
                 <div className="columns">
                     <div className="column">
-                        <p className="is-size-5 has-text-md-black has-font-roboto-medium" style={{ opacity: '75%' }}>
-                            Overview
-                        </p>
+                        <p className="is-size-5 has-text-md-black-o-7 has-font-roboto-medium">Overview</p>
                     </div>
                 </div>
                 <div className="columns">

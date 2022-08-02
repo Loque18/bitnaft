@@ -19,9 +19,7 @@ const OwnedAssetsCard = props => {
                 </div>
                 <div className="columns">
                     <div className="column pt-0 is-narrow">
-                        <p className="has-text-md-black has-font-pt-mono is-size-5" style={{ opacity: '75%' }}>
-                            {formatCurrency(amount)}
-                        </p>
+                        <p className="has-text-md-black-o-7 has-font-pt-mono is-size-5">{formatCurrency(amount)}</p>
                     </div>
                 </div>
                 <div className="columns is-mobile pt-5">
@@ -33,10 +31,7 @@ const OwnedAssetsCard = props => {
                         ))}
                     </div>
                     <div className="column is-flex is-justify-content-flex-end is-align-items-center">
-                        <p
-                            className="is-size-7 has-text-md-black has-text-weight-bold has-font-roboto"
-                            style={{ opacity: '75%' }}
-                        >
+                        <p className="is-size-7 has-text-md-black-o-7 has-text-weight-bold has-font-roboto">
                             {numberOfAssets === 0 ? 'No assets' : `${numberOfAssets} assets`}
                         </p>
                     </div>

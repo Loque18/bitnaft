@@ -115,7 +115,7 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <hr className="is-md-ref-primary-80" style={{ opacity: '50%' }} />
+                <hr className="is-md-ref-primary-80-o-5" />
                 <p className="has-text-md-ref-neutral-50 has-font-roboto">BITNAFT © 2022</p>
             </div>
         </footer>
