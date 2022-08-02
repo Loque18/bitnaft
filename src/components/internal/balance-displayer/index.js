@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { change_balance_visibility } from 'src/redux/actions';
 import formatCurrency from 'src/utils/format-currency';
 import DisplayAsteriks from 'src/utils/display-asteriks';
 
@@ -6,10 +7,12 @@ const Eye = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30
 const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
 
 const BalanceDisplayer = () => {
-    const [balanceVisibility, setBalanceVisibility] = useState(true);
+    const dispatch = useDispatch();
 
-    const toggleBalanceVisibility = () => {
-        setBalanceVisibility(!balanceVisibility);
+    const balanceVisibility = useSelector(state => state.balanceDisplayerReducer.balanceVisibility);
+
+    const toggle_balance_visibility = () => {
+        dispatch(change_balance_visibility());
     };
 
     return (
@@ -25,7 +28,7 @@ const BalanceDisplayer = () => {
                             type="button"
                             className="unstyled-button pl-3"
                             tabIndex={-1}
-                            onClick={toggleBalanceVisibility}
+                            onClick={toggle_balance_visibility}
                             style={{ zIndex: '5' }}
                         >
                             <span className="icon is-small">{balanceVisibility ? <EyeSlash /> : <Eye />}</span>
