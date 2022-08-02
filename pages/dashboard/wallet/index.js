@@ -3,7 +3,7 @@ import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
 import { useRouter } from 'next/router';
 
-import AssetsList from 'src/components/modals/coin-manager-modal/assets-list';
+// import AssetsList from 'src/components/modals/coin-manager-modal/assets-list';
 import BalanceDisplayer from 'src/components/internal/balance-displayer';
 
 const WalletPage = () => {
