@@ -61,10 +61,12 @@
 
 }
 
-.min-w-200{
-    min-width: 200px !important;
+@mixin min-w-list {
+    @for $i from 100 to 301 {
+        .min-w-#{$i} {
+            min-width: #{$i}px !important;
+        }
+    }
 }
 
-.min-w-250{
-    min-width: 250px !important;
-}
+@include min-w-list;

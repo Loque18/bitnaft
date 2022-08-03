@@ -91,7 +91,7 @@ const Navbar = () => {
                         <Link href="/dashboard">
                             <a
                                 className={`navbar-item is-size-6 has-font-roboto ${
-                                    router.pathname === '/dashboard' ? 'is-active' : ''
+                                    router.pathname.includes('/dashboard') ? 'is-active' : ''
                                 }`}
                                 onClick={handleNavbarItemClick}
                                 role="button"

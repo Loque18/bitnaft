@@ -9,10 +9,6 @@ import modals from 'src/static/app.modals';
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
 import LoanedAssetsCard from 'src/components/internal/assets-cards/assests-loan-card';
 
-import AssetsTable from 'src/components/tables/assets-table';
-import SavingsTable from 'src/components/tables/savings-table';
-import LoansTable from 'src/components/tables/loans-table';
-
 const Dashboard = () => {
     const dispatch = useDispatch();
 
@@ -84,21 +80,6 @@ const Dashboard = () => {
                             numberOfLoanedAssets={1}
                             payBeforeDate={1659603600}
                         />
-                    </div>
-                </div>
-                <div className="columns pt-5">
-                    <div className="column">
-                        <AssetsTable />
-                    </div>
-                </div>
-                <div className="columns pt-5">
-                    <div className="column">
-                        <SavingsTable />
-                    </div>
-                </div>
-                <div className="columns pt-5">
-                    <div className="column">
-                        <LoansTable />
                     </div>
                 </div>
                 <div className="columns pt-5">

@@ -1,13 +1,4 @@
-@import './vars.scss';
+@import './variables.scss';
 
-
-/* *~~*~~*~~*~~*~~* INPUT *~~*~~*~~*~~*~~* */
-
-// $input-focus-border-color: $hpurple;
-// $input-focus-box-shadow-color: rgba($hpurple, 0.25);
-
-/* *~~*~~*~~*~~*~~* BUTTONS *~~*~~*~~*~~*~~* */
-
-// $button-focus-color: $hpurple;
-// $button-focus-border-color: $hpurple;
-// $button-focus-box-shadow-color: rgba($hpurple, 0.25);
+/* *~~*~~*~~*~~*~~* TABS *~~*~~*~~*~~*~~* */
+$tabs-boxed-link-active-border-bottom-color: transparent !important;
