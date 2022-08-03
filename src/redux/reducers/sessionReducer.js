@@ -1,14 +1,5 @@
 /* eslint-disable default-param-last */
-import {
-    TRY_RECOVERING_SESSION,
-    RECOVER_SESSION_SUCCESS,
-    RECOVER_SESSION_FAILURE,
-    LOG_IN_REQUEST,
-    LOG_IN_SUCCESS,
-    LOG_IN_FAILURE,
-    LOG_OUT_REQUEST,
-    LOG_OUT_SUCCESS,
-} from '../constants';
+import { LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS } from '../constants';
 
 const defaultState = {
     session: {},
@@ -21,18 +12,6 @@ const defaultState = {
 
 const reducer = (state = defaultState, action) => {
     switch (action.type) {
-        case RECOVER_SESSION_SUCCESS:
-            return {
-                ...state,
-                session: action.payload,
-                isLoggedIn: true,
-            };
-
-        case RECOVER_SESSION_FAILURE:
-            return {
-                ...defaultState,
-            };
-
         case LOG_IN_REQUEST:
             return {
                 ...state,
@@ -60,7 +39,6 @@ const reducer = (state = defaultState, action) => {
             };
 
         case LOG_OUT_REQUEST:
-        case TRY_RECOVERING_SESSION:
         default:
             return state;
     }

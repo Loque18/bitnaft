@@ -11,6 +11,8 @@ import AssetsTable from 'src/components/tables/assets-table';
 import SavingsTable from 'src/components/tables/savings-table';
 import LoansTable from 'src/components/tables/loans-table';
 
+import sessionService from 'src/utils/sessionService';
+
 const Dashboard = () => {
     const dispatch = useDispatch();
 
@@ -118,4 +120,7 @@ const Dashboard = () => {
 };
 
 Dashboard.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Dashboard');
+
 export default Dashboard;
+
+export const getServerSideProps = sessionService;
