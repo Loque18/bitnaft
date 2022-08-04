@@ -7,6 +7,8 @@ import { open_modal } from 'src/redux/actions';
 import modals from 'src/static/app.modals';
 
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
+import LoanedAssetsCard from 'src/components/internal/assets-cards/assests-loan-card';
+
 import AssetsTable from 'src/components/tables/assets-table';
 import SavingsTable from 'src/components/tables/savings-table';
 import LoansTable from 'src/components/tables/loans-table';
@@ -46,7 +48,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="columns">
-                    <div className="column is-3">
+                    <div className="column is-one-fifth">
                         <OwnedAssetsCard
                             title="Wallet"
                             to="/dashboard/wallet"
@@ -61,7 +63,7 @@ const Dashboard = () => {
                             numberOfAssets={15}
                         />
                     </div>
-                    <div className="column is-3">
+                    <div className="column is-one-fifth">
                         <OwnedAssetsCard
                             title="Savings"
                             to="/dashboard/savings"
@@ -74,6 +76,17 @@ const Dashboard = () => {
                                 'https://bitcoin.org/img/icons/opengraph.png?1657703267',
                             ]}
                             numberOfAssets={4}
+                        />
+                    </div>
+                    <div className="column is-one-fifth">
+                        <LoanedAssetsCard
+                            title="Loans"
+                            to="/dashboard/loans"
+                            icon="fa-solid fa-hand-holding-dollar"
+                            amount={1.5}
+                            cryptoIcon="https://bitcoin.org/img/icons/opengraph.png?1657703267"
+                            numberOfLoanedAssets={1}
+                            payBeforeDate={1659603600}
                         />
                     </div>
                 </div>

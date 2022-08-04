@@ -8,7 +8,7 @@ const OwnedAssetsCard = props => {
 
     return (
         <Link href={to}>
-            <div className="box rounded-shadowed-box is-clickable">
+            <div className="box rounded-shadowed-box is-clickable min-w-250">
                 <div className="columns">
                     <div className="column is-flex is-flex-direction-flex-start is-align-items-center">
                         <span className="icon is-size-5">
@@ -24,11 +24,11 @@ const OwnedAssetsCard = props => {
                         </p>
                     </div>
                 </div>
-                <div className="columns pt-5">
+                <div className="columns is-mobile pt-5">
                     <div className="column stacked-images is-flex">
                         {cryptoIcons.map((link, index) => (
                             <figure className="image is-24x24" key={index}>
-                                <Image className="is-rounded shadowed-logos" src={link} layout="fill" alt="" />
+                                <Image className="is-rounded shadowed-logo" src={link} layout="fill" alt="" />
                             </figure>
                         ))}
                     </div>
