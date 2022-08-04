@@ -10,13 +10,13 @@ export default async function login(req, res) {
         if (response.data.success) {
             const { token } = response.data;
 
-            const session = { user: { email }, token, isLoggedIn: true };
+            const session = { user: { email, isLoggedIn: true }, token };
 
             const sessionSerialized = serialize('session', JSON.stringify(session), {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 1000 * 60 * 60 * 24 * 7,
+                maxAge: 60 * 60 * 24 * 15,
                 path: '/',
             });
 

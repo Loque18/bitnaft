@@ -7,6 +7,10 @@ export const OPEN_MODAL = 'OPEN_MODAL';
 export const PLAY_CLOSE_ANIMATION = 'PLAY_CLOSE_ANIMATION';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 
+/* *~~*~~*~~*~~*~~* SESSION *~~*~~*~~*~~*~~* */
+export const UPDATE_SESSION = 'UPDATE_SESSION';
+export const CLEAR_SESSION = 'CLEAR_SESSION';
+
 /* *~~*~~*~~*~~*~~* LOGIN *~~*~~*~~*~~*~~* */
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';

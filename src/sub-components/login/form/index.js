@@ -1,6 +1,8 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
@@ -16,7 +18,9 @@ const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30"
 
 const Form = () => {
     const dispatch = useDispatch();
-    const { loading, success, failure, errorMessage } = useSelector(state => state.sessionReducer);
+    const { loading, success, failure, errorMessage } = useSelector(state => state.authReducer);
+
+    const router = useRouter();
 
     const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -44,9 +48,9 @@ const Form = () => {
 
     useEffect(() => {
         if (success) {
-            window.location.href = '/dashboard';
+            router.push('/dashboard');
         }
-    }, [success]);
+    }, [router, success]);
 
     return (
         <form onSubmit={formik.handleSubmit}>

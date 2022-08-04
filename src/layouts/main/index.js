@@ -6,7 +6,7 @@ const MainLayout = props => {
 
     return (
         <>
-            <Navbar session={props.session} />
+            <Navbar />
             <div style={{ height: '75px' }} />
             {children}
             <Footer />
@@ -14,6 +14,6 @@ const MainLayout = props => {
     );
 };
 
-export const getLayout = page => <MainLayout session={page.props.session}>{page}</MainLayout>;
+export const getLayout = page => <MainLayout>{page}</MainLayout>;
 
 export default MainLayout;
