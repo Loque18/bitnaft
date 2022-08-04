@@ -11,7 +11,7 @@ const Tabs = props => {
     const activeTab = tabs.find(tab => tab.to === router.pathname);
 
     return (
-        <div className="tabs is-medium is-boxed has-font-roboto">
+        <div className="tabs is-size-5 is-size-7-mobile is-boxed has-font-roboto">
             <ul>
                 {tabs.map(tab => (
                     <Tab key={tab.name} name={tab.name} changeActiveTab={changeActiveTab} activeTab={activeTab} />
