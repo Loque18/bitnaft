@@ -9,6 +9,8 @@ import modals from 'src/static/app.modals';
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
 import LoanedAssetsCard from 'src/components/internal/assets-cards/assests-loan-card';
 
+import sessionService from 'src/utils/sessionService';
+
 const Dashboard = () => {
     const dispatch = useDispatch();
 
@@ -110,4 +112,7 @@ const Dashboard = () => {
 };
 
 Dashboard.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Dashboard');
+
 export default Dashboard;
+
+export const getServerSideProps = sessionService;

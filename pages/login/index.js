@@ -75,3 +75,21 @@ const LoginPage = () => {
 LoginPage.getLayout = page => getPageTitleLayout(page, 'Login');
 
 export default LoginPage;
+
+export const getServerSideProps = async ctx => {
+    const { session } = ctx.req.cookies;
+
+    if (session) {
+        return {
+            redirect: {
+                destination: '/dashboard',
+                permanent: false,
+            },
+            props: {},
+        };
+    }
+
+    return {
+        props: {},
+    };
+};

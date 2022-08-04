@@ -49,3 +49,21 @@ const SignUpPage = () => {
 SignUpPage.usePageTitleLayout = page => usePageTitleLayout('Sign Up', page);
 
 export default SignUpPage;
+
+export const getServerSideProps = async ctx => {
+    const { session } = ctx.req.cookies;
+
+    if (session) {
+        return {
+            redirect: {
+                destination: '/dashboard',
+                permanent: false,
+            },
+            props: {},
+        };
+    }
+
+    return {
+        props: {},
+    };
+};

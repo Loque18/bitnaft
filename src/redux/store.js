@@ -8,6 +8,7 @@ import modalReducer from './reducers/modalReducer';
 import sessionReducer from './reducers/sessionReducer';
 import balanceDisplayerReducer from './reducers/balanceDisplayerReducer';
 import httpReducer from './reducers/httpReducer';
+import authReducer from './reducers/authReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -16,6 +17,7 @@ const reducer = combineReducers({
     sessionReducer,
     httpReducer,
     balanceDisplayerReducer,
+    authReducer,
 });
 
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));

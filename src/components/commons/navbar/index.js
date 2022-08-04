@@ -8,12 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { log_out_request } from 'src/redux/actions';
 
-const Navbar = () => {
+const Navbar = props => {
     // app state
     const dispatch = useDispatch();
-    const { isLoggedIn, session } = useSelector(state => state.sessionReducer);
 
-    const { email } = session;
+    const { session } = props;
 
     //  local state
     const [mobileActive, setMobileActive] = useState(false);
@@ -125,7 +124,7 @@ const Navbar = () => {
                             </a>
                         </Link>
                     </div>
-                    {isLoggedIn ? (
+                    {session && session.isLoggedIn ? (
                         <div className="navbar-end">
                             <div className="navbar-item has-dropdown is-hoverable">
                                 <div className="navbar-link has-font-roboto has-text-md-black">
@@ -136,7 +135,7 @@ const Navbar = () => {
                                         height={64}
                                         className="is-rounded"
                                     />
-                                    <span className="has-text-md-black has-font-roboto">{email}</span>
+                                    <span className="has-text-md-black has-font-roboto">{session.user.email}</span>
                                 </div>
                                 <div className="navbar-dropdown">
                                     <div className="navbar-item">Overview</div>
