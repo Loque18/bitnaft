@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Tabs from 'src/layouts/tabs';
 import tabList from 'src/static/tab-list';
 import BalanceDisplayer from 'src/components/internal/balance-displayer';
+import AssetsDistributionPieChart from 'src/components/assets-distribution-pie-chart';
 
 const DashboardSubPage = props => {
     const { title, table } = props;
@@ -27,7 +28,7 @@ const DashboardSubPage = props => {
                 <div className="column is-one-fifth">
                     <BalanceDisplayer />
                 </div>
-                <div className="column is-offset-8">Hi</div>
+                <div className="column is-offset-8">{/* <AssetsDistributionPieChart /> */}</div>
             </div>
             <div className="columns py-4">
                 <div className="column">

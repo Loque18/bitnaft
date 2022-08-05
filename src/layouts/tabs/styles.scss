@@ -15,8 +15,8 @@
         &.is-active{
             a{ 
                 border-color: $md-source-seed !important;
-                color: $md-source-seed !important;
-                background-color: #f9f9fd !important;
+                color: $md-white !important;
+                background-color: $md-source-seed !important;
             }
         }
         
