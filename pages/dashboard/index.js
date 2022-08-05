@@ -1,18 +1,21 @@
+import { useDispatch } from 'react-redux';
+
 import { getLayout as getMainLayout } from 'src/layouts/main';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
-
-import { useDispatch } from 'react-redux';
-import { open_modal } from 'src/redux/actions';
-
-import modals from 'src/static/app.modals';
 
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
 import LoanedAssetsCard from 'src/components/internal/assets-cards/assests-loan-card';
 
-import sessionService from 'src/utils/sessionService';
+import { open_modal } from 'src/redux/actions';
 
-const Dashboard = () => {
+import modals from 'src/static/app.modals';
+
+import requirePageAuth from 'src/functions/require-page-auth';
+
+const Dashboard = ({ session }) => {
     const dispatch = useDispatch();
+
+    const { user } = session;
 
     const handleCoinManagerModal = () => {
         dispatch(
@@ -32,9 +35,9 @@ const Dashboard = () => {
 
     return (
         <section className="section">
-            <div>
+            <div className="container">
                 <h1 className="subtitle is-size-3 has-text-md-source-primary has-font-roboto-medium">
-                    Welcome back, user@email.com !
+                    Welcome back, {user.email} !
                 </h1>
                 <div className="columns">
                     <div className="column">
@@ -42,7 +45,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="columns">
-                    <div className="column is-one-fifth">
+                    <div className="column is-narrow">
                         <OwnedAssetsCard
                             title="Wallet"
                             to="/dashboard/wallet"
@@ -57,7 +60,7 @@ const Dashboard = () => {
                             numberOfAssets={15}
                         />
                     </div>
-                    <div className="column is-one-fifth">
+                    <div className="column is-narrow">
                         <OwnedAssetsCard
                             title="Savings"
                             to="/dashboard/savings"
@@ -72,7 +75,7 @@ const Dashboard = () => {
                             numberOfAssets={4}
                         />
                     </div>
-                    <div className="column is-one-fifth">
+                    <div className="column is-narrow">
                         <LoanedAssetsCard
                             title="Loans"
                             to="/dashboard/loans"
@@ -115,4 +118,4 @@ Dashboard.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Dashboard
 
 export default Dashboard;
 
-export const getServerSideProps = sessionService;
+export const getServerSideProps = requirePageAuth();

@@ -1,15 +1,18 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
+
+import { update_session } from 'src/redux/actions';
 
 import styles from 'src/scss/common_modules/form_utils.module.scss';
-import { log_in_request } from 'src/redux/actions';
 
 const { eye_button } = styles;
 
@@ -18,7 +21,11 @@ const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30"
 
 const Form = () => {
     const dispatch = useDispatch();
-    const { loading, success, failure, errorMessage } = useSelector(state => state.authReducer);
+
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [failure, setFailure] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const router = useRouter();
 
@@ -34,11 +41,26 @@ const Form = () => {
             password: yup.string().required('Enter your password'),
         }),
         onSubmit: async values => {
-            // setLoading(true);
-
+            setLoading(true);
             const { email, password } = values;
 
-            dispatch(log_in_request({ email, password }));
+            try {
+                const res = await axios({ method: 'post', url: '/api/auth/login', data: { email, password } });
+
+                if (res.data.status === 'success') {
+                    setSuccess(true);
+                    dispatch(update_session({ session: res.data.data }));
+                } else {
+                    throw new Error(res.data.data.message);
+                }
+            } catch (err) {
+                setFailure(true);
+                setErrorMessage(err.message);
+            }
+
+            setLoading(false);
+
+            // dispatch(log_in_request({ email, password }));
         },
     });
 
@@ -56,7 +78,16 @@ const Form = () => {
         <form onSubmit={formik.handleSubmit}>
             {loading ? null : failure ? (
                 <div className="notification animate__animated animate__fadeInDown is-danger has-text-centered p-2">
-                    {errorMessage}
+                    {errorMessage.toLowerCase() === 'email not verified' ? (
+                        <>
+                            {errorMessage}{' '}
+                            <Link href={`/checkemail?email=${formik.values.email}`}>
+                                <a>Resend email</a>
+                            </Link>
+                        </>
+                    ) : (
+                        errorMessage
+                    )}
                 </div>
             ) : null}
             <div className="field">

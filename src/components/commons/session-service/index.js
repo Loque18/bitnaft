@@ -12,7 +12,7 @@ const SessionComponent = () => {
         (async () => {
             const res = await axios({
                 method: 'get',
-                url: '/api/session',
+                url: '/api/auth/session',
                 headers: {
                     'Content-Type': 'application/json',
                 },

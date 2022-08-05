@@ -1,6 +1,8 @@
 import { serialize } from 'cookie';
 import api from 'src/api';
 
+import { encrypt } from 'src/utils/hash';
+
 export default async function login(req, res) {
     const { email, password } = req.body;
 
@@ -9,10 +11,10 @@ export default async function login(req, res) {
 
         if (response.data.success) {
             const { token } = response.data;
+            const session = { user: { email }, token, isLoggedIn: true };
+            const encryptedSession = encrypt(JSON.stringify(session));
 
-            const session = { user: { email, isLoggedIn: true }, token };
-
-            const sessionSerialized = serialize('session', JSON.stringify(session), {
+            const sessionSerialized = serialize('session', encryptedSession, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',

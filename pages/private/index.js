@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import { getLayout as getMainLayout } from 'src/layouts/main';
 
+import requirePageAuth from 'src/functions/require-page-auth';
+
 const PrivatePage = ({ session, gallery }) => {
-    console.log('session: ', session);
     return (
         <div style={{ height: '100vh' }}>
             <div className="hero is-dark">
@@ -56,28 +57,6 @@ const PrivatePage = ({ session, gallery }) => {
 PrivatePage.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Private');
 
 export default PrivatePage;
-
-const requirePageAuth = inner => {
-    return async context => {
-        const { session } = context.req.cookies;
-
-        if (!session) {
-            return {
-                redirect: {
-                    destination: '/public',
-                    permanent: false,
-                },
-                props: {},
-            };
-        }
-
-        const sessionData = JSON.parse(session);
-
-        delete sessionData.token;
-
-        return inner ? inner(context, sessionData) : { props: { session: sessionData } };
-    };
-};
 
 export const getServerSideProps = requirePageAuth((context, session) => {
     return {
