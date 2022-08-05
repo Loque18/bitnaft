@@ -11,7 +11,7 @@ const SavingsTable = () => {
     const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
     const initFilter = () => {
         setFilter({
@@ -59,7 +59,7 @@ const SavingsTable = () => {
             .then(response => response.json())
             .then(data => {
                 setAssets(data);
-                setLoading(false);
+                // setLoading(false);
             });
         initFilter();
     }, []);
@@ -146,7 +146,7 @@ const SavingsTable = () => {
                 dataKey="name.common"
                 filters={filter}
                 filterDisplay="menu"
-                loading={loading}
+                // loading={loading}
                 responsiveLayout="scroll"
                 globalFilterFields={['name.common']}
                 header={header}

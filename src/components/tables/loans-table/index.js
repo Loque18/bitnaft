@@ -11,7 +11,7 @@ const LoansTable = () => {
     const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
     const [expandedRows, setExpandedRows] = useState(null);
 
@@ -64,7 +64,7 @@ const LoansTable = () => {
             .then(response => response.json())
             .then(data => {
                 setAssets(data);
-                setLoading(false);
+                // setLoading(false);
             });
         initFilter();
     }, []);
@@ -172,7 +172,7 @@ const LoansTable = () => {
                 dataKey="name.common"
                 filters={filter}
                 filterDisplay="menu"
-                loading={loading}
+                // loading={loading}
                 rowExpansionTemplate={rowExpansionTemplate}
                 responsiveLayout="scroll"
                 globalFilterFields={['name.common']}

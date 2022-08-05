@@ -24,11 +24,11 @@ const DashboardSubPage = props => {
                     Dashboard / {title}
                 </h1>
             </div>
-            <div className="columns is-mobile pt-4">
+            <div className="columns pt-4">
                 <div className="column is-one-fifth">
                     <BalanceDisplayer />
                 </div>
-                <div className="column is-offset-8">{/* <AssetsDistributionPieChart /> */}</div>
+                {/* <div className="column is-offset-8"><AssetsDistributionPieChart /></div> */}
             </div>
             <div className="columns py-4">
                 <div className="column">
