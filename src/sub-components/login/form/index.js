@@ -137,7 +137,7 @@ const Form = () => {
                             '⠀'
                         )}
                         <Link href="/login/resetpassword">
-                            <u>Forgot password ?</u>
+                            <u className="is-clickable">Forgot password ?</u>
                         </Link>
                     </p>
 
