@@ -12,10 +12,6 @@ const AssetsTable = ({ assets }) => {
     // const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-<<<<<<< HEAD
-    // const [loading, setLoading] = useState(true);
-=======
->>>>>>> 2dc3bfb9356db31f79e642cd861bde21907957ba
 
     const initFilter = () => {
         setFilter({
@@ -58,14 +54,6 @@ const AssetsTable = ({ assets }) => {
     };
 
     useEffect(() => {
-<<<<<<< HEAD
-        fetch('https://restcountries.com/v3.1/all')
-            .then(response => response.json())
-            .then(data => {
-                setAssets(data);
-                // setLoading(false);
-            });
-=======
         // fetch('https://restcountries.com/v3.1/all')
         //     .then(response => response.json())
         //     .then(data => {
@@ -73,7 +61,6 @@ const AssetsTable = ({ assets }) => {
         //         // setLoading(false);
         //         console.log(data);
         //     });
->>>>>>> 2dc3bfb9356db31f79e642cd861bde21907957ba
         initFilter();
     }, []);
 
@@ -170,10 +157,6 @@ const AssetsTable = ({ assets }) => {
                 dataKey="name"
                 filters={filter}
                 filterDisplay="menu"
-<<<<<<< HEAD
-                // loading={loading}
-=======
->>>>>>> 2dc3bfb9356db31f79e642cd861bde21907957ba
                 responsiveLayout="scroll"
                 globalFilterFields={['name', 'symbol', 'balance']}
                 header={header}
