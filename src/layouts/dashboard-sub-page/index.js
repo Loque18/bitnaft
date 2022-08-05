@@ -5,7 +5,7 @@ import BalanceDisplayer from 'src/components/internal/balance-displayer';
 import AssetsDistributionPieChart from 'src/components/assets-distribution-pie-chart';
 
 const DashboardSubPage = props => {
-    const { title, table } = props;
+    const { title, children } = props;
     const router = useRouter();
 
     const redirectToDashboard = () => {
@@ -28,7 +28,6 @@ const DashboardSubPage = props => {
                 <div className="column is-one-fifth">
                     <BalanceDisplayer />
                 </div>
-                {/* <div className="column is-offset-8"><AssetsDistributionPieChart /></div> */}
             </div>
             <div className="columns py-4">
                 <div className="column">
@@ -36,10 +35,12 @@ const DashboardSubPage = props => {
                 </div>
             </div>
             <div className="columns">
-                <div className="column">{table}</div>
+                <div className="column">{children}</div>
             </div>
         </section>
     );
 };
+
+export const getLayout = (page, title) => <DashboardSubPage title={title}>{page}</DashboardSubPage>;
 
 export default DashboardSubPage;

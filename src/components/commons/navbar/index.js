@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Image from 'next/image';
@@ -15,10 +16,12 @@ import axios from 'axios';
 const Navbar = () => {
     // app state
     const dispatch = useDispatch();
+    // eslint-disable-next-line no-unused-vars
     const [loLoading, setLoLoading] = useState(false);
-    const [loSuccess, setLoSuccess] = useState(false);
+    // const [loSuccess, setLoSuccess] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [loFailure, setLoFailure] = useState(false);
-    const [loErrorMessage, setLoErrorMessage] = useState('');
+    // const [loErrorMessage, setLoErrorMessage] = useState('');
 
     //  local state
     const [mobileActive, setMobileActive] = useState(false);

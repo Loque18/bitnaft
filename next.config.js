@@ -1,7 +1,7 @@
 module.exports = {
     reactStrictMode: false,
     images: {
-        domains: ['bitcoin.org', 'img.freepik.com', 'flagcdn.com', 'chart.googleapis.com'],
+        domains: ['bitcoin.org', 'img.freepik.com', 'flagcdn.com', 'chart.googleapis.com', 's2.coinmarketcap.com'],
     },
     // i18n: {
     //     locales: ['en'],
@@ -9,7 +9,7 @@ module.exports = {
     // },
     env: {
         FONT_AWESOME_KEY: '8d70729523',
-        ENDPOINT: 'https://orcanialabs.com',
+        ENDPOINT: 'http://193.176.87.163:8080',
         KEY_HEX: '20b5f8969c326141a12dd954076091ae6b8ea5843cf6154b443fa367035ae37c',
         IV_HEX: '9e8c8cc70430a6939fb30914e32caebb',
     },

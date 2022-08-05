@@ -28,6 +28,7 @@ const useFetch = (type, resourceMethod, options) => {
             }
         };
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return { loading, success, failure, response, error };

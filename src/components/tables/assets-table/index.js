@@ -8,16 +8,19 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
-const AssetsTable = () => {
-    const [assets, setAssets] = useState([]);
+const AssetsTable = ({ assets }) => {
+    // const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
+<<<<<<< HEAD
     // const [loading, setLoading] = useState(true);
+=======
+>>>>>>> 2dc3bfb9356db31f79e642cd861bde21907957ba
 
     const initFilter = () => {
         setFilter({
             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-            'name.common': {
+            name: {
                 operator: FilterOperator.AND,
                 constraints: [
                     {
@@ -26,8 +29,7 @@ const AssetsTable = () => {
                     },
                 ],
             },
-
-            'name.cca3': {
+            symbol: {
                 operator: FilterOperator.AND,
                 constraints: [
                     {
@@ -56,12 +58,22 @@ const AssetsTable = () => {
     };
 
     useEffect(() => {
+<<<<<<< HEAD
         fetch('https://restcountries.com/v3.1/all')
             .then(response => response.json())
             .then(data => {
                 setAssets(data);
                 // setLoading(false);
             });
+=======
+        // fetch('https://restcountries.com/v3.1/all')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // setAssets(data);
+        //         // setLoading(false);
+        //         console.log(data);
+        //     });
+>>>>>>> 2dc3bfb9356db31f79e642cd861bde21907957ba
         initFilter();
     }, []);
 
@@ -98,19 +110,17 @@ const AssetsTable = () => {
             <div className="media is-flex is-align-items-center">
                 <div className="media-left">
                     <figure className="image is-48x48">
-                        <Image className="is-rounded shadowed-logo" src={rowData.flags.png} layout="fill" alt="" />
+                        <Image className="is-rounded shadowed-logo" src={rowData.icon} layout="fill" alt="" />
                     </figure>
                 </div>
                 <div className="media-content is-clipped">
                     <div className="columns">
                         <div className="column is-3 is-flex is-flex-direction-flex-start is-align-items-center">
-                            <p className="title has-text-md-black is-size-6 has-text-weight-medium">
-                                {rowData.name.common}
-                            </p>
+                            <p className="title has-text-md-black is-size-6 has-text-weight-medium">{rowData.name}</p>
                         </div>
                         <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
                             <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-roboto">
-                                {rowData.cca3}
+                                {rowData.symbol}
                             </p>
                         </div>
                     </div>
@@ -121,9 +131,7 @@ const AssetsTable = () => {
 
     const balanceBodyTemplate = rowData => {
         return (
-            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {rowData.population}
-            </p>
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.balance}</p>
         );
     };
 
@@ -158,20 +166,23 @@ const AssetsTable = () => {
                 className="p-datatable-customers"
                 removableSort
                 sortMode="multiple"
-                rows={10}
-                dataKey="name.common"
+                rows={8}
+                dataKey="name"
                 filters={filter}
                 filterDisplay="menu"
+<<<<<<< HEAD
                 // loading={loading}
+=======
+>>>>>>> 2dc3bfb9356db31f79e642cd861bde21907957ba
                 responsiveLayout="scroll"
-                globalFilterFields={['name.common', 'name.cca3', 'name.population']}
+                globalFilterFields={['name', 'symbol', 'balance']}
                 header={header}
                 emptyMessage="No assets available."
             >
                 <Column
-                    sortable
-                    field="name.common"
+                    field="name"
                     header="Assets"
+                    sortable
                     filter
                     filterPlaceholder="Search by assets"
                     body={assetsNameTemplate}
@@ -179,7 +190,7 @@ const AssetsTable = () => {
                 />
                 <Column
                     sortable
-                    field="population"
+                    field="balance"
                     header="Balance"
                     body={balanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
