@@ -2,7 +2,7 @@
 import { UPDATE_SESSION, CLEAR_SESSION } from '../constants';
 
 const defaultState = {
-    session: null,
+    session: {},
 };
 
 const reducer = (state = defaultState, action) => {

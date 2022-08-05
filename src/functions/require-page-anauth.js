@@ -1,6 +1,8 @@
+const { SESSION_KEY } = process.env;
+
 const requirePageAunauth = inner => {
     return async context => {
-        const { session } = context.req.cookies;
+        const session = context.req.cookies[SESSION_KEY];
 
         if (session) {
             return {

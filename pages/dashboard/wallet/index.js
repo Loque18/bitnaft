@@ -8,10 +8,6 @@ import requirePageAuth from 'src/functions/require-page-auth';
 
 import api from 'src/api';
 
-// const WalletPage = ({ balances }) => {
-//     return <DashboardSubPage title="Wallet" table={<AssetsTable />} assets={balances} />;
-// };
-
 const WalletPage = ({ balances }) => {
     return <AssetsTable assets={balances} />;
 };
@@ -36,7 +32,7 @@ export const getServerSideProps = requirePageAuth(async (context, session) => {
         return {
             props: { errorMessage: err.message },
             redirect: {
-                destination: '/login',
+                destination: '/sessionexpired',
                 permanent: false,
             },
         };

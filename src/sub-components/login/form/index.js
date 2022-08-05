@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -23,6 +23,7 @@ const Form = () => {
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [success, setSuccess] = useState(false);
     const [failure, setFailure] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -46,9 +47,9 @@ const Form = () => {
 
             try {
                 const res = await axios({ method: 'post', url: '/api/auth/login', data: { email, password } });
-
                 if (res.data.status === 'success') {
                     setSuccess(true);
+                    router.push('/dashboard');
                     dispatch(update_session({ session: res.data.data }));
                 } else {
                     throw new Error(res.data.data.message);
@@ -68,11 +69,11 @@ const Form = () => {
         setPasswordVisible(!passwordVisible);
     };
 
-    useEffect(() => {
-        if (success) {
-            router.push('/dashboard');
-        }
-    }, [router, success]);
+    // useEffect(() => {
+    //     if (success) {
+    //         // router.push('/dashboard');
+    //     }
+    // }, [router, success]);
 
     return (
         <form onSubmit={formik.handleSubmit}>
