@@ -15,10 +15,11 @@ const requirePageAuth = inner => {
         }
 
         const sessionData = JSON.parse(decrypt(session));
+        const sessionWithToken = { ...sessionData };
 
         delete sessionData.token;
 
-        return inner ? inner(context, sessionData) : { props: { session: sessionData } };
+        return inner ? inner(context, sessionWithToken) : { props: { session: sessionData } };
     };
 };
 
