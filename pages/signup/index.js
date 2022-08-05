@@ -5,6 +5,8 @@ import { getLayout as usePageTitleLayout } from 'src/layouts/page-title';
 
 import SignupForm from 'src/sub-components/signup/form';
 
+import requirePageAunauth from 'src/functions/require-page-anauth';
+
 import styles from 'src/scss/common_modules/box.module.scss';
 
 const { box_container, box_column } = styles;
@@ -50,20 +52,4 @@ SignUpPage.usePageTitleLayout = page => usePageTitleLayout('Sign Up', page);
 
 export default SignUpPage;
 
-export const getServerSideProps = async ctx => {
-    const { session } = ctx.req.cookies;
-
-    if (session) {
-        return {
-            redirect: {
-                destination: '/dashboard',
-                permanent: false,
-            },
-            props: {},
-        };
-    }
-
-    return {
-        props: {},
-    };
-};
+export const getServerSideProps = requirePageAunauth();

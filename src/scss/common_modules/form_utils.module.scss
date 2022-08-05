@@ -26,4 +26,9 @@
             transform: translate(-50%, -50%);
         }
     }
+
+    &::-ms-reveal,
+    &::-ms-clear {
+        display: none;
+    }
 }

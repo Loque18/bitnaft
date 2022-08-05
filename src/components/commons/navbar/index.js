@@ -4,21 +4,29 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { log_out_request } from 'src/redux/actions';
+import { toast } from 'react-toastify';
 
-const Navbar = props => {
+import { clear_session } from 'src/redux/actions';
+import useSession from 'src/hooks/useSession';
+import axios from 'axios';
+
+const Navbar = () => {
     // app state
     const dispatch = useDispatch();
-
-    const { session } = props;
+    const [loLoading, setLoLoading] = useState(false);
+    const [loSuccess, setLoSuccess] = useState(false);
+    const [loFailure, setLoFailure] = useState(false);
+    const [loErrorMessage, setLoErrorMessage] = useState('');
 
     //  local state
     const [mobileActive, setMobileActive] = useState(false);
     const [burgerActive, setBurgerActive] = useState(false);
     const [scrolledBgColor, setScrolledBgColor] = useState(false);
     const [scrollingDown, setScrollingDown] = useState(false);
+
+    const { isLoggedIn, user } = useSession();
 
     //  router
     const router = useRouter();
@@ -34,8 +42,23 @@ const Navbar = props => {
         handleHamburgerClick();
     };
 
-    const handleLogoutClick = () => {
-        dispatch(log_out_request());
+    const handleLogoutClick = async () => {
+        setLoLoading(true);
+
+        try {
+            const res = await axios('/api/auth/logout', { method: 'post' });
+
+            if (res.data.status === 'success') {
+                router.replace('/home');
+                dispatch(clear_session());
+            } else throw new Error(res.data.data.message);
+        } catch (err) {
+            setLoFailure(true);
+
+            toast.error(err.message);
+        }
+
+        setLoLoading(false);
     };
 
     useEffect(() => {
@@ -124,7 +147,7 @@ const Navbar = props => {
                             </a>
                         </Link>
                     </div>
-                    {session && session.isLoggedIn ? (
+                    {isLoggedIn ? (
                         <div className="navbar-end">
                             <div className="navbar-item has-dropdown is-hoverable">
                                 <div className="navbar-link has-font-roboto has-text-md-black">
@@ -133,42 +156,32 @@ const Navbar = props => {
                                         alt="user"
                                         width={64}
                                         height={64}
-                                        className="is-rounded"
+                                        className="is-rounded "
                                     />
-                                    <span className="has-text-md-black has-font-roboto">{session.user.email}</span>
+                                    &nbsp;&nbsp;
+                                    <span className="has-text-md-black has-font-roboto">{user.email}</span>
                                 </div>
                                 <div className="navbar-dropdown">
                                     <div className="navbar-item">Overview</div>
                                     <a href="profile/settings" className="navbar-item">
                                         User Settings
                                     </a>
-                                    <Link href="/home">
-                                        <a href="/replace" className="navbar-item" onClick={handleLogoutClick}>
-                                            Log out
-                                        </a>
-                                    </Link>
+
+                                    <a className="navbar-item" onClick={handleLogoutClick}>
+                                        Log out
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     ) : (
                         <div className="navbar-end">
                             <Link href="/login">
-                                <a
-                                    href="/replace"
-                                    className="navbar-item is-size-6 has-font-roboto "
-                                    role="button"
-                                    tabIndex={0}
-                                >
+                                <a className="navbar-item is-size-6 has-font-roboto " role="button" tabIndex={0}>
                                     Login
                                 </a>
                             </Link>
                             <Link href="/signup">
-                                <a
-                                    href="/replace"
-                                    className="navbar-item is-size-6 has-font-roboto "
-                                    role="button"
-                                    tabIndex={0}
-                                >
+                                <a className="navbar-item is-size-6 has-font-roboto " role="button" tabIndex={0}>
                                     Signup
                                 </a>
                             </Link>

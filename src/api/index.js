@@ -10,6 +10,14 @@ const api = {
                 url: `https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${userAddress}&choe=UTF-8`,
             });
         },
+
+        balances: ({ email, token }) => {
+            const params = `?email=${email}&sessionToken=${token}`;
+            return axios({
+                method: 'get',
+                url: `${endpoint}/balances/${params}`,
+            });
+        },
     },
     post: {
         signup: ({ email, password }) => {

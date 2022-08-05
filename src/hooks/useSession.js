@@ -13,7 +13,6 @@ const useSession = () => {
     delete sessionData.token;
 
     return {
-        isLoggedIn: true,
         ...sessionData,
     };
 };
