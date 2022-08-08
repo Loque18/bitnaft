@@ -158,7 +158,7 @@ const AssetsTable = ({ assets }) => {
                 filters={filter}
                 filterDisplay="menu"
                 responsiveLayout="scroll"
-                globalFilterFields={['name', 'symbol', 'balance']}
+                globalFilterFields={['name', 'symbol']}
                 header={header}
                 emptyMessage="No assets available."
             >

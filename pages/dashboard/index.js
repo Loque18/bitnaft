@@ -16,7 +16,6 @@ const Dashboard = ({ session }) => {
     const dispatch = useDispatch();
 
     const { user } = session;
-    console.log('🚀 ~ file: index.js ~ line 19 ~ Dashboard ~ session', session);
 
     const handleCoinManagerModal = () => {
         dispatch(
