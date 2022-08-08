@@ -1,0 +1,72 @@
+[33m62140e8[m[33m ([m[1;36mHEAD -> [m[1;32munverified[m[33m)[m fix: fixed merge issues
+[33m1985ad6[m feat: added withdraw page link
+[33me148211[m[33m ([m[1;31morigin/unverified[m[33m)[m feat: integrated backend into dashboard/savings page
+[33m650ebb6[m feat: finished loans table layout
+[33m5eba22a[m Merge branch 'unverified' of https://github.com/Orcania/bitnaft into unverified
+[33m21606e6[m feat: redirect user when session expires
+[33m8f81a4b[m styles: made forgot password clickable
+[33meb8499f[m fix: fixed merge issues
+[33m3213c05[m fix: resolved merge issues
+[33m2dc3bfb[m feat: integrated backend in dashboard/wallet page
+[33m9c1c421[m Merge branch 'unverified' of https://github.com/Orcania/bitnaft into unverified
+[33m6e9d5e4[m feat: removed loading from tables
+[33m5121c9f[m styles: changed tabs look
+[33m8d1b32d[m fix: fixed login issues
+[33mce54751[m fix: fixed active tab border bottom issue
+[33m62b8467[m feat: added recovery sessions constants
+[33mbeb51aa[m fix: fixed merge issues
+[33m144937e[m feat: encrypted cookie for user safety
+[33m7dc6af7[m Merge branch 'unverified' of https://github.com/Orcania/bitnaft into unverified
+[33m9092aaa[m feat: added private routes, public routes and improved login system
+[33m730720a[m feat: added tabs and layout pages for wallet savings and loans
+[33m6a49764[m feat: changed the way session is handled
+[33m276d6d8[m feat: added reducer functionality to balance displayer
+[33m5cb0196[m feat: added balance displayer component
+[33mbac8057[m feat: added balance displayer component
+[33m9911fb2[m feat: added loan card
+[33m38e0ce9[m added qr generator modal
+[33m46f22e4[m feat: added asset manager modal
+[33m6434485[m Merge branch 'unverified' of https://github.com/Orcania/bitnaft into unverified
+[33me854a76[m feat: added card layout
+[33m7840d30[m fix: fixed issue with cookies
+[33me0f75cf[m feat: added recover password panel
+[33m168cda0[m feat: fixed merge issues
+[33me892972[m feat: added more tables
+[33m6aed34d[m fix: fixed eslint issues
+[33m05282c3[m feat: handled errors for login page
+[33m415a1d6[m feat: added fetch reducer
+[33m478e344[m refactor: added react tostify and refactored login panel
+[33m7085203[m fix: fixed eslint issues
+[33m473d7e9[m Merge branch 'unverified' of https://github.com/Orcania/bitnaft into unverified
+[33m750ee4d[m fix: fixed shadows and input search for table
+[33m5e7d3a4[m feat: added login feature
+[33m791ff10[m feat: added session reducer
+[33me473333[m feat: added login page
+[33m79ecf56[m fix: fixed merge issues
+[33mc9dfde3[m chore: added eslintignore file
+[33m94d5fae[m perf: added subcomponents folder and removed duplicated scss code, added favicon
+[33m88788b3[m fix: fixed merge issues
+[33mcbb3d01[m feat: finished savings table desktop version
+[33md8aad4d[m fix: fixed middleware bug
+[33mc67d220[m fix: fixed eslint issues
+[33medf73fe[m feat: added verify email feature
+[33me804870[m feat: added verify email page
+[33md3c8f17[m Merge branch 'unverified' of https://github.com/Orcania/bitnaft into unverified
+[33m3cfcc0a[m feat: added resend verification email page
+[33m673889c[m feat: added primereact package for tables
+[33m9509159[m feat: redirected main page from home to dashboard
+[33mffd59bf[m fix: fixed merge issues
+[33m5bb0af9[m feat: finished assests card component
+[33m20e453b[m refactor: last 404 details
+[33m40e9ec9[m feat: added 404 page
+[33m0d34ba7[m style: added responsiveness to the signup form
+[33m93391ca[m feat: added sign up page
+[33m5244a80[m fix: colors wasn't being generating
+[33mafcddd6[m style: added material tokens as scss variables
+[33m7f1d1e4[m feat: added footer page and redirect main page from home to dashboard
+[33mea45a54[m feat: added navbar layout
+[33m64f75ed[m feat: added colors
+[33mc8c5c1e[m feat: added fonts
+[33mcdab515[m chore: updated arch diagram
+[33m44060c6[m feat: added arch diagram part1
+[33m35e3403[m Initial commit

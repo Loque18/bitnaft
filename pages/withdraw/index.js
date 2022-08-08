@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { getLayout as getMainLayout } from 'src/layouts/main';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
@@ -7,9 +8,9 @@ import { useRouter } from 'next/router';
 import { open_modal } from 'src/redux/actions';
 import modals from 'src/static/app.modals';
 
-import styles from './styles.module.scss';
+// import styles from './styles.module.scss';
 
-const { selectTokenButton } = styles;
+// const { selectTokenButton } = styles;
 
 const WithdrawPage = () => {
     const router = useRouter();
