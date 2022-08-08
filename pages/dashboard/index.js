@@ -16,6 +16,7 @@ const Dashboard = ({ session }) => {
     const dispatch = useDispatch();
 
     const { user } = session;
+    console.log('🚀 ~ file: index.js ~ line 19 ~ Dashboard ~ session', session);
 
     const handleCoinManagerModal = () => {
         dispatch(
@@ -37,7 +38,7 @@ const Dashboard = ({ session }) => {
         <section className="section">
             <div className="container">
                 <h1 className="subtitle is-size-3 has-text-md-source-primary has-font-roboto-medium">
-                    Welcome back, {user.email} !
+                    {/* Welcome back, {user.email} ! */}
                 </h1>
                 <div className="columns">
                     <div className="column">

@@ -4,7 +4,7 @@ import { getLayout as getMainLayout } from 'src/layouts/main';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
 const LoansPage = () => {
-    return <DashboardSubPage title="Loans" table={<LoansTable />} />;
+    return <DashboardSubPage title="Loans" children={<LoansTable />} />;
 };
 
 LoansPage.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Loans');

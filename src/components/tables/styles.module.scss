@@ -1,0 +1,16 @@
+@import 'src/scss/_variables.scss';
+@import 'src/scss/vars.scss';
+
+#green_circle{
+    width: 0.6rem;
+    height: 0.6rem;
+    background: $hgreen;
+    border-radius: 50%;
+}
+
+#red_circle{
+    width: 0.6rem;
+    height: 0.6rem;
+    background: $md-ref-error-40;
+    border-radius: 50%;
+}
