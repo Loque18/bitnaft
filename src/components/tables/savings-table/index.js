@@ -7,8 +7,8 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
-const SavingsTable = () => {
-    const [assets, setAssets] = useState([]);
+const SavingsTable = ({ assets }) => {
+    // const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     // const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ const SavingsTable = () => {
     const initFilter = () => {
         setFilter({
             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-            'name.common': {
+            name: {
                 operator: FilterOperator.AND,
                 constraints: [
                     {
@@ -26,7 +26,7 @@ const SavingsTable = () => {
                 ],
             },
 
-            'name.cca3': {
+            symbol: {
                 operator: FilterOperator.AND,
                 constraints: [
                     {
@@ -55,12 +55,12 @@ const SavingsTable = () => {
     };
 
     useEffect(() => {
-        fetch('https://restcountries.com/v3.1/all')
-            .then(response => response.json())
-            .then(data => {
-                setAssets(data);
-                // setLoading(false);
-            });
+        // fetch('https://restcountries.com/v3.1/all')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         setAssets(data);
+        //         // setLoading(false);
+        //     });
         initFilter();
     }, []);
 
@@ -97,19 +97,17 @@ const SavingsTable = () => {
             <div className="media is-flex is-align-items-center">
                 <div className="media-left">
                     <figure className="image is-48x48">
-                        <Image className="is-rounded shadowed-logo" src={rowData.flags.png} layout="fill" alt="" />
+                        <Image className="is-rounded shadowed-logo" src={rowData.icon} layout="fill" alt="" />
                     </figure>
                 </div>
                 <div className="media-content is-clipped">
                     <div className="columns">
                         <div className="column is-3 is-flex is-flex-direction-flex-start is-align-items-center">
-                            <p className="title has-text-md-black is-size-6 has-text-weight-medium">
-                                {rowData.name.common}
-                            </p>
+                            <p className="title has-text-md-black is-size-6 has-text-weight-medium">{rowData.name}</p>
                         </div>
                         <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
                             <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-roboto">
-                                {rowData.cca3}
+                                {rowData.symbol}
                             </p>
                         </div>
                     </div>
@@ -121,14 +119,14 @@ const SavingsTable = () => {
     const balanceBodyTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {rowData.population}
+                {rowData.savingsBalance}
             </p>
         );
     };
 
     const apyBodyTemplate = rowData => {
         return (
-            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.area} %</p>
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.apr} %</p>
         );
     };
 
@@ -143,18 +141,18 @@ const SavingsTable = () => {
                 removableSort
                 rows={10}
                 sortMode="multiple"
-                dataKey="name.common"
+                dataKey="name"
                 filters={filter}
                 filterDisplay="menu"
                 // loading={loading}
                 responsiveLayout="scroll"
-                globalFilterFields={['name.common']}
+                globalFilterFields={['name', 'symbol']}
                 header={header}
                 emptyMessage="No assets available."
             >
                 <Column
                     sortable
-                    field="name.common"
+                    field="name"
                     header="Assets"
                     filter
                     filterPlaceholder="Search by assets"
@@ -163,7 +161,7 @@ const SavingsTable = () => {
                 />
                 <Column
                     sortable
-                    field="population"
+                    field="sacvingsBalance"
                     header="Balance"
                     body={balanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}

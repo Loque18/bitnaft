@@ -18,6 +18,13 @@ const api = {
                 url: `${endpoint}/balances/${params}`,
             });
         },
+        savingsBalances: ({ email, token }) => {
+            const params = `?email=${email}&sessionToken=${token}`;
+            return axios({
+                method: 'get',
+                url: `${endpoint}/savingsBalances/${params}`,
+            });
+        },
     },
     post: {
         signup: ({ email, password }) => {
