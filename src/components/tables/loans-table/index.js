@@ -148,7 +148,10 @@ const LoansTable = () => {
                                         </p>
                                         <div className="columns mt-0">
                                             <div className="column">
-                                                <p className="has-text-md-black has-font-pt-mono is-size-7 has-text-weight-bold">
+                                                <p
+                                                    className="has-font-pt-mono is-size-7 has-text-weight-bold"
+                                                    style={{ color: '#FF6E3A' }}
+                                                >
                                                     {formatDate(1695642037)}
                                                 </p>
                                             </div>
