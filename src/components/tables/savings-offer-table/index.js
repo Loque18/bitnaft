@@ -1,17 +1,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
-const SavingsTable = ({ assets }) => {
-    // const [assets, setAssets] = useState([]);
+const SavingsOfferTable = () => {
+    const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-    // const [loading, setLoading] = useState(true);
 
     const initFilter = () => {
         setFilter({
@@ -25,7 +24,6 @@ const SavingsTable = ({ assets }) => {
                     },
                 ],
             },
-
             symbol: {
                 operator: FilterOperator.AND,
                 constraints: [
@@ -53,15 +51,12 @@ const SavingsTable = ({ assets }) => {
         setFilter(newFilter);
         setGlobalFilterValue(value);
     };
-
     useEffect(() => {
-        // fetch('https://restcountries.com/v3.1/all')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         setAssets(data);
-        //         // setLoading(false);
-        //     });
-        initFilter();
+        fetch('https://restcountries.com/v3.1/all')
+            .then(response => response.json())
+            .then(data => {
+                setAssets(data);
+            }, []);
     }, []);
 
     const renderHeader = () => {
@@ -92,25 +87,18 @@ const SavingsTable = ({ assets }) => {
         );
     };
 
-    const assetsNameTemplate = rowData => {
+    const coinNameTemplate = rowData => {
         return (
             <div className="media is-flex is-align-items-center">
                 <div className="media-left">
                     <figure className="image is-48x48">
-                        <Image className="is-rounded shadowed-logo" src={rowData.icon} layout="fill" alt="" />
+                        <Image className="is-rounded shadowed-logo" src={rowData.flags.png} layout="fill" alt="" />
                     </figure>
                 </div>
                 <div className="media-content is-clipped">
-                    <div className="columns">
-                        <div className="column is-3 is-flex is-flex-direction-flex-start is-align-items-center">
-                            <p className="title has-text-md-black is-size-6 has-text-weight-medium">
-                                {rowData.name.common}
-                            </p>
-                        </div>
-                        <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
-                            <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-roboto">
-                                {rowData.symbol}
-                            </p>
+                    <div className="columns is-mobile">
+                        <div className="column is-3-desktop is-6-mobile is-flex is-flex-direction-flex-start is-align-items-center">
+                            <p className="title has-text-md-black is-size-6 has-text-weight-medium">{rowData.cca3}</p>
                         </div>
                     </div>
                 </div>
@@ -118,17 +106,21 @@ const SavingsTable = ({ assets }) => {
         );
     };
 
-    const balanceBodyTemplate = rowData => {
+    const aprBodyTemplate = rowData => {
+        return <p className="is-size-6 has-text-hgreen has-text-weight-semi-bold has-font-pt-mono">{rowData.area} %</p>;
+    };
+
+    const durationBodyTemplate = rowData => {
         return (
-            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {rowData.savingsBalance}
-            </p>
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-roboto">{rowData.capital}</p>
         );
     };
 
-    const apyBodyTemplate = rowData => {
+    const actionsBodyTemplate = () => {
         return (
-            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.apr} %</p>
+            <button type="button" className="button has-bg-md-source-primary-o-2 has-text-md-source-primary">
+                Subscribe
+            </button>
         );
     };
 
@@ -141,36 +133,36 @@ const SavingsTable = ({ assets }) => {
                 paginator
                 className="p-datatable-customers"
                 removableSort
-                rows={10}
                 sortMode="multiple"
+                rows={8}
                 dataKey="name"
                 filters={filter}
                 filterDisplay="menu"
-                // loading={loading}
                 responsiveLayout="scroll"
                 globalFilterFields={['name', 'symbol']}
                 header={header}
                 emptyMessage="No assets available."
             >
                 <Column
+                    field="cca3"
+                    header="Coins"
                     sortable
-                    field="name"
-                    header="Assets"
                     filter
                     filterPlaceholder="Search by assets"
-                    body={assetsNameTemplate}
-                    className="min-w-250"
-                />
-                <Column
-                    sortable
-                    field="sacvingsBalance"
-                    header="Balance"
-                    body={balanceBodyTemplate}
+                    body={coinNameTemplate}
                     style={{ verticalAlign: 'middle' }}
                 />
-                <Column sortable field="area" header="APY" body={apyBodyTemplate} style={{ verticalAlign: 'middle' }} />
+                <Column field="area" header="APR" sortable body={aprBodyTemplate} style={{ verticalAlign: 'middle' }} />
+                <Column
+                    field="capital"
+                    header="Duration"
+                    body={durationBodyTemplate}
+                    style={{ verticalAlign: 'middle' }}
+                />
+                <Column body={actionsBodyTemplate} style={{ verticalAlign: 'middle' }} />
             </DataTable>
         </div>
     );
 };
-export default SavingsTable;
+
+export default SavingsOfferTable;

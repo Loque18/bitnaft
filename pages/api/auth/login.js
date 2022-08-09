@@ -12,7 +12,7 @@ export default async function login(req, res) {
         const response = await api.post.login({ email, password });
 
         if (response.data.success) {
-            const maxAge = 60 * 5;
+            const maxAge = 60 * 60;
             const { token } = response.data;
             const session = { user: { email }, token, isLoggedIn: true };
             const encryptedSession = encrypt(JSON.stringify(session));
