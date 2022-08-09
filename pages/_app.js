@@ -2,9 +2,13 @@
 import Head from 'next/head';
 // import dynamic from 'next/dynamic';
 import Script from 'next/script';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import { Provider } from 'react-redux';
 
 import { ToastContainer } from 'react-toastify';
+
+import Loading from 'src/components/commons/loading';
 
 import CoinManagerModal from 'src/components/modals/coin-manager-modal';
 import QRCodeGeneratorModal from 'src/components/modals/qr-code-generator-modal';
@@ -22,6 +26,41 @@ const { appName } = appConfig;
 
 function MyApp({ Component, pageProps }) {
     const getLayout = Component.getLayout || (page => page);
+
+    const [state, setState] = useState({
+        isRouteChanging: false,
+        loadingKey: 0,
+    });
+
+    const router = useRouter();
+
+    useEffect(() => {
+        const handleRouteChangeStart = () => {
+            setState(prevState => ({
+                ...prevState,
+                isRouteChanging: true,
+                loadingKey: prevState.loadingKey ^ 1,
+            }));
+        };
+
+        const handleRouteChangeEnd = () => {
+            setState(prevState => ({
+                ...prevState,
+                isRouteChanging: false,
+            }));
+        };
+
+        router.events.on('routeChangeStart', handleRouteChangeStart);
+        router.events.on('routeChangeComplete', handleRouteChangeEnd);
+        router.events.on('routeChangeError', handleRouteChangeEnd);
+
+        return () => {
+            router.events.off('routeChangeStart', handleRouteChangeStart);
+            router.events.off('routeChangeComplete', handleRouteChangeEnd);
+            router.events.off('routeChangeError', handleRouteChangeEnd);
+        };
+    }, [router.events]);
+
     return (
         <>
             <Head>
@@ -30,6 +69,8 @@ function MyApp({ Component, pageProps }) {
             </Head>
 
             <ToastContainer />
+
+            <Loading isRouteChanging={state.isRouteChanging} key={state.loadingKey} />
 
             <Provider store={store}>
                 <Script src={`https://kit.fontawesome.com/${FONT_AWESOME_KEY}.js`} />

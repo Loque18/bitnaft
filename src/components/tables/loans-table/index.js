@@ -7,8 +7,9 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
-const LoansTable = () => {
-    const [assets, setAssets] = useState([]);
+const LoansTable = ({ assets }) => {
+    // const [assets, setAssets] = useState([]);
+
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     // const [loading, setLoading] = useState(true);
@@ -20,25 +21,25 @@ const LoansTable = () => {
     const initFilter = () => {
         setFilter({
             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-            'name.common': {
-                operator: FilterOperator.AND,
-                constraints: [
-                    {
-                        value: null,
-                        matchMode: FilterMatchMode.STARTS_WITH,
-                    },
-                ],
-            },
+            // 'name.common': {
+            //     operator: FilterOperator.AND,
+            //     constraints: [
+            //         {
+            //             value: null,
+            //             matchMode: FilterMatchMode.STARTS_WITH,
+            //         },
+            //     ],
+            // },
 
-            'name.cca3': {
-                operator: FilterOperator.AND,
-                constraints: [
-                    {
-                        value: null,
-                        matchMode: FilterMatchMode.STARTS_WITH,
-                    },
-                ],
-            },
+            // 'name.cca3': {
+            //     operator: FilterOperator.AND,
+            //     constraints: [
+            //         {
+            //             value: null,
+            //             matchMode: FilterMatchMode.STARTS_WITH,
+            //         },
+            //     ],
+            // },
         });
         setGlobalFilterValue('');
     };
@@ -60,12 +61,12 @@ const LoansTable = () => {
 
     useEffect(() => {
         isMounted.current = true;
-        fetch('https://restcountries.com/v3.1/all')
-            .then(response => response.json())
-            .then(data => {
-                setAssets(data);
-                // setLoading(false);
-            });
+        // fetch('https://restcountries.com/v3.1/all')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         setAssets(data);
+        //         // setLoading(false);
+        //     });
         initFilter();
     }, []);
 
@@ -119,22 +120,22 @@ const LoansTable = () => {
             <div className="media is-flex is-align-items-center">
                 <div className="media-left">
                     <figure className="image is-24x24">
-                        <Image className="is-rounded shadowed-logo" src={rowData.flags.png} layout="fill" alt="" />
+                        <Image className="is-rounded shadowed-logo" src={rowData.collateralIcon} layout="fill" alt="" />
                     </figure>
                     <figure className="image is-24x24">
-                        <Image className="is-rounded shadowed-logo" src={rowData.flags.png} layout="fill" alt="" />
+                        <Image className="is-rounded shadowed-logo" src={rowData.borrowIcon} layout="fill" alt="" />
                     </figure>
                 </div>
                 <div className="media-content is-clipped">
                     <div className="columns">
                         <div className="column is-3 is-flex is-flex-direction-flex-start is-align-items-center">
                             <p className="title has-text-md-black is-size-6 has-text-weight-medium">
-                                {rowData.name.common}
+                                {rowData.collateralName}
                             </p>
                         </div>
                         <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
                             <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-roboto">
-                                {rowData.cca3}
+                                {rowData.collateralSymbol}
                             </p>
                         </div>
                     </div>
@@ -145,13 +146,17 @@ const LoansTable = () => {
     const loanAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {rowData.population}
+                {rowData.borrowAmount}
             </p>
         );
     };
 
     const collateralAmountTemplate = rowData => {
-        return <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.area}</p>;
+        return (
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
+                {rowData.borrowInterest}
+            </p>
+        );
     };
 
     const header = renderHeader();
