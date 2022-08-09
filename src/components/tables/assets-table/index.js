@@ -102,7 +102,7 @@ const AssetsTable = ({ assets }) => {
                 </div>
                 <div className="media-content is-clipped">
                     <div className="columns is-mobile">
-                        <div className="column is-3-desktop is-6-mobile is-flex is-flex-direction-flex-start is-align-items-center">
+                        <div className="column is-4-desktop is-6-mobile is-flex is-flex-direction-flex-start is-align-items-center">
                             <p className="title has-text-md-black is-size-6 has-text-weight-medium">{rowData.name}</p>
                         </div>
                         <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
@@ -119,6 +119,12 @@ const AssetsTable = ({ assets }) => {
     const balanceBodyTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.balance}</p>
+        );
+    };
+
+    const usdBalanceBodyTemplate = rowData => {
+        return (
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.usdValue}</p>
         );
     };
 
@@ -176,6 +182,13 @@ const AssetsTable = ({ assets }) => {
                     field="balance"
                     header="Balance"
                     body={balanceBodyTemplate}
+                    style={{ verticalAlign: 'middle' }}
+                />
+                <Column
+                    sortable
+                    field="usdValue"
+                    header="USD Value"
+                    body={usdBalanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
                 />
                 <Column
