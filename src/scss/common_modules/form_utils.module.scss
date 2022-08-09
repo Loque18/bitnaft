@@ -27,3 +27,10 @@
         }
     }
 }
+
+.input_reset {
+    &::-ms-reveal,
+    &::-ms-clear {
+        display: none;
+    }
+}

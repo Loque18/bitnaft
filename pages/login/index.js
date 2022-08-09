@@ -5,6 +5,8 @@ import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
 import LoginForm from 'src/sub-components/login/form';
 
+import requirePageAunauth from 'src/functions/require-page-anauth';
+
 import styles from 'src/scss/common_modules/box.module.scss';
 import localStyles from './login.module.scss';
 
@@ -75,3 +77,5 @@ const LoginPage = () => {
 LoginPage.getLayout = page => getPageTitleLayout(page, 'Login');
 
 export default LoginPage;
+
+export const getServerSideProps = requirePageAunauth();

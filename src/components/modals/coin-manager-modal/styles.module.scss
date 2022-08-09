@@ -1,0 +1,41 @@
+@import 'src/scss/_variables';
+
+.outter_box {
+    padding: 3px !important;
+}
+
+.list {
+    max-height: 244px;
+    min-height: 244px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.assets_list {
+    max-height: 244px;
+    min-height: 244px;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    li {
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba($md-ref-neutral-60, 0.5);
+        }
+
+        border-radius: 10px;
+    }
+}
+
+
+.sbutton {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+

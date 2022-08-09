@@ -6,14 +6,16 @@ import rootSaga from './sagas';
 
 import modalReducer from './reducers/modalReducer';
 import sessionReducer from './reducers/sessionReducer';
-import dataReducer from './reducers/dataReducer';
+import balanceDisplayerReducer from './reducers/balanceDisplayerReducer';
+import httpReducer from './reducers/httpReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const reducer = combineReducers({
     modalReducer,
     sessionReducer,
-    dataReducer,
+    httpReducer,
+    balanceDisplayerReducer,
 });
 
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));

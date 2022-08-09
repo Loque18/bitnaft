@@ -5,6 +5,7 @@
 @import './customs';
 @import './scroll-helper';
 @import './size-helper';
+@import './table-helper';
 @import './user-select-helper';
 @import './globals.scss';
 @import './button-helper';
@@ -32,4 +33,13 @@ body {
 #__next {
     height: 100%;
     position: relative;
+}
+
+
+.has-bg-earn-banner{
+    background-image: url('/media/pages/earn/earn-banner.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 250px;
 }

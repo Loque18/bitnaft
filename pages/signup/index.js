@@ -5,6 +5,8 @@ import { getLayout as usePageTitleLayout } from 'src/layouts/page-title';
 
 import SignupForm from 'src/sub-components/signup/form';
 
+import requirePageAunauth from 'src/functions/require-page-anauth';
+
 import styles from 'src/scss/common_modules/box.module.scss';
 
 const { box_container, box_column } = styles;
@@ -49,3 +51,5 @@ const SignUpPage = () => {
 SignUpPage.usePageTitleLayout = page => usePageTitleLayout('Sign Up', page);
 
 export default SignUpPage;
+
+export const getServerSideProps = requirePageAunauth();

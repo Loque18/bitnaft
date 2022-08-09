@@ -1,23 +1,35 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { log_out_request } from 'src/redux/actions';
+import { toast } from 'react-toastify';
+
+import { clear_session } from 'src/redux/actions';
+import useSession from 'src/hooks/useSession';
+import axios from 'axios';
 
 const Navbar = () => {
     // app state
     const dispatch = useDispatch();
-    const { isLoggedIn } = useSelector(state => state.sessionReducer);
+    // eslint-disable-next-line no-unused-vars
+    const [loLoading, setLoLoading] = useState(false);
+    // const [loSuccess, setLoSuccess] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [loFailure, setLoFailure] = useState(false);
+    // const [loErrorMessage, setLoErrorMessage] = useState('');
 
     //  local state
     const [mobileActive, setMobileActive] = useState(false);
     const [burgerActive, setBurgerActive] = useState(false);
     const [scrolledBgColor, setScrolledBgColor] = useState(false);
     const [scrollingDown, setScrollingDown] = useState(false);
+
+    const { isLoggedIn, user } = useSession();
 
     //  router
     const router = useRouter();
@@ -33,8 +45,23 @@ const Navbar = () => {
         handleHamburgerClick();
     };
 
-    const handleLogoutClick = () => {
-        dispatch(log_out_request());
+    const handleLogoutClick = async () => {
+        setLoLoading(true);
+
+        try {
+            const res = await axios('/api/auth/logout', { method: 'post' });
+
+            if (res.data.status === 'success') {
+                router.replace('/home');
+                dispatch(clear_session());
+            } else throw new Error(res.data.data.message);
+        } catch (err) {
+            setLoFailure(true);
+
+            toast.error(err.message);
+        }
+
+        setLoLoading(false);
     };
 
     useEffect(() => {
@@ -86,10 +113,10 @@ const Navbar = () => {
                 </div>
                 <div className={`navbar-menu ${mobileActive ? 'is-active' : ''}`}>
                     <div className="navbar-start">
-                        <Link href="/">
+                        <Link href="/dashboard">
                             <a
                                 className={`navbar-item is-size-6 has-font-roboto ${
-                                    router.pathname === '/dashboard' ? 'is-active' : ''
+                                    router.pathname.includes('/dashboard') ? 'is-active' : ''
                                 }`}
                                 onClick={handleNavbarItemClick}
                                 role="button"
@@ -132,39 +159,32 @@ const Navbar = () => {
                                         alt="user"
                                         width={64}
                                         height={64}
-                                        className="is-rounded"
+                                        className="is-rounded "
                                     />
-                                    <span className="has-text-md-black has-font-roboto">username@email.com</span>
+                                    &nbsp;&nbsp;
+                                    <span className="has-text-md-black has-font-roboto">{user.email}</span>
                                 </div>
                                 <div className="navbar-dropdown">
                                     <div className="navbar-item">Overview</div>
-                                    <Link href="/home">
-                                        <a href="/replace" className="navbar-item" onClick={handleLogoutClick}>
-                                            Log out
-                                        </a>
-                                    </Link>
+                                    <a href="profile/settings" className="navbar-item">
+                                        User Settings
+                                    </a>
+
+                                    <a className="navbar-item" onClick={handleLogoutClick}>
+                                        Log out
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     ) : (
                         <div className="navbar-end">
                             <Link href="/login">
-                                <a
-                                    href="/replace"
-                                    className="navbar-item is-size-6 has-font-roboto "
-                                    role="button"
-                                    tabIndex={0}
-                                >
+                                <a className="navbar-item is-size-6 has-font-roboto " role="button" tabIndex={0}>
                                     Login
                                 </a>
                             </Link>
                             <Link href="/signup">
-                                <a
-                                    href="/replace"
-                                    className="navbar-item is-size-6 has-font-roboto "
-                                    role="button"
-                                    tabIndex={0}
-                                >
+                                <a className="navbar-item is-size-6 has-font-roboto " role="button" tabIndex={0}>
                                     Signup
                                 </a>
                             </Link>

@@ -60,3 +60,19 @@
 
 
 }
+
+@mixin min-w-list {
+    @for $i from 100 to 301 {
+        .min-w-#{$i} {
+            min-width: #{$i}px !important;
+
+            // media between mobile and tablet
+            @media screen and (min-width: 350px) and (max-width: 767px) {
+                min-width: #{$i/2}px !important;
+            }
+
+        }
+    }
+}
+
+@include min-w-list;

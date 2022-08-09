@@ -1,22 +1,34 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
+
+import { update_session } from 'src/redux/actions';
 
 import styles from 'src/scss/common_modules/form_utils.module.scss';
-import { log_in_request } from 'src/redux/actions';
 
-const { eye_button } = styles;
+const { eye_button, input_reset } = styles;
 
 const Eye = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
 const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
 
 const Form = () => {
     const dispatch = useDispatch();
-    const { loading, success, failure, errorMessage } = useSelector(state => state.sessionReducer);
+
+    const [loading, setLoading] = useState(false);
+    // eslint-disable-next-line no-unused-vars
+    const [success, setSuccess] = useState(false);
+    const [failure, setFailure] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const router = useRouter();
 
     const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -30,11 +42,26 @@ const Form = () => {
             password: yup.string().required('Enter your password'),
         }),
         onSubmit: async values => {
-            // setLoading(true);
-
+            setLoading(true);
             const { email, password } = values;
 
-            dispatch(log_in_request({ email, password }));
+            try {
+                const res = await axios({ method: 'post', url: '/api/auth/login', data: { email, password } });
+                if (res.data.status === 'success') {
+                    setSuccess(true);
+                    router.push('/dashboard');
+                    dispatch(update_session({ session: res.data.data }));
+                } else {
+                    throw new Error(res.data.data.message);
+                }
+            } catch (err) {
+                setFailure(true);
+                setErrorMessage(err.message);
+            }
+
+            setLoading(false);
+
+            // dispatch(log_in_request({ email, password }));
         },
     });
 
@@ -42,17 +69,26 @@ const Form = () => {
         setPasswordVisible(!passwordVisible);
     };
 
-    useEffect(() => {
-        if (success) {
-            window.location.href = '/dashboard';
-        }
-    }, [success]);
+    // useEffect(() => {
+    //     if (success) {
+    //         // router.push('/dashboard');
+    //     }
+    // }, [router, success]);
 
     return (
         <form onSubmit={formik.handleSubmit}>
             {loading ? null : failure ? (
                 <div className="notification animate__animated animate__fadeInDown is-danger has-text-centered p-2">
-                    {errorMessage}
+                    {errorMessage.toLowerCase() === 'email not verified' ? (
+                        <>
+                            {errorMessage}{' '}
+                            <Link href={`/checkemail?email=${formik.values.email}`}>
+                                <a>Resend email</a>
+                            </Link>
+                        </>
+                    ) : (
+                        errorMessage
+                    )}
                 </div>
             ) : null}
             <div className="field">
@@ -82,7 +118,9 @@ const Form = () => {
                 <label className="label is-size-7">Password</label>
                 <div className="control has-icons-left has-icons-right">
                     <input
-                        className={`input ${formik.touched.password && formik.errors.password ? 'is-danger' : ''}`}
+                        className={`input ${
+                            formik.touched.password && formik.errors.password ? 'is-danger' : ''
+                        } ${input_reset}`}
                         type={passwordVisible ? 'text' : 'password'}
                         placeholder="Password"
                         value={formik.values.password}
@@ -101,10 +139,8 @@ const Form = () => {
                         ) : (
                             '⠀'
                         )}
-                        <Link href="/recover-password">
-                            <a href="/replace">
-                                <u>Forgot password ?</u>
-                            </a>
+                        <Link href="/login/resetpassword">
+                            <u className="is-clickable">Forgot password ?</u>
                         </Link>
                     </p>
 
