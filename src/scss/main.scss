@@ -34,3 +34,12 @@ body {
     height: 100%;
     position: relative;
 }
+
+
+.has-bg-earn-banner{
+    background-image: url('/media/pages/earn/earn-banner.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 250px;
+}
