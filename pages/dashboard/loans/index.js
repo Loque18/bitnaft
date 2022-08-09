@@ -21,7 +21,6 @@ export const getServerSideProps = requirePageAuth(async (context, session) => {
     try {
         const res = await api.get.loansBalances({ email: user.email, token });
 
-        console.log(res.data);
         if (!res.data.success) {
             throw new Error(res.message);
         }

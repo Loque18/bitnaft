@@ -39,6 +39,7 @@ function MyApp({ Component, pageProps }) {
             setState(prevState => ({
                 ...prevState,
                 isRouteChanging: true,
+                // eslint-disable-next-line no-bitwise
                 loadingKey: prevState.loadingKey ^ 1,
             }));
         };
