@@ -1,0 +1,8 @@
+@import 'src/scss/_variables.scss';
+
+.bordered_hr{
+    border: none;
+    border-top: 1px dashed $md-source-primary;
+    height: 1px;
+    width: 20rem;
+}

@@ -142,3 +142,12 @@ $add-levels: 25, 75;
 .is-borderless {
     border: none !important;
 }
+
+
+.p-inputtext{ 
+    &.p-component {
+        &.p-inputnumber-input{
+            background: $md-ref-neutral-99;
+        }
+    }
+}
