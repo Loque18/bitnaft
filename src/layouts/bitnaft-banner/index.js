@@ -1,7 +1,7 @@
 const BitnaftBanner = props => {
-    const { title, description } = props;
+    const { title, description, background } = props;
     return (
-        <section className="hero has-bg-earn-banner">
+        <section className={`hero has-bg-${background}`}>
             <div className="hero-body">
                 <div className="columns">
                     <div className="column is-narrow">

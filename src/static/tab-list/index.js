@@ -1,4 +1,4 @@
-const tabList = [
+export const dashboardTabList = [
     {
         name: 'Your assets',
         to: '/dashboard/wallet',
@@ -13,4 +13,13 @@ const tabList = [
     },
 ];
 
-export default tabList;
+export const portfolioTabList = [
+    {
+        name: 'Loan Application',
+        to: '/borrow',
+    },
+    {
+        name: 'Portfolio',
+        to: '/portfolio',
+    },
+];

@@ -8,6 +8,8 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
+import formatBigNumber from 'src/utils/format-bignumber';
+
 const AssetsTable = ({ assets }) => {
     // const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
@@ -118,7 +120,9 @@ const AssetsTable = ({ assets }) => {
 
     const balanceBodyTemplate = rowData => {
         return (
-            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.balance}</p>
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
+                {formatBigNumber(rowData.balance, rowData.decimals)}
+            </p>
         );
     };
 

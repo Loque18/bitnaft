@@ -7,6 +7,8 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
+import formatBigNumber from 'src/utils/format-bignumber';
+
 const SavingsTable = ({ assets }) => {
     // const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
@@ -103,9 +105,7 @@ const SavingsTable = ({ assets }) => {
                 <div className="media-content is-clipped">
                     <div className="columns">
                         <div className="column is-3 is-flex is-flex-direction-flex-start is-align-items-center">
-                            <p className="title has-text-md-black is-size-6 has-text-weight-medium">
-                                {rowData.name.common}
-                            </p>
+                            <p className="title has-text-md-black is-size-6 has-text-weight-medium">{rowData.name}</p>
                         </div>
                         <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
                             <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-roboto">
@@ -121,7 +121,7 @@ const SavingsTable = ({ assets }) => {
     const balanceBodyTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {rowData.savingsBalance}
+                {formatBigNumber(rowData.savingsBalance, rowData.decimals)}
             </p>
         );
     };

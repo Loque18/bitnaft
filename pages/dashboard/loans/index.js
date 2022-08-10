@@ -11,7 +11,7 @@ const LoansPage = ({ balances }) => {
     return <LoansTable assets={balances} />;
 };
 
-LoansPage.getLayout = page => getPageTitleLayout(getMainLayout(getDashboardSubPageLayout(page), 'Loans'), 'Loans');
+LoansPage.getLayout = page => getPageTitleLayout(getMainLayout(getDashboardSubPageLayout(page, 'Loans')), 'Loans');
 export default LoansPage;
 
 export const getServerSideProps = requirePageAuth(async (context, session) => {

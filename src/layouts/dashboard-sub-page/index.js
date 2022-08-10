@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import Tabs from 'src/layouts/tabs';
-import tabList from 'src/static/tab-list';
+import { dashboardTabList } from 'src/static/tab-list';
 import BalanceDisplayer from 'src/components/internal/balance-displayer';
 
 const DashboardSubPage = props => {
@@ -30,7 +30,7 @@ const DashboardSubPage = props => {
             </div>
             <div className="columns py-4">
                 <div className="column">
-                    <Tabs tabs={tabList} />
+                    <Tabs tabs={dashboardTabList} />
                 </div>
             </div>
             <div className="columns">
