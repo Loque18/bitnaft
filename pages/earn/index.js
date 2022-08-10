@@ -7,7 +7,11 @@ import SavingsOfferTable from 'src/components/tables/savings-offer-table';
 const EarnPage = () => {
     return (
         <div>
-            <BitnaftBanner title="Bitnaft earn" description="Lorem ipsum dolor sit amet consectetur adipiscing elit." />
+            <BitnaftBanner
+                title="Bitnaft earn"
+                description="Lorem ipsum dolor sit amet consectetur adipiscing elit."
+                background="earn-banner"
+            />
             <div className="columns is-centered">
                 <div className="column">
                     <PortfolioCard />
