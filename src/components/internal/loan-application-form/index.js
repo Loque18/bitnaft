@@ -55,6 +55,16 @@ const LoanApplicationForm = props => {
                         />
                     </div>
                 </div>
+                <div className="columns">
+                    <div className="column is-2">
+                        <button
+                            className="button has-font-roboto has-bg-hperiwinkle has-text-md-key-colors-primary has-text-weight-medium is-fullwidth"
+                            type="button"
+                        >
+                            Continue
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     );
