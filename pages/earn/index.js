@@ -13,8 +13,14 @@ const EarnPage = () => {
                     <PortfolioCard />
                 </div>
             </div>
-            <section className="section">
-                <h1 className="title has-text-centered has-text-md-black-o-7 has-font-roboto">Savings offers</h1>
+            <section className="section pt-0">
+                <div className="columns pb-4">
+                    <div className="column is-flex">
+                        <h1 className="subtitle has-text-centered has-text-md-black-o-7 has-font-roboto">
+                            Savings offers
+                        </h1>
+                    </div>
+                </div>
                 <SavingsOfferTable />
             </section>
         </div>
