@@ -28,12 +28,12 @@
 }
 
 .coolscroll-small::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.8);
+    background: $md-ref-neutral-90;
     border-radius: 10px;
 }
 
 .coolscroll-small::-webkit-scrollbar-thumb {
-    background: $md-ref-primary-10;
+    background: $hblue;
     border-radius: 10px;
 }
 

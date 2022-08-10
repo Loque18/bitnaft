@@ -12,6 +12,7 @@ import Loading from 'src/components/commons/loading';
 
 import CoinManagerModal from 'src/components/modals/coin-manager-modal';
 import QRCodeGeneratorModal from 'src/components/modals/qr-code-generator-modal';
+import SubscribeToSavingOfferModal from 'src/components/modals/subscribe-to-saving-offer-modal';
 
 import SessionComponent from 'src/components/commons/session-service';
 
@@ -79,6 +80,7 @@ function MyApp({ Component, pageProps }) {
 
                 <CoinManagerModal />
                 <QRCodeGeneratorModal />
+                <SubscribeToSavingOfferModal />
 
                 {getLayout(<Component {...pageProps} />)}
             </Provider>

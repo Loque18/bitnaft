@@ -17,26 +17,29 @@ const EarnPage = ({ savingOffers }) => {
                 description="Lorem ipsum dolor sit amet consectetur adipiscing elit."
                 background="earn-banner"
             />
-            <div className="columns is-centered">
-                <div className="column">
-                    <PortfolioCard />
-                </div>
-            </div>
-            <section className="section pt-0">
-                <div className="columns pb-4">
-                    <div className="column is-flex">
-                        <h1 className="subtitle has-text-centered has-text-md-black-o-7 has-font-roboto">
-                            Savings offers
-                        </h1>
+            <div className="container">
+                <div className="columns is-centered">
+                    <div className="column">
+                        <PortfolioCard />
                     </div>
                 </div>
-                <SavingsOfferTable />
-            </section>
+                <section className="section pt-0 px-2">
+                    <div className="columns pb-4">
+                        <div className="column is-flex">
+                            <h1 className="title is-size-4 has-text-md-black-o-7 has-font-roboto has-text-weight-light">
+                                Savings offers
+                            </h1>
+                        </div>
+                    </div>
+                    <SavingsOfferTable assets={savingOffers} />
+                </section>
+            </div>
         </div>
     );
 };
 
 EarnPage.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Earn');
+
 export default EarnPage;
 
 export const getServerSideProps = requirePageAuth(async () => {
