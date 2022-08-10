@@ -26,10 +26,16 @@ const api = {
             });
         },
         loansBalances: ({ email, token }) => {
-            const paras = `?email=${email}&sessionToken=${token}`;
+            const params = `?email=${email}&sessionToken=${token}`;
             return axios({
                 method: 'get',
-                url: `${endpoint}/loans/${paras}`,
+                url: `${endpoint}/loans/${params}`,
+            });
+        },
+        savingOffers: () => {
+            return axios({
+                method: 'get',
+                url: `${endpoint}/borrowables`,
             });
         },
     },

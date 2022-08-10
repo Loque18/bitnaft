@@ -219,7 +219,11 @@ const LoansTable = ({ assets }) => {
                         <div className="columns mt-0">
                             <div className="column">
                                 <p className="has-text-md-black has-font-pt-mono is-size-7 has-text-weight-bold">
-                                    {rowData.remainingPrinciple}
+                                    {formatBigNumber(
+                                        rowData.remainingPrinciple,
+                                        rowData.borrowDecimals,
+                                        rowData.borrowDecimals
+                                    )}
                                 </p>
                                 <div className="columns mt-0">
                                     <div className="column">
@@ -303,10 +307,11 @@ const LoansTable = ({ assets }) => {
             </div>
         );
     };
+
     const loanAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {formatBigNumber(rowData.borrowAmount, rowData.borrowDecimals)}
+                {formatBigNumber(rowData.borrowAmount, rowData.borrowDecimals, rowData.borrowDecimals)}
             </p>
         );
     };
@@ -314,7 +319,7 @@ const LoansTable = ({ assets }) => {
     const collateralAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {formatBigNumber(rowData.collateralAmount, rowData.collateralDecimals)}
+                {formatBigNumber(rowData.collateralAmount, rowData.collateralDecimals, rowData.collateralDecimals)}
             </p>
         );
     };

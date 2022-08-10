@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 
-const formatBigNumber = (value, decimals) => {
+const formatBigNumber = (value, decimals, decimalPlaces = 8) => {
     return +BigNumber(value)
         .div(10 ** decimals)
-        .toFixed(8)
+        .toFixed(decimalPlaces)
         .toString();
 };
 

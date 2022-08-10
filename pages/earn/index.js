@@ -1,10 +1,15 @@
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import { getLayout as getMainLayout } from 'src/layouts/main';
+
 import BitnaftBanner from 'src/layouts/bitnaft-banner';
 import PortfolioCard from 'src/components/internal/assets-cards/portfolio-card';
 import SavingsOfferTable from 'src/components/tables/savings-offer-table';
 
-const EarnPage = () => {
+import api from 'src/api';
+
+import requirePageAuth from 'src/functions/require-page-auth';
+
+const EarnPage = ({ savingOffers }) => {
     return (
         <div>
             <BitnaftBanner
@@ -33,3 +38,26 @@ const EarnPage = () => {
 
 EarnPage.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Earn');
 export default EarnPage;
+
+export const getServerSideProps = requirePageAuth(async () => {
+    let savingOffers = [];
+    try {
+        const res = await api.get.savingOffers();
+
+        if (!res.data.success) {
+            throw new Error(res.data.message);
+        }
+
+        savingOffers = res.data.data;
+    } catch (err) {
+        return {
+            props: { error: true, errorMessage: err.message, savingOffers: [] },
+        };
+    }
+
+    return {
+        props: {
+            savingOffers,
+        },
+    };
+});

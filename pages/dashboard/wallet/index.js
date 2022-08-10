@@ -24,17 +24,23 @@ export const getServerSideProps = requirePageAuth(async (context, session) => {
         const res = await api.get.balances({ email: user.email, token });
 
         if (!res.data.success) {
-            throw new Error(res.message);
+            if (res.data.code.toString() === '603') {
+                return {
+                    props: {},
+                    redirect: {
+                        destination: '/sessionexpired',
+                        permanent: false,
+                    },
+                };
+            }
+
+            throw new Error(res.data.message);
         }
 
         balances = res.data.data;
     } catch (err) {
         return {
-            props: { errorMessage: err.message },
-            redirect: {
-                destination: '/sessionexpired',
-                permanent: false,
-            },
+            props: { error: true, errorMessage: err.message, balances: [] },
         };
     }
 
