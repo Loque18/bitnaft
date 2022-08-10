@@ -42,6 +42,8 @@ const Form = () => {
             password: yup.string().required('Enter your password'),
         }),
         onSubmit: async values => {
+            setSuccess(false);
+            setFailure(false);
             setLoading(true);
             const { email, password } = values;
 

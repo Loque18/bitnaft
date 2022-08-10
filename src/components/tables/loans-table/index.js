@@ -9,6 +9,7 @@ import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
 import formatDate from 'src/utils/format-date';
+import formatBigNumber from 'src/utils/format-bignumber';
 
 import styles from '../styles.module.scss';
 
@@ -305,7 +306,7 @@ const LoansTable = ({ assets }) => {
     const loanAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {rowData.borrowAmount}
+                {formatBigNumber(rowData.borrowAmount, rowData.borrowDecimals)}
             </p>
         );
     };
@@ -313,7 +314,7 @@ const LoansTable = ({ assets }) => {
     const collateralAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {rowData.collateralAmount}
+                {formatBigNumber(rowData.collateralAmount, rowData.collateralDecimals)}
             </p>
         );
     };
