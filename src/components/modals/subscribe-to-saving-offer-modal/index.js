@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Image from 'next/image';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -7,7 +8,7 @@ import * as yup from 'yup';
 import Modal from 'src/components/commons/modal';
 import CardLayout from 'src/layouts/card';
 
-import { start_close_modal } from 'src/redux/actions';
+import { open_modal, start_close_modal } from 'src/redux/actions';
 
 import formatBigNumber from 'src/utils/format-bignumber';
 import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
@@ -22,6 +23,8 @@ const SubscribeToSavingOffer = () => {
 
     const { asset } = subscribeToSavingOfferModal.data;
 
+    const [loading, setLoading] = useState(false);
+
     const formik = useFormik({
         initialValues: {
             amount: '',
@@ -29,10 +32,12 @@ const SubscribeToSavingOffer = () => {
         validationSchema: yup.object({
             amount: yup.number().min(0.1, `minimum amount is 0.1`).max(10000).required('please enter amount'),
         }),
-        onSubmit: async values => {
+        onSubmit: async (values, { resetForm }) => {
             const { amount } = values;
 
             const amountBN = formatNormalNumber(amount, asset.decimals);
+
+            setLoading(true);
 
             try {
                 const res = await axios({
@@ -48,12 +53,19 @@ const SubscribeToSavingOffer = () => {
                     throw new Error(res.data.message);
                 }
 
-                toast('Subscribed successfully');
-                dispatch(start_close_modal(modals.subscribeToSavingOfferModal));
+                dispatch(
+                    open_modal({
+                        modalName: modals.subscribedSuccesfullyModal,
+                        modalData: { amount, asset: { symbol: asset.symbol } },
+                    })
+                );
+
+                resetForm();
             } catch (err) {
                 toast.error(err.message);
             }
-            // dispatch(start_close_modal(modals.subscribeToSavingOfferModal));
+
+            setLoading(false);
         },
     });
 
@@ -62,7 +74,12 @@ const SubscribeToSavingOffer = () => {
     };
 
     return (
-        <Modal isOpen={subscribeToSavingOfferModal.isOpen}>
+        <Modal
+            isOpen={subscribeToSavingOfferModal.isOpen}
+            onCloseCallback={() => {
+                formik.resetForm();
+            }}
+        >
             <div className="resize-manager">
                 <div className="box has-bg-md-white ">
                     <CardLayout
@@ -101,9 +118,16 @@ const SubscribeToSavingOffer = () => {
                                     <div className="is-flex is-justify-content-space-between">
                                         <h1 className="title is-size-6">Minimun</h1>
                                         <h1 className="is-size-6 has-text-right">
-                                            {asset && formatBigNumber(asset.minimumAmount, asset.decimals)}
+                                            {asset && formatBigNumber(asset.minimumAmount, asset.decimals)}{' '}
+                                            {asset && asset.symbol}
                                         </h1>
                                     </div>
+                                    <div className="is-flex is-justify-content-space-between">
+                                        <h1 className="title is-size-6">APR</h1>
+                                        <h1 className="is-size-6 has-text-right">{asset && asset.apr} %</h1>
+                                    </div>
+                                </section>
+                                <section className="">
                                     <form onSubmit={formik.handleSubmit}>
                                         <div className="field">
                                             <label className="label is-size-7">Amount</label>
@@ -143,17 +167,12 @@ const SubscribeToSavingOffer = () => {
                                             </div>
                                         </div>
 
-                                        <div className="is-flex is-justify-content-space-between">
-                                            <h1 className="title is-size-6">Est. Interest</h1>
-                                            <h1 className="is-size-6 has-text-right"></h1>
-                                        </div>
-
                                         <div className="field">
                                             <div className="control">
                                                 <button
                                                     aria-label="Log in"
                                                     className={`button is-hblue is-fullwidth ${
-                                                        false ? 'is-loading' : ''
+                                                        loading ? 'is-loading' : ''
                                                     }`}
                                                     type="submit"
                                                     disabled={Object.keys(formik.errors).length > 0}
