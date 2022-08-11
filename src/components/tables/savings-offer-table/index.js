@@ -12,9 +12,7 @@ import { open_modal } from 'src/redux/actions';
 
 import modals from 'src/static/app.modals';
 
-import { toast } from 'react-toastify';
-
-const SavingsOfferTable = ({ assets }) => {
+const SavingsOfferTable = ({ assets, walletAssets }) => {
     const dispatch = useDispatch();
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
@@ -71,6 +69,7 @@ const SavingsOfferTable = ({ assets }) => {
                 modalName: modals.subscribeToSavingOfferModal,
                 modalData: {
                     asset,
+                    balance: walletAssets.find(a => a.symbol === asset.symbol).balance,
                 },
             })
         );

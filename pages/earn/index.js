@@ -9,7 +9,15 @@ import api from 'src/api';
 
 import requirePageAuth from 'src/functions/require-page-auth';
 
-const EarnPage = ({ savingOffers }) => {
+const EarnPage = ({ savingOffers, error, errorMessage, walletAssets }) => {
+    if (error) {
+        return (
+            <div className="container">
+                <div className="notification is-danger">{errorMessage}</div>
+            </div>
+        );
+    }
+
     return (
         <div>
             <BitnaftBanner
@@ -31,7 +39,7 @@ const EarnPage = ({ savingOffers }) => {
                             </h1>
                         </div>
                     </div>
-                    <SavingsOfferTable assets={savingOffers} />
+                    <SavingsOfferTable assets={savingOffers} walletAssets={walletAssets} />
                 </section>
             </div>
         </div>
@@ -44,34 +52,43 @@ export default EarnPage;
 
 export const getServerSideProps = requirePageAuth(async (_ctx, session) => {
     const { token, user } = session;
-    let savingOffers = [];
-    try {
-        const res = await api.get.savingsBalances({ email: user.email, token });
 
-        if (!res.data.success) {
-            if (res.data.code.toString() === '603') {
-                return {
-                    props: {},
-                    redirect: {
-                        destination: '/sessionexpired',
-                        permanent: false,
-                    },
-                };
+    const balancesFunctions = [api.get.balances, api.get.savingsBalances];
+
+    const assets = [];
+    try {
+        const responses = await Promise.all(balancesFunctions.map(func => func({ email: user.email, token })));
+
+        responses.forEach((response, i) => {
+            if (!response.data.success) {
+                if (response.data.code.toString() === '603') {
+                    return {
+                        props: {},
+                        redirect: {
+                            destination: '/sessionexpired',
+                            permanent: false,
+                        },
+                    };
+                }
+
+                throw new Error(response.data.message);
             }
 
-            throw new Error(res.data.message);
-        }
+            assets[i] = response.data.data;
+            return null;
+        });
 
-        savingOffers = res.data.data;
-    } catch (err) {
+        // balances = res.data.data;
+    } catch (error) {
         return {
-            props: { error: true, errorMessage: err.message, savingOffers: [] },
+            props: { error: true, errorMessage: error.message },
         };
     }
 
     return {
         props: {
-            savingOffers,
+            walletAssets: assets[0],
+            savingOffers: assets[1],
         },
     };
 });

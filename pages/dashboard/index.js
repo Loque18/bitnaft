@@ -6,16 +6,31 @@ import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
 import LoanedAssetsCard from 'src/components/internal/assets-cards/assests-loan-card';
 
+import api from 'src/api';
+
 import { open_modal } from 'src/redux/actions';
 
 import modals from 'src/static/app.modals';
 
 import requirePageAuth from 'src/functions/require-page-auth';
 
-const Dashboard = ({ session }) => {
+const getUserBalances = assets => {
+    const userBalances = assets.reduce((prev, curr) => {
+        return prev + curr.usdValue;
+    }, 0);
+
+    return userBalances;
+};
+const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     const dispatch = useDispatch();
 
     const { user } = session;
+
+    const noneZeroBalancesWallet = walletAssets.filter(asset => asset.balance > 0);
+    const userWalletBalance = getUserBalances(noneZeroBalancesWallet);
+    const userSavingsBalance = getUserBalances(savingsAssets.filter(asset => asset.savingsBalance > 0));
+    // const sbalances = getUserBalances(savingsAssets);
+    // const lbalances = getUserBalances(loansAssets);
 
     const handleCoinManagerModal = () => {
         dispatch(
@@ -50,7 +65,7 @@ const Dashboard = ({ session }) => {
                             title="Wallet"
                             to="/dashboard/wallet"
                             icon="fas fa-wallet"
-                            amount={8800.003}
+                            amount={userWalletBalance}
                             cryptoIcons={[
                                 'https://bitcoin.org/img/icons/opengraph.png?1657703267',
                                 'https://bitcoin.org/img/icons/opengraph.png?1657703267',
@@ -65,7 +80,7 @@ const Dashboard = ({ session }) => {
                             title="Savings"
                             to="/dashboard/savings"
                             icon="fa-solid fa-sack-dollar"
-                            amount={50523.001}
+                            amount={userSavingsBalance}
                             cryptoIcons={[
                                 'https://bitcoin.org/img/icons/opengraph.png?1657703267',
                                 'https://bitcoin.org/img/icons/opengraph.png?1657703267',
@@ -118,4 +133,51 @@ Dashboard.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Dashboard
 
 export default Dashboard;
 
-export const getServerSideProps = requirePageAuth();
+export const getServerSideProps = requirePageAuth(async (ctx, sessionWithToken) => {
+    const { user, token } = sessionWithToken;
+    const { email } = user;
+
+    const session = { ...sessionWithToken };
+    delete session.token;
+
+    const balancesFunctions = [api.get.balances, api.get.savingsBalances, api.get.loansBalances];
+
+    const assets = [];
+    try {
+        const responses = await Promise.all(balancesFunctions.map(func => func({ email, token })));
+
+        responses.forEach((response, i) => {
+            if (!response.data.success) {
+                if (response.data.code.toString() === '603') {
+                    return {
+                        props: {},
+                        redirect: {
+                            destination: '/sessionexpired',
+                            permanent: false,
+                        },
+                    };
+                }
+
+                throw new Error(response.data.message);
+            }
+
+            assets[i] = response.data.data;
+            return null;
+        });
+
+        // balances = res.data.data;
+    } catch (error) {
+        return {
+            props: { error: true, errorMessage: error.message, balances: [] },
+        };
+    }
+
+    return {
+        props: {
+            session,
+            walletAssets: assets[0],
+            savingsAssets: assets[1],
+            loansAssets: assets[2],
+        },
+    };
+});

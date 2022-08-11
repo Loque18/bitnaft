@@ -21,7 +21,7 @@ const SubscribeToSavingOffer = () => {
     const dispatch = useDispatch();
     const subscribeToSavingOfferModal = useSelector(state => state.modalReducer[modals.subscribeToSavingOfferModal]);
 
-    const { asset } = subscribeToSavingOfferModal.data;
+    const { asset, balance } = subscribeToSavingOfferModal.data;
 
     const [loading, setLoading] = useState(false);
 
@@ -30,7 +30,11 @@ const SubscribeToSavingOffer = () => {
             amount: '',
         },
         validationSchema: yup.object({
-            amount: yup.number().min(0.1, `minimum amount is 0.1`).max(10000).required('please enter amount'),
+            amount: yup
+                .number()
+                .min(0.1, `minimum amount is 0.1`)
+                .max((asset && formatBigNumber(balance, asset.decimals)) || 0)
+                .required('please enter amount'),
         }),
         onSubmit: async (values, { resetForm }) => {
             const { amount } = values;
@@ -71,6 +75,7 @@ const SubscribeToSavingOffer = () => {
 
     const closeModal = () => {
         dispatch(start_close_modal());
+        formik.resetForm();
     };
 
     return (
@@ -130,7 +135,12 @@ const SubscribeToSavingOffer = () => {
                                 <section className="">
                                     <form onSubmit={formik.handleSubmit}>
                                         <div className="field">
-                                            <label className="label is-size-7">Amount</label>
+                                            <div className="is-flex is-flex-direction-row is-justify-content-space-between">
+                                                <label className="label is-size-7">Amount</label>
+                                                <div className="is-size-7">
+                                                    Asset balance: {asset && formatBigNumber(balance, asset.decimals)}
+                                                </div>
+                                            </div>
                                             <div className="control has-icons-right">
                                                 <input
                                                     className={`input arrowless${
