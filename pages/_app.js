@@ -70,10 +70,9 @@ function MyApp({ Component, pageProps }) {
                 <meta name="description" content={appConfig.description} />
             </Head>
 
-            <ToastContainer />
-
             <Loading isRouteChanging={state.isRouteChanging} key={state.loadingKey} />
 
+            <ToastContainer />
             <Provider store={store}>
                 <Script src={`https://kit.fontawesome.com/${FONT_AWESOME_KEY}.js`} />
                 <SessionComponent />

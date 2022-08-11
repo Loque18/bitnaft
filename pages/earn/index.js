@@ -42,12 +42,23 @@ EarnPage.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Earn');
 
 export default EarnPage;
 
-export const getServerSideProps = requirePageAuth(async () => {
+export const getServerSideProps = requirePageAuth(async (_ctx, session) => {
+    const { token, user } = session;
     let savingOffers = [];
     try {
-        const res = await api.get.savingOffers();
+        const res = await api.get.savingsBalances({ email: user.email, token });
 
         if (!res.data.success) {
+            if (res.data.code.toString() === '603') {
+                return {
+                    props: {},
+                    redirect: {
+                        destination: '/sessionexpired',
+                        permanent: false,
+                    },
+                };
+            }
+
             throw new Error(res.data.message);
         }
 
