@@ -6,7 +6,7 @@ import DisplayAsteriks from 'src/utils/display-asteriks';
 const Eye = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
 const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
 
-const BalanceDisplayer = () => {
+const BalanceDisplayer = ({ balance, totalBalance }) => {
     const dispatch = useDispatch();
 
     const balanceVisibility = useSelector(state => state.balanceDisplayerReducer.balanceVisibility);
@@ -42,7 +42,7 @@ const BalanceDisplayer = () => {
                                 !balanceVisibility ? 'has-text-weight-bold' : 'has-text-weight-medium'
                             } title is-size-4 has-text-md-source-primary-o-9 has-font-pt-mono has-text-weight-medium`}
                         >
-                            {balanceVisibility ? formatCurrency(8800.03) : DisplayAsteriks(5)}
+                            {balanceVisibility ? formatCurrency(balance) : DisplayAsteriks(5)}
                         </p>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ const BalanceDisplayer = () => {
                                 !balanceVisibility ? 'has-text-weight-bold' : 'has-text-weight-medium'
                             } is-size-6 has-text-md-black-o-5 has-font-pt-mono`}
                         >
-                            {balanceVisibility ? formatCurrency(59323) : DisplayAsteriks(5)}
+                            {balanceVisibility ? formatCurrency(totalBalance) : DisplayAsteriks(5)}
                         </p>
                     </div>
                 </div>

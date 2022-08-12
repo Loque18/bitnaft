@@ -32,8 +32,8 @@ const SubscribeToSavingOffer = () => {
         validationSchema: yup.object({
             amount: yup
                 .number()
-                .min(0.1, `minimum amount is 0.1`)
-                .max((asset && formatBigNumber(balance, asset.decimals)) || 0)
+                .min(asset && formatBigNumber(asset.minimumAmount, asset.decimals), `minimum amount not reached`)
+                .max((asset && formatBigNumber(balance, asset.decimals)) || 0, 'insufficient balance')
                 .required('please enter amount'),
         }),
         onSubmit: async (values, { resetForm }) => {

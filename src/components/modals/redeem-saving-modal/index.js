@@ -32,8 +32,8 @@ const RedeemSavingModal = () => {
         validationSchema: yup.object({
             amount: yup
                 .number()
-                .min(0.1, `minimum amount is 0.1`)
-                .max((asset && formatBigNumber(asset.savingsBalance, asset.decimals)) || 1)
+                .min(0.0001, 'Minimum redeem amount is 0.0001')
+                .max(asset && formatBigNumber(asset.savingsBalance, asset.decimals), 'Insufficient balance')
                 .required('please enter amount'),
         }),
         onSubmit: async (values, { resetForm }) => {

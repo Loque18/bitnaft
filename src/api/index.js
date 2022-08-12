@@ -38,6 +38,13 @@ const api = {
                 url: `${endpoint}/borrowables`,
             });
         },
+
+        borrowables: () => {
+            return axios({
+                method: 'get',
+                url: `${endpoint}/borrowables`,
+            });
+        },
     },
     post: {
         signup: ({ email, password }) => {

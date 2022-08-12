@@ -3,8 +3,12 @@ import Tabs from 'src/layouts/tabs';
 import { dashboardTabList } from 'src/static/tab-list';
 import BalanceDisplayer from 'src/components/internal/balance-displayer';
 
-const DashboardSubPage = props => {
-    const { title, children } = props;
+import getBalances from 'src/utils/get-balances/indes';
+
+const DashboardSubPage = ({ title, children, walletAssets, savingsAssets }) => {
+    const balance = getBalances(walletAssets);
+    const totalBalance = getBalances(savingsAssets) + balance;
+
     const router = useRouter();
 
     const redirectToDashboard = () => {
@@ -26,7 +30,7 @@ const DashboardSubPage = props => {
                 </div>
                 <div className="columns pt-4">
                     <div className="column is-one-fifth">
-                        <BalanceDisplayer />
+                        <BalanceDisplayer balance={balance} totalBalance={totalBalance} />
                     </div>
                 </div>
                 <div className="columns py-4">
@@ -42,6 +46,13 @@ const DashboardSubPage = props => {
     );
 };
 
-export const getLayout = (page, title) => <DashboardSubPage title={title}>{page}</DashboardSubPage>;
+export const getLayout = (page, title) => {
+    const { walletAssets, savingsAssets } = page.props;
+    return (
+        <DashboardSubPage title={title} walletAssets={walletAssets} savingsAssets={savingsAssets}>
+            {page}
+        </DashboardSubPage>
+    );
+};
 
 export default DashboardSubPage;

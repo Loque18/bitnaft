@@ -1,56 +1,67 @@
+/* eslint-disable no-unused-vars */
 import { getLayout as getMainLayout } from 'src/layouts/main';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import { getLayout as getSubPageLayout } from 'src/layouts/dashboard-sub-page';
 
 import AssetsTable from 'src/components/tables/assets-table';
 
-import requirePageAuth from 'src/functions/require-page-auth';
-
 import api from 'src/api';
 
-const WalletPage = ({ balances }) => {
-    return <AssetsTable assets={balances} />;
+import { toast } from 'react-toastify';
+
+import requirePageAuth from 'src/functions/require-page-auth';
+
+const WalletPage = ({ error, errorMessage, walletAssets, savingsAssets }) => {
+    if (error) {
+        toast.error(errorMessage);
+    }
+    return <AssetsTable assets={walletAssets} />;
 };
 
 WalletPage.getLayout = page => getPageTitleLayout(getMainLayout(getSubPageLayout(page, 'Wallet')), 'Wallet');
 
 export default WalletPage;
 
-export const getServerSideProps = requirePageAuth(async (context, session) => {
-    const { token, user } = session;
+export const getServerSideProps = requirePageAuth(async (ctx, sessionWithToken) => {
+    const { user, token } = sessionWithToken;
+    const { email } = user;
 
-    let balances = [];
+    const balancesFunctions = [api.get.balances, api.get.savingsBalances];
+
+    const assets = [];
     try {
-        const res = await api.get.balances({ email: user.email, token });
+        const responses = await Promise.all(balancesFunctions.map(func => func({ email, token })));
 
-        if (!res.data.success) {
-            if (res.data.code.toString() === '603') {
-                return {
-                    props: {},
-                    redirect: {
-                        destination: '/sessionexpired',
-                        permanent: false,
-                    },
-                };
+        responses.forEach((response, i) => {
+            if (!response.data.success) {
+                if (response.data.code.toString() === '603') {
+                    return {
+                        props: {},
+                        redirect: {
+                            destination: '/sessionexpired',
+                            permanent: false,
+                        },
+                    };
+                }
+
+                throw new Error(response.data.message);
             }
 
-            throw new Error(res.data.message);
-        }
+            assets[i] = response.data.data;
+            return null;
+        });
 
-        balances = res.data.data;
-    } catch (err) {
+        // balances = res.data.data;
+    } catch (error) {
         return {
-            props: { error: true, errorMessage: err.message, balances: [] },
+            props: { error: true, errorMessage: error.message, walletAssets: [], savingsAssets: [] },
         };
     }
 
-    const sessionData = { ...session };
-    delete sessionData.token;
-
     return {
         props: {
-            session: sessionData,
-            balances,
+            walletAssets: assets[0],
+            savingsAssets: assets[1],
         },
     };
 });

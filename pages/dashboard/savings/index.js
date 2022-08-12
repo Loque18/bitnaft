@@ -11,8 +11,8 @@ import requirePageAuth from 'src/functions/require-page-auth';
 const SavingsPage = ({ error, errorMessage, savingsAssets }) => {
     if (error) {
         toast.error(errorMessage);
-        return null;
     }
+
     return <SavingsTable assets={savingsAssets} />;
 };
 
@@ -61,7 +61,6 @@ export const getServerSideProps = requirePageAuth(async (ctx, sessionWithToken) 
 
     return {
         props: {
-            session,
             walletAssets: assets[0],
             savingsAssets: assets[1],
         },

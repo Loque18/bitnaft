@@ -14,21 +14,16 @@ import modals from 'src/static/app.modals';
 
 import requirePageAuth from 'src/functions/require-page-auth';
 
-const getUserBalances = assets => {
-    const userBalances = assets.reduce((prev, curr) => {
-        return prev + curr.usdValue;
-    }, 0);
+import getBalances from 'src/utils/get-balances/indes';
 
-    return userBalances;
-};
 const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     const dispatch = useDispatch();
 
     const { user } = session;
 
     const noneZeroBalancesWallet = walletAssets.filter(asset => asset.balance > 0);
-    const userWalletBalance = getUserBalances(noneZeroBalancesWallet);
-    const userSavingsBalance = getUserBalances(savingsAssets.filter(asset => asset.savingsBalance > 0));
+    const userWalletBalance = getBalances(noneZeroBalancesWallet);
+    const userSavingsBalance = getBalances(savingsAssets.filter(asset => asset.savingsBalance > 0));
     // const sbalances = getUserBalances(savingsAssets);
     // const lbalances = getUserBalances(loansAssets);
 
