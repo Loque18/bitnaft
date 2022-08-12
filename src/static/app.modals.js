@@ -3,6 +3,7 @@ const modals = {
     qrCodeGeneratorModal: 'qrCodeGeneratorModal',
     subscribeToSavingOfferModal: 'subscribeToSavingOfferModal',
     subscribedSuccesfullyModal: 'subscribedSuccesfullyModal',
+    redeemSavingModal: 'redeemSavingModal',
 };
 
 export default modals;

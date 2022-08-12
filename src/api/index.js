@@ -84,6 +84,14 @@ const api = {
                 url: `${endpoint}/addToSavings/${params}`,
             });
         },
+
+        redeemSavingProfit: ({ email, token, cryptoName, amount }) => {
+            const params = `?email=${email}&sessionToken=${token}&crypto=${cryptoName}&amount=${amount}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/removeFromSavings/${params}`,
+            });
+        },
     },
     put: {},
     delete: {},
