@@ -17,11 +17,11 @@ import modals from 'src/static/app.modals';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const SubscribeToSavingOffer = () => {
+const RedeemSavingModal = () => {
     const dispatch = useDispatch();
-    const subscribeToSavingOfferModal = useSelector(state => state.modalReducer[modals.subscribeToSavingOfferModal]);
+    const redeemSavingModal = useSelector(state => state.modalReducer[modals.redeemSavingModal]);
 
-    const { asset, balance } = subscribeToSavingOfferModal.data;
+    const { asset, balance } = redeemSavingModal.data;
 
     const [loading, setLoading] = useState(false);
 
@@ -33,7 +33,7 @@ const SubscribeToSavingOffer = () => {
             amount: yup
                 .number()
                 .min(0.1, `minimum amount is 0.1`)
-                .max((asset && formatBigNumber(balance, asset.decimals)) || 0)
+                .max((asset && formatBigNumber(asset.savingsBalance, asset.decimals)) || 1)
                 .required('please enter amount'),
         }),
         onSubmit: async (values, { resetForm }) => {
@@ -46,7 +46,7 @@ const SubscribeToSavingOffer = () => {
             try {
                 const res = await axios({
                     method: 'POST',
-                    url: '/api/savings/subscribe',
+                    url: '/api/savings/redeem',
                     data: {
                         cryptoName: asset.name,
                         amount: amountBN,
@@ -80,7 +80,7 @@ const SubscribeToSavingOffer = () => {
 
     return (
         <Modal
-            isOpen={subscribeToSavingOfferModal.isOpen}
+            isOpen={redeemSavingModal.isOpen}
             onCloseCallback={() => {
                 formik.resetForm();
             }}
@@ -91,7 +91,7 @@ const SubscribeToSavingOffer = () => {
                         header={
                             <div className="is-flex is-flex-direction-row is-justify-content-space-between">
                                 <h1 className="subtitle is-size-5 has-text-md-black has-font-roboto has-text-weight-medium is-flex-grow-a">
-                                    Subscribe {asset && asset.symbol}
+                                    redeem {asset && asset.symbol}
                                 </h1>
                                 <button
                                     className="has-text-md-black is-flex unstyled-button"
@@ -116,17 +116,17 @@ const SubscribeToSavingOffer = () => {
                                 </section>
 
                                 <section>
-                                    <div className="is-flex is-justify-content-space-between">
+                                    {/* <div className="is-flex is-justify-content-space-between">
                                         <h1 className="title is-size-6">Duration</h1>
                                         <h1 className=" is-size-6 has-text-right">Flexible</h1>
-                                    </div>
-                                    <div className="is-flex is-justify-content-space-between">
+                                    </div> */}
+                                    {/* <div className="is-flex is-justify-content-space-between">
                                         <h1 className="title is-size-6">Minimun</h1>
                                         <h1 className="is-size-6 has-text-right">
                                             {asset && formatBigNumber(asset.minimumAmount, asset.decimals)}{' '}
                                             {asset && asset.symbol}
                                         </h1>
-                                    </div>
+                                    </div> */}
                                     <div className="is-flex is-justify-content-space-between">
                                         <h1 className="title is-size-6">APR</h1>
                                         <h1 className="is-size-6 has-text-right">{asset && asset.apr} %</h1>
@@ -138,7 +138,8 @@ const SubscribeToSavingOffer = () => {
                                             <div className="is-flex is-flex-direction-row is-justify-content-space-between">
                                                 <label className="label is-size-7">Amount</label>
                                                 <div className="is-size-7">
-                                                    Asset balance: {asset && formatBigNumber(balance, asset.decimals)}
+                                                    Asset balance:{' '}
+                                                    {asset && formatBigNumber(asset.savingsBalance, asset.decimals)}
                                                 </div>
                                             </div>
                                             <div className="control has-icons-right">
@@ -202,4 +203,4 @@ const SubscribeToSavingOffer = () => {
     );
 };
 
-export default SubscribeToSavingOffer;
+export default RedeemSavingModal;
