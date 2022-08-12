@@ -21,7 +21,7 @@ const RedeemSavingModal = () => {
     const dispatch = useDispatch();
     const redeemSavingModal = useSelector(state => state.modalReducer[modals.redeemSavingModal]);
 
-    const { asset, balance } = redeemSavingModal.data;
+    const { asset } = redeemSavingModal.data;
 
     const [loading, setLoading] = useState(false);
 
@@ -59,7 +59,7 @@ const RedeemSavingModal = () => {
 
                 dispatch(
                     open_modal({
-                        modalName: modals.subscribedSuccesfullyModal,
+                        modalName: modals.redeemSuccessfullModal,
                         modalData: { amount, asset: { symbol: asset.symbol } },
                     })
                 );

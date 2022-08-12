@@ -15,6 +15,7 @@ import QRCodeGeneratorModal from 'src/components/modals/qr-code-generator-modal'
 import SubscribeToSavingOfferModal from 'src/components/modals/subscribe-to-saving-offer-modal';
 import SubscribedSuccesfullyModal from 'src/components/modals/subscribed-succesfully';
 import RedeemSavingModal from 'src/components/modals/redeem-saving-modal';
+import RedeemSuccessfullModal from 'src/components/modals/redeemed-successfully';
 
 import SessionComponent from 'src/components/commons/session-service';
 
@@ -84,6 +85,7 @@ function MyApp({ Component, pageProps }) {
                 <SubscribeToSavingOfferModal />
                 <SubscribedSuccesfullyModal />
                 <RedeemSavingModal />
+                <RedeemSuccessfullModal />
 
                 {getLayout(<Component {...pageProps} />)}
             </Provider>

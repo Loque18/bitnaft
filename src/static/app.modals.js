@@ -4,6 +4,7 @@ const modals = {
     subscribeToSavingOfferModal: 'subscribeToSavingOfferModal',
     subscribedSuccesfullyModal: 'subscribedSuccesfullyModal',
     redeemSavingModal: 'redeemSavingModal',
+    redeemSuccessfullModal: 'redeemSuccessfullModal',
 };
 
 export default modals;
