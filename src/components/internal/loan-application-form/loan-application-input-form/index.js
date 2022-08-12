@@ -28,7 +28,7 @@ const LoanApplicationInputForm = props => {
                     value={value}
                     onChange={e => setValue(e.value)}
                     minFractionDigits={0}
-                    maxFractionDigits={5}
+                    maxFractionDigits={18}
                     placeholder={placeholder}
                 />
                 <button
