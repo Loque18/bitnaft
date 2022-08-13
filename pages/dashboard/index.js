@@ -97,7 +97,7 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                         />
                     </div>
                 </div>
-                <div className="columns pt-5">
+                {/* <div className="columns pt-5">
                     <div className="column">
                         <button
                             type="button"
@@ -118,7 +118,7 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                             Generate QR Code
                         </button>
                     </div>
-                </div>
+                </div> */}
             </div>
         </section>
     );

@@ -5,6 +5,7 @@ const modals = {
     subscribedSuccesfullyModal: 'subscribedSuccesfullyModal',
     redeemSavingModal: 'redeemSavingModal',
     redeemSuccessfullModal: 'redeemSuccessfullModal',
+    confirmLoanApplicationModal: 'confirmLoanApplicationModal',
 };
 
 export default modals;

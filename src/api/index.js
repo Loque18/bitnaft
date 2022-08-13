@@ -45,6 +45,14 @@ const api = {
                 url: `${endpoint}/borrowables`,
             });
         },
+
+        collateralNeeded({ email, token, collateralName, borrowName, borrowAmount }) {
+            const params = `?email=${email}&sessionToken=${token}&collateral=${collateralName}&borrow=${borrowName}&borrowAmount=${borrowAmount}`;
+            return axios({
+                method: 'get',
+                url: `${endpoint}/collateralNeeded/${params}`,
+            });
+        },
     },
     post: {
         signup: ({ email, password }) => {
@@ -97,6 +105,15 @@ const api = {
             return axios({
                 method: 'post',
                 url: `${endpoint}/removeFromSavings/${params}`,
+            });
+        },
+
+        // loans
+        takeLoan: ({ email, token, collateral, borrow, collateralAmount, borrowAmount }) => {
+            const params = `?email=${email}&sessionToken=${token}&collateral=${collateral}&borrow=${borrow}&collateralAmount=${collateralAmount}&borrowAmount=${borrowAmount}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/takeLoan/${params}`,
             });
         },
     },

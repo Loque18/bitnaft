@@ -6,8 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 
 import { start_close_modal } from 'src/redux/actions';
-import AssetsListComponent from './assets-list';
+import modals from 'src/static/app.modals';
 
+import AssetsListComponent from './assets-list';
 import styles from './styles.module.scss';
 
 const { list } = styles;
@@ -15,10 +16,12 @@ const { list } = styles;
 const CoinManagerModal = () => {
     // modal reducer
     const dispatch = useDispatch();
-    const { coinManagerModal } = useSelector(state => state.modalReducer);
+    const coinManagerModal = useSelector(state => state.modalReducer[modals.coinManagerModal]);
+
+    const { data } = coinManagerModal;
 
     // local state
-    const [assetsList, setAssetsList] = useState([]);
+
     const [isSearching, setIsSearching] = useState(false);
     // const [searchText, setSearchText] = useState('');
     const [loading, setLoading] = useState(false);
@@ -46,17 +49,12 @@ const CoinManagerModal = () => {
         dispatch(start_close_modal());
     };
 
-    /* ~~*~~*~~*~~*~~* INPUT HANDLERS *~~*~~*~~*~~*~~*~~*~~* */
+    const onSelect = (e, asset) => {
+        data.onSelect(asset);
+        closeModal();
+    };
 
-    useEffect(() => {
-        fetch('https://restcountries.com/v3.1/all')
-            .then(response => response.json())
-            .then(data => {
-                setAssetsList(data);
-                setLoading(false);
-                setIsSearching(false);
-            });
-    }, []);
+    /* ~~*~~*~~*~~*~~* INPUT HANDLERS *~~*~~*~~*~~*~~*~~*~~* */
 
     return (
         <Modal isOpen={coinManagerModal.isOpen}>
@@ -97,7 +95,11 @@ const CoinManagerModal = () => {
                                             </ul>
                                         ) : null
                                     ) : (
-                                        <AssetsListComponent assets={assetsList} handleSelectAssetClick={closeModal} />
+                                        <AssetsListComponent
+                                            assets={data.availableAssets}
+                                            disableAssets={data.disableAssets}
+                                            handleSelectAssetClick={onSelect}
+                                        />
                                     )}
                                 </div>
                             }

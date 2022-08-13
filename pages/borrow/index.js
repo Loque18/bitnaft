@@ -1,15 +1,25 @@
+import { toast } from 'react-toastify';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import { getLayout as getMainLayout } from 'src/layouts/main';
 import BitnaftBanner from 'src/layouts/bitnaft-banner';
-import Tabs from 'src/layouts/tabs';
-import { portfolioTabList } from 'src/static/tab-list';
+// import Tabs from 'src/layouts/tabs';
+// import { portfolioTabList } from 'src/static/tab-list';
 import LoanApplicationForm from 'src/components/internal/loan-application-form';
+
+import requirePageAuth from 'src/functions/require-page-auth';
+
+import api from 'src/api';
 
 import styles from './styles.module.scss';
 
 const { bordered_hr } = styles;
 
-const BorrowPage = () => {
+const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
+    if (error) {
+        toast.error(errorMessage);
+        return null;
+    }
+
     return (
         <div>
             <BitnaftBanner
@@ -17,9 +27,7 @@ const BorrowPage = () => {
                 description="Lorem ipsum dolor sit amet consectetur adipiscing elit."
                 background="earn-banner"
             />
-            <section className="section">
-                <Tabs tabs={portfolioTabList} />
-            </section>
+            <section className="section">{/* <Tabs tabs={portfolioTabList} /> */}</section>
             <section className="section is-hidden-mobile pt-0">
                 {/* TODO: Adjust this section to fit in screens starting from 1024px */}
                 <div className="columns mb-0 is-gapless">
@@ -80,7 +88,81 @@ const BorrowPage = () => {
                 </div>
             </section>
             <section className="section pt-0">
-                <LoanApplicationForm />
+                <div className="box">
+                    <div className="columns is-reverse">
+                        <div className="column is-6">
+                            <LoanApplicationForm availableAssets={availableAssets} walletAssets={walletAssets} />
+                        </div>
+                        <div className="column is-5 is-offset-1">
+                            <div className="columns">
+                                <div className="column">
+                                    <h1 className="is-size-4 has-font-roboto has-text-weight-medium has-text-hdarkgray">
+                                        Loan to value ratio (LVT)
+                                    </h1>
+                                    <div className="columns is-mobile">
+                                        <div className="column">
+                                            <p className="is-size-4 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
+                                                0%
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="columns mt-5">
+                                <div className="column">
+                                    <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
+                                        Liquidation price
+                                    </h1>
+                                    <div className="columns is-mobile">
+                                        <div className="column">
+                                            <p className="is-size-5 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
+                                                -
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="column">
+                                    <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
+                                        Interest rate
+                                    </h1>
+                                    <div className="columns is-mobile">
+                                        <div className="column">
+                                            <p className="is-size-5 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
+                                                -
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="columns mt-5">
+                                <div className="column">
+                                    <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
+                                        Total interest amount
+                                    </h1>
+                                    <div className="columns is-mobile">
+                                        <div className="column">
+                                            <p className="is-size-5 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
+                                                -
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="column">
+                                    <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
+                                        Repayment amount
+                                    </h1>
+                                    <div className="columns is-mobile">
+                                        <div className="column">
+                                            <p className="is-size-5 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
+                                                -
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
     );
@@ -88,3 +170,52 @@ const BorrowPage = () => {
 
 BorrowPage.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Borrow');
 export default BorrowPage;
+
+export const getServerSideProps = requirePageAuth(async (ctx, sessionWithToken) => {
+    const { user, token } = sessionWithToken;
+    const { email } = user;
+
+    let availableAssets = [];
+    let walletAssets = [];
+
+    try {
+        const res1 = await api.get.borrowables();
+
+        if (!res1.data.success) {
+            throw new Error(res1.data.message);
+        }
+
+        availableAssets = res1.data.data;
+
+        const res2 = await api.get.balances({ email, token });
+
+        if (!res2.data.success) {
+            if (res2.data.code.toString() === '603') {
+                return {
+                    props: {},
+                    redirect: {
+                        destination: '/sessionexpired',
+                        permanent: false,
+                    },
+                };
+            }
+
+            throw new Error(res2.data.message);
+        }
+
+        walletAssets = res2.data.data;
+
+        // balances = res.data.data;
+    } catch (error) {
+        return {
+            props: { error: true, errorMessage: error.message, walletAssets: [], availableAssets: [] },
+        };
+    }
+
+    return {
+        props: {
+            walletAssets,
+            availableAssets,
+        },
+    };
+});
