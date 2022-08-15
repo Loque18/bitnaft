@@ -27,22 +27,6 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     // const sbalances = getUserBalances(savingsAssets);
     // const lbalances = getUserBalances(loansAssets);
 
-    const handleCoinManagerModal = () => {
-        dispatch(
-            open_modal({
-                modalName: modals.coinManagerModal,
-            })
-        );
-    };
-
-    const handleQRCodeGeneratorModal = () => {
-        dispatch(
-            open_modal({
-                modalName: modals.qrCodeGeneratorModal,
-            })
-        );
-    };
-
     return (
         <section className="section">
             <div className="container">
@@ -97,14 +81,20 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                         />
                     </div>
                 </div>
-                {/* <div className="columns pt-5">
+                <div className="columns pt-5">
                     <div className="column">
                         <button
                             type="button"
                             className="button is-primary is-fullwidth"
-                            onClick={handleCoinManagerModal}
+                            onClick={() => {
+                                dispatch(
+                                    open_modal({
+                                        modalName: modals.repayLoanModal,
+                                    })
+                                );
+                            }}
                         >
-                            Manage Coins
+                            Repay loan
                         </button>
                     </div>
                 </div>
@@ -113,12 +103,18 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                         <button
                             type="button"
                             className="button is-primary is-fullwidth"
-                            onClick={handleQRCodeGeneratorModal}
+                            onClick={() => {
+                                dispatch(
+                                    open_modal({
+                                        modalName: modals.qrCodeGeneratorModal,
+                                    })
+                                );
+                            }}
                         >
                             Generate QR Code
                         </button>
                     </div>
-                </div> */}
+                </div>
             </div>
         </section>
     );

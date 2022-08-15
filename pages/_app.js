@@ -17,6 +17,7 @@ import SubscribedSuccesfullyModal from 'src/components/modals/subscribed-succesf
 import RedeemSavingModal from 'src/components/modals/redeem-saving-modal';
 import RedeemSuccessfullModal from 'src/components/modals/redeemed-successfully';
 import ConfirmLoanApplicationModal from 'src/components/modals/confirm-loan-application-modal';
+import RepayLoanModal from 'src/components/modals/repay-loan-modal';
 
 import SessionComponent from 'src/components/commons/session-service';
 
@@ -88,6 +89,7 @@ function MyApp({ Component, pageProps }) {
                 <RedeemSavingModal />
                 <RedeemSuccessfullModal />
                 <ConfirmLoanApplicationModal />
+                <RepayLoanModal />
 
                 {getLayout(<Component {...pageProps} />)}
             </Provider>
