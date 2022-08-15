@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 const LoansPage = ({ error, errorMessage, walletAssets, savingsAssets, loansAssets }) => {
     if (error) toast.error(errorMessage);
-    return <LoansTable assets={loansAssets} />;
+    return <LoansTable walletAssets={walletAssets} assets={loansAssets} />;
 };
 
 LoansPage.getLayout = page => getPageTitleLayout(getMainLayout(getDashboardSubPageLayout(page, 'Loans')), 'Loans');
@@ -49,7 +49,7 @@ export const getServerSideProps = requirePageAuth(async (ctx, sessionWithToken) 
         // balances = res.data.data;
     } catch (error) {
         return {
-            props: { error: true, errorMessage: error.message, balances: [] },
+            props: { error: true, errorMessage: error.message, walletAssets: [], savingsAssets: [], loansAssets: [] },
         };
     }
 

@@ -4,7 +4,7 @@ import { decrypt } from 'src/utils/hash';
 
 const { SESSION_KEY } = process.env;
 
-export default async function takeLoan(req, res) {
+export default async function repay(req, res) {
     const session = req.cookies[SESSION_KEY];
 
     if (!session) {
@@ -15,17 +15,17 @@ export default async function takeLoan(req, res) {
     const { token, user } = sessionData;
     const { email } = user;
 
-    const { collateralName, collateralAmount, borrowName, borrowAmount } = req.body;
+    const { amount, loanHash } = req.body;
 
     try {
-        const response = await api.post.takeLoan({
+        const response = await api.post.repayLoan({
             email,
             token,
-            collateral: collateralName,
-            collateralAmount,
-            borrow: borrowName,
-            borrowAmount,
+            loanId: loanHash,
+            amount,
         });
+
+        console.log(response);
 
         if (!response.data.success) {
             return res.status(200).send({
@@ -39,6 +39,7 @@ export default async function takeLoan(req, res) {
             data: response.data.data,
         });
     } catch (err) {
+        console.log(err);
         return res.status(200).send({
             status: 'error',
             message: err.message,

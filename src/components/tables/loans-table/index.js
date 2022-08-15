@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button } from 'primereact/button';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
@@ -11,11 +12,15 @@ import { InputText } from 'primereact/inputtext';
 import formatDate from 'src/utils/format-date';
 import formatBigNumber from 'src/utils/format-bignumber';
 
+import modals from 'src/static/app.modals';
+
+import { open_modal } from 'src/redux/actions';
 import styles from '../styles.module.scss';
 
 const { green_circle } = styles;
 
-const LoansTable = ({ assets }) => {
+const LoansTable = ({ assets, walletAssets }) => {
+    const dispatch = useDispatch();
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     // const [loading, setLoading] = useState(true);
@@ -23,6 +28,43 @@ const LoansTable = ({ assets }) => {
     const [expandedRows, setExpandedRows] = useState(null);
 
     // const isMounted = useRef(false);
+
+    const handleRepayClick = (e, loan) => {
+        e.preventDefault();
+        dispatch(
+            open_modal({
+                modalName: modals.repayLoanModal,
+                modalData: {
+                    loan,
+                    walletAssets,
+                },
+            })
+        );
+    };
+
+    const handleAddCollateralClick = (e, loan) => {
+        e.preventDefault();
+        dispatch(
+            open_modal({
+                modalName: modals.addCollateralModal,
+                modalData: {
+                    loan,
+                },
+            })
+        );
+    };
+
+    const handleWithdrawClick = (e, loan) => {
+        e.preventDefault();
+        dispatch(
+            open_modal({
+                modalName: modals.withdrawCollateralModal,
+                modalData: {
+                    loan,
+                },
+            })
+        );
+    };
 
     const initFilter = () => {
         setFilter({
@@ -324,6 +366,37 @@ const LoansTable = ({ assets }) => {
         );
     };
 
+    const actionsBodyTemplate = rawData => {
+        return (
+            <div className="is-flex is-justify-content-flex-start is-align-items-center">
+                <button
+                    type="button"
+                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6"
+                    style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={e => handleRepayClick(e, rawData)}
+                >
+                    Repay
+                </button>
+                <button
+                    type="button"
+                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-5"
+                    style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={e => handleAddCollateralClick(e, rawData)}
+                >
+                    Add
+                </button>
+                <button
+                    type="button"
+                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-5"
+                    style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={e => handleWithdrawClick(e, rawData)}
+                >
+                    Withdraw
+                </button>
+            </div>
+        );
+    };
+
     const header = renderHeader();
     return (
         <div className="box">
@@ -371,6 +444,12 @@ const LoansTable = ({ assets }) => {
                     field="collateralAmount"
                     header="Collateral Amount"
                     body={collateralAmountTemplate}
+                    style={{ verticalAlign: 'middle' }}
+                    className="min-w-200"
+                />
+                <Column
+                    header="Actions"
+                    body={actionsBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
                     className="min-w-200"
                 />

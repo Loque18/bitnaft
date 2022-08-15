@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { toast } from 'react-toastify';
+
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import { getLayout as getMainLayout } from 'src/layouts/main';
 import BitnaftBanner from 'src/layouts/bitnaft-banner';

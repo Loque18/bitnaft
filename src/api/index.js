@@ -116,6 +116,27 @@ const api = {
                 url: `${endpoint}/takeLoan/${params}`,
             });
         },
+        repayLoan: ({ email, token, loanId, amount }) => {
+            const params = `?email=${email}&sessionToken=${token}&loanHash=${loanId}&amount=${amount}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/repayLoan/${params}`,
+            });
+        },
+        addCollateral: ({ email, token, loanId, amount }) => {
+            const params = `?email=${email}&sessionToken=${token}&loanHash=${loanId}&amount=${amount}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/addCollateral/${params}`,
+            });
+        },
+        withdrawCollateral: ({ email, token, loanId, amount }) => {
+            const params = `?email=${email}&sessionToken=${token}&loanHash=${loanId}&amount=${amount}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/withdrawCollateral/${params}`,
+            });
+        },
     },
     put: {},
     delete: {},
