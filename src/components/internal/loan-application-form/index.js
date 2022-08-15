@@ -164,7 +164,12 @@ const LoanApplicationForm = ({ availableAssets, walletAssets }) => {
                                     <div className="columns is-gapless is-mobile">
                                         <div className="column is-flex is-narrow">
                                             <figure className="image is-24x24 has-margin-right-0 has-margin-left-0">
-                                                <Image src={formik.values.loanAsset.icon} alt="Bitcoin" layout="fill" />
+                                                <Image
+                                                    src={formik.values.loanAsset.icon}
+                                                    alt="Bitcoin"
+                                                    layout="fill"
+                                                    className="is-rounded"
+                                                />
                                             </figure>
                                         </div>
                                         <div className="column is-flex is-align-items-center is-narrow ml-2">
@@ -227,8 +232,9 @@ const LoanApplicationForm = ({ availableAssets, walletAssets }) => {
                                             <figure className="image is-24x24 has-margin-right-0 has-margin-left-0">
                                                 <Image
                                                     src={formik.values.collateralAsset.icon}
-                                                    alt="Bitcoin"
+                                                    alt={formik.values.collateralAsset.name}
                                                     layout="fill"
+                                                    className="is-rounded"
                                                 />
                                             </figure>
                                         </div>

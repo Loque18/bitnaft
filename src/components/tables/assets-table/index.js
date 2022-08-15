@@ -134,7 +134,7 @@ const AssetsTable = ({ assets }) => {
 
     const actionsBodyTemplate = () => {
         return (
-            <div className="buttons is-flex is-justify-content-flex-start is-align-items-center">
+            <div className="is-flex is-justify-content-flex-start is-align-items-center">
                 <button
                     type="button"
                     className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6"
@@ -179,7 +179,8 @@ const AssetsTable = ({ assets }) => {
                     filter
                     filterPlaceholder="Search by assets"
                     body={assetsNameTemplate}
-                    className="min-w-250"
+                    style={{ verticalAlign: 'middle' }}
+                    className="min-w-300"
                 />
                 <Column
                     sortable
@@ -187,6 +188,7 @@ const AssetsTable = ({ assets }) => {
                     header="Balance"
                     body={balanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-100"
                 />
                 <Column
                     sortable
@@ -194,6 +196,7 @@ const AssetsTable = ({ assets }) => {
                     header="USD Value"
                     body={usdBalanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-150"
                 />
                 <Column
                     header="Actions"

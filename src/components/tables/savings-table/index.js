@@ -220,6 +220,7 @@ const SavingsTable = ({ assets }) => {
                     header="USD Value"
                     body={balanceUsdValueTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-150"
                 />
 
                 <Column sortable field="area" header="APY" body={apyBodyTemplate} style={{ verticalAlign: 'middle' }} />
