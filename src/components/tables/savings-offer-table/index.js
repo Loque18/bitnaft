@@ -172,6 +172,7 @@ const SavingsOfferTable = ({ assets, walletAssets }) => {
                     filterPlaceholder="Search by assets"
                     body={coinNameTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-200"
                 />
                 <Column field="apr" header="APR" sortable body={aprBodyTemplate} style={{ verticalAlign: 'middle' }} />
                 <Column

@@ -2,7 +2,6 @@ import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import { getLayout as getMainLayout } from 'src/layouts/main';
 
 import BitnaftBanner from 'src/layouts/bitnaft-banner';
-import PortfolioCard from 'src/components/internal/assets-cards/portfolio-card';
 import SavingsOfferTable from 'src/components/tables/savings-offer-table';
 
 import api from 'src/api';
@@ -26,12 +25,7 @@ const EarnPage = ({ savingOffers, error, errorMessage, walletAssets }) => {
                 background="earn-banner"
             />
             <div className="container">
-                <div className="columns is-centered">
-                    <div className="column">
-                        <PortfolioCard />
-                    </div>
-                </div>
-                <section className="section pt-0 px-2">
+                <section className="section px-2">
                     <div className="columns pb-4">
                         <div className="column is-flex">
                             <h1 className="title is-size-4 has-text-md-black-o-7 has-font-roboto has-text-weight-light">

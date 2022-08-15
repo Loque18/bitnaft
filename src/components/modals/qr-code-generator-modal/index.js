@@ -39,6 +39,10 @@ const QRCodeGeneratorModal = () => {
         }
     };
 
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(userAddress).then(toast.success('Address copied to clipboard'));
+    };
+
     useEffect(() => {
         generateQRCode();
     }, []);
@@ -84,10 +88,15 @@ const QRCodeGeneratorModal = () => {
                                         )}
                                     </div>
                                     <div className="columns has-text-centered">
-                                        <div className="column">
+                                        <div className="column is-flex is-justify-content-center is-align-items-center">
                                             <p className="is-size-7 has-text-md-black has-font-roboto has-text-weight-bold">
                                                 {userAddress}
                                             </p>
+                                            <button className="unstyled-button" type="button" onClick={copyToClipboard}>
+                                                <span className="icon has-text-md-black ml-2">
+                                                    <i className="fas fa-copy" />
+                                                </span>
+                                            </button>
                                         </div>
                                     </div>
                                     <div className="columns has-text-centered">

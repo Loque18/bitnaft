@@ -1,6 +1,7 @@
 @use 'sass:map';
 
 $hblue: #15195b;
+$hblue2: #4492E8;
 $hlight: #f2f2f2;
 $hlightblue: #d7e7f9;
 $hperiwinkle: #d0d1de;
@@ -15,6 +16,7 @@ $hcolors: (
     hperiwinkle: $hperiwinkle,
     hgreen: $hgreen,
     hdarkgray: $hdarkgray,
+    hblue2: $hblue2,
 );
 
 $hgras: ();

@@ -97,7 +97,7 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                             <div className="columns">
                                 <div className="column">
                                     <h1 className="is-size-4 has-font-roboto has-text-weight-medium has-text-hdarkgray">
-                                        Loan to value ratio (LVT)
+                                        Loan to value ratio (LTV)
                                     </h1>
                                     <div className="columns is-mobile">
                                         <div className="column">

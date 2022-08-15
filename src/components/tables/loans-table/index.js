@@ -115,7 +115,7 @@ const LoansTable = ({ assets }) => {
 
         return (
             <div className="has-font-roboto">
-                <div className="columns">
+                <div className="columns is-mobile">
                     <div className="column">
                         <div className="columns mb-0 is-mobile">
                             <div className="column is-flex is-align-items-center">
@@ -355,7 +355,7 @@ const LoansTable = ({ assets }) => {
                     filter
                     filterPlaceholder="Search by assets"
                     body={assetsNameTemplate}
-                    className="min-w-250"
+                    className="min-w-400"
                     style={{ verticalAlign: 'middle' }}
                 />
                 <Column
@@ -364,6 +364,7 @@ const LoansTable = ({ assets }) => {
                     header="Loan Amount"
                     body={loanAmountTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-200"
                 />
                 <Column
                     sortable
@@ -371,6 +372,7 @@ const LoansTable = ({ assets }) => {
                     header="Collateral Amount"
                     body={collateralAmountTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-200"
                 />
                 <Column expander style={{ width: '3em' }} />
             </DataTable>
