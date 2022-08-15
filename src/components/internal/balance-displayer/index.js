@@ -16,7 +16,7 @@ const BalanceDisplayer = ({ balance, totalBalance }) => {
     };
 
     return (
-        <div className="py-4 px-6 has-bg-hlightblue">
+        <div className="py-4 px-6 has-bg-hblue2-o-1">
             <div>
                 <div className="columns mb-1 is-gapless is-mobile">
                     <div className="column is-narrow is-flex is-align-items-center">
