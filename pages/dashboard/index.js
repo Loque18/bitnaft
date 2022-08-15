@@ -89,7 +89,7 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                             onClick={() => {
                                 dispatch(
                                     open_modal({
-                                        modalName: modals.repayLoanModal,
+                                        modalName: modals.withdrawCollateralModal,
                                     })
                                 );
                             }}

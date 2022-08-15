@@ -18,6 +18,8 @@ import RedeemSavingModal from 'src/components/modals/redeem-saving-modal';
 import RedeemSuccessfullModal from 'src/components/modals/redeemed-successfully';
 import ConfirmLoanApplicationModal from 'src/components/modals/confirm-loan-application-modal';
 import RepayLoanModal from 'src/components/modals/repay-loan-modal';
+import AddCollateralModal from 'src/components/modals/add-collateral-modal';
+import WithdrawCollateralModal from 'src/components/modals/withdraw-collateral-modal';
 
 import SessionComponent from 'src/components/commons/session-service';
 
@@ -90,6 +92,8 @@ function MyApp({ Component, pageProps }) {
                 <RedeemSuccessfullModal />
                 <ConfirmLoanApplicationModal />
                 <RepayLoanModal />
+                <AddCollateralModal />
+                <WithdrawCollateralModal />
 
                 {getLayout(<Component {...pageProps} />)}
             </Provider>
