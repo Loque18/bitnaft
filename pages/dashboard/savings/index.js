@@ -55,7 +55,7 @@ export const getServerSideProps = requirePageAuth(async (ctx, sessionWithToken) 
         // balances = res.data.data;
     } catch (error) {
         return {
-            props: { error: true, errorMessage: error.message, balances: [] },
+            props: { error: true, errorMessage: error.message, savingsAssets: [], walletAssets: [] },
         };
     }
 

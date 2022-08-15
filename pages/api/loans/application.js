@@ -7,6 +7,8 @@ const { SESSION_KEY } = process.env;
 export default async function takeLoan(req, res) {
     const session = req.cookies[SESSION_KEY];
 
+    console.log('session', session);
+
     if (!session) {
         res.status(200).send({ status: 'fail', data: { message: 'Session not found' } });
     }
@@ -27,6 +29,8 @@ export default async function takeLoan(req, res) {
             borrowAmount,
         });
 
+        console.log('response', response);
+
         if (!response.data.success) {
             return res.status(200).send({
                 status: 'fail',
@@ -39,6 +43,7 @@ export default async function takeLoan(req, res) {
             data: response.data.data,
         });
     } catch (err) {
+        console.log(err);
         return res.status(200).send({
             status: 'error',
             message: err.message,

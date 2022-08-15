@@ -21,7 +21,8 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
 
     const { user } = session;
 
-    const noneZeroBalancesWallet = walletAssets.filter(asset => asset.balance > 0);
+    const noneZeroBalancesWallet = walletAssets.filter(asset => asset.usdValue > 0);
+    const noneZeroSavingAssets = savingsAssets.filter(asset => asset.usdValue > 0);
     const userWalletBalance = getBalances(noneZeroBalancesWallet);
     const userSavingsBalance = getBalances(savingsAssets.filter(asset => asset.savingsBalance > 0));
     // const sbalances = getUserBalances(savingsAssets);
@@ -61,13 +62,8 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                             to="/dashboard/wallet"
                             icon="fas fa-wallet"
                             amount={userWalletBalance}
-                            cryptoIcons={[
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                            ]}
-                            numberOfAssets={15}
+                            cryptoIcons={noneZeroBalancesWallet.slice(0, 4).map(asset => asset.icon)}
+                            numberOfAssets={noneZeroBalancesWallet.length}
                         />
                     </div>
                     <div className="column is-narrow">
@@ -76,13 +72,8 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                             to="/dashboard/savings"
                             icon="fa-solid fa-sack-dollar"
                             amount={userSavingsBalance}
-                            cryptoIcons={[
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                            ]}
-                            numberOfAssets={4}
+                            cryptoIcons={noneZeroSavingAssets.slice(0, 4).map(asset => asset.icon)}
+                            numberOfAssets={noneZeroSavingAssets.length}
                         />
                     </div>
                     <div className="column is-narrow">

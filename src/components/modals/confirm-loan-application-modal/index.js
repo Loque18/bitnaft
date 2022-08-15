@@ -8,9 +8,11 @@ import axios from 'axios';
 import Modal from 'src/components/commons/modal';
 import CardLayout from 'src/layouts/card';
 
-import { start_close_modal } from 'src/redux/actions';
+import { open_modal, start_close_modal } from 'src/redux/actions';
 
 import modals from 'src/static/app.modals';
+
+import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
 
 const ConfirmLoanApplicationModal = () => {
     const dispatch = useDispatch();
@@ -27,25 +29,38 @@ const ConfirmLoanApplicationModal = () => {
     const handleConfirmClick = async () => {
         setLoading(true);
         try {
+            const dataa = {
+                collateralName: data.collateralAsset.name,
+                collateralAmount: formatNormalNumber(data.collateralAmount, data.collateralAsset.decimals),
+                borrowName: data.loanAsset.name,
+                borrowAmount: formatNormalNumber(data.loanAmount, data.loanAsset.decimals),
+            };
+
+            console.log(data);
+
             const res = await axios({
                 method: 'post',
                 url: '/api/loans/application',
-                data: {
-                    collateralName: data.collateralAsset.name,
-                    collateralAmount: data.collateralAmount,
-                    borrowName: data.loanAsset.name,
-                    borrowAmount: data.loanAmount,
-                },
+                data: dataa,
             });
-
-            console.log(res);
-
             if (res.data.status === 'success') {
-                console.log(res.data);
-                dispatch(start_close_modal(modals.confirmLoanApplicationModal));
+                dispatch(
+                    open_modal({
+                        modalName: modals.LoanGivenSuccessfullyModal,
+                        modalData: {
+                            borrowAmount: data.loanAmount,
+                            collateralAmount: data.collateralAmount,
+                            borrowAsset: data.loanAsset,
+                            collateralAsset: data.collateralAsset,
+                        },
+                    })
+                );
+            }
+            if (res.data.status === 'fail') {
+                toast.error(res.data.data.message);
             }
         } catch (err) {
-            toast.error(err.message);
+            toast.error('Something went wrong, try again later');
         }
         setLoading(false);
     };
