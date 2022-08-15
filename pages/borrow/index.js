@@ -104,7 +104,7 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                                     <div className="columns is-mobile">
                                         <div className="column">
                                             <p className="is-size-4 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
-                                                0%
+                                                65%
                                             </p>
                                         </div>
                                     </div>

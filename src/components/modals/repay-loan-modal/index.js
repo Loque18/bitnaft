@@ -42,11 +42,11 @@ const RepayLoanModal = () => {
             setLoading(true);
             try {
                 const response = await axios({
-                    method: 'get',
+                    method: 'post',
                     url: `/api/loans/repay`,
                     data: {
                         loanHash: data.loan.loanHash,
-                        amount: formatNormalNumber(values.amount, data.loan.collateralDecimals),
+                        amount: formatNormalNumber(values.amount, data.loan.borrowDecimals),
                     },
                 });
 
@@ -60,7 +60,7 @@ const RepayLoanModal = () => {
                 return toast.success(response.data.message);
             } catch (error) {
                 setLoading(false);
-                return toast.error(error.message);
+                return toast.error('Something went wrong, please try again later');
             }
         },
     });

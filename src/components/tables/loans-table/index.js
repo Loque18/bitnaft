@@ -49,6 +49,7 @@ const LoansTable = ({ assets, walletAssets }) => {
                 modalName: modals.addCollateralModal,
                 modalData: {
                     loan,
+                    walletAssets,
                 },
             })
         );
@@ -61,6 +62,7 @@ const LoansTable = ({ assets, walletAssets }) => {
                 modalName: modals.withdrawCollateralModal,
                 modalData: {
                     loan,
+                    walletAssets,
                 },
             })
         );

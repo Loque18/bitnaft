@@ -1,27 +1,75 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import Image from 'next/image';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { InputNumber } from 'primereact/inputnumber';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
 import Modal from 'src/components/commons/modal';
 import CardLayout from 'src/layouts/card';
 
-import { InputNumber } from 'primereact/inputnumber';
-
-import formatDate from 'src/utils/format-date';
-
-import Image from 'next/image';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import modals from 'src/static/app.modals';
 
 import { start_close_modal } from 'src/redux/actions';
+import formatBigNumber from 'src/utils/format-bignumber';
+import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
 
 const WithdrawCollateralModal = () => {
     const dispatch = useDispatch();
-    const { withdrawCollateralModal } = useSelector(state => state.modalReducer);
+    const withdrawCollateralModal = useSelector(state => state.modalReducer[modals.withdrawCollateralModal]);
 
     const [loading, setLoading] = useState(false);
+
+    const { data } = withdrawCollateralModal;
+
+    const formik = useFormik({
+        initialValues: {
+            amount: '',
+        },
+        validationSchema: yup.object().shape({
+            amount: yup.number().required('Amount is required'),
+        }),
+
+        onSubmit: async values => {
+            console.log('si');
+            setLoading(true);
+            try {
+                const response = await axios({
+                    method: 'post',
+                    url: `/api/loans/withdraw-collateral`,
+                    data: {
+                        loanHash: data.loan.loanHash,
+                        amount: formatNormalNumber(values.amount, data.loan.collateralDecimals),
+                    },
+                });
+
+                if (!response.data.success) {
+                    setLoading(false);
+                    return toast.error(response.data.message);
+                }
+
+                setLoading(false);
+                dispatch(start_close_modal(modals.repayLoanModal));
+                return toast.success(response.data.message);
+            } catch (error) {
+                setLoading(false);
+                return toast.error('Something went wrong');
+            }
+        },
+    });
+
+    const handleSubmit = () => {
+        formik.submitForm();
+    };
 
     const closeModal = () => {
         dispatch(start_close_modal());
     };
+
+    if (!data || !data.loan) return null;
 
     return (
         <Modal isOpen={withdrawCollateralModal.isOpen}>
@@ -49,7 +97,7 @@ const WithdrawCollateralModal = () => {
                                         <figure className="image is-24x24">
                                             <Image
                                                 className="is-rounded shadowed-logo"
-                                                src="https://bitcoin.org/img/icons/opengraph.png?1657703267"
+                                                src={data.loan.borrowIcon}
                                                 layout="fill"
                                                 alt=""
                                             />
@@ -60,7 +108,7 @@ const WithdrawCollateralModal = () => {
                                         >
                                             <Image
                                                 className="is-rounded shadowed-logo"
-                                                src="https://bitcoin.org/img/icons/opengraph.png?1657703267"
+                                                src={data.loan.collateralIcon}
                                                 layout="fill"
                                                 alt=""
                                             />
@@ -70,12 +118,12 @@ const WithdrawCollateralModal = () => {
                                         <div className="columns is-mobile">
                                             <div className="column is-flex is-flex-direction-flex-start is-align-items-center">
                                                 <p className="title has-font-roboto has-text-md-black is-size-6 has-text-weight-medium">
-                                                    Bitcoin / Bitcoin
+                                                    {data.loan.borrowName} / {data.loan.collateralName}
                                                 </p>
                                             </div>
                                             <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
                                                 <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-roboto">
-                                                    BTC / BTC
+                                                    {data.loan.borrowSymbol} / {data.loan.collateralSymbol}
                                                 </p>
                                             </div>
                                         </div>
@@ -101,33 +149,38 @@ const WithdrawCollateralModal = () => {
                                     </div>
                                     <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
                                         <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
-                                            0.0 <span className="has-font-roboto">BTC</span>
+                                            {formatBigNumber(data.loan.collateralAmount, data.loan.collateralDecimals)}{' '}
+                                            <span className="has-font-roboto">{data.loan.collateralSymbol}</span>
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="columns mb-0 is-mobile">
                                     <div className="column">
-                                        <div className="field">
-                                            <label
-                                                className="has-font-roboto has-text-md-black"
-                                                htmlFor="minmaxfraction"
-                                            >
-                                                Amount
-                                            </label>
-                                            <div className="control ">
-                                                <div className="p-inputgroup pt-2">
-                                                    <InputNumber
-                                                        inputId="minmaxfraction"
-                                                        name="Amount"
-                                                        minFractionDigits={0}
-                                                        maxFractionDigits={18}
-                                                        placeholder="Amount"
-                                                        allowEmpty
-                                                    />
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="field">
+                                                <label
+                                                    className="label has-font-roboto has-text-md-black"
+                                                    htmlFor="minmaxfraction"
+                                                >
+                                                    Amount
+                                                </label>
+                                                <div className="control ">
+                                                    <div className="p-inputgroup pt-2">
+                                                        <InputNumber
+                                                            inputId="minmaxfraction"
+                                                            name="amount"
+                                                            minFractionDigits={0}
+                                                            maxFractionDigits={18}
+                                                            placeholder="Amount"
+                                                            allowEmpty
+                                                            value={formik.values.amount}
+                                                            onChange={e => formik.setFieldValue('amount', e.value)}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -135,10 +188,14 @@ const WithdrawCollateralModal = () => {
                         footer={
                             <section className="has-text-centered ">
                                 <div className="buttons is-flex is-justify-content-center ">
-                                    <button className="button is-hblue outlined" type="button">
+                                    <button className="button is-hblue outlined" type="button" onClick={closeModal}>
                                         Cancel
                                     </button>
-                                    <button className={`button is-hblue ${loading ? 'is-loading' : ''}`} type="button">
+                                    <button
+                                        className={`button is-hblue ${loading ? 'is-loading' : ''}`}
+                                        type="button"
+                                        onClick={handleSubmit}
+                                    >
                                         Confirm
                                     </button>
                                 </div>
