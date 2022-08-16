@@ -12,6 +12,15 @@ import Loading from 'src/components/commons/loading';
 
 import CoinManagerModal from 'src/components/modals/coin-manager-modal';
 import QRCodeGeneratorModal from 'src/components/modals/qr-code-generator-modal';
+import SubscribeToSavingOfferModal from 'src/components/modals/subscribe-to-saving-offer-modal';
+import SubscribedSuccesfullyModal from 'src/components/modals/subscribed-succesfully';
+import RedeemSavingModal from 'src/components/modals/redeem-saving-modal';
+import RedeemSuccessfullModal from 'src/components/modals/redeemed-successfully';
+import ConfirmLoanApplicationModal from 'src/components/modals/confirm-loan-application-modal';
+import LoanGivenModal from 'src/components/modals/loan-given-modal';
+import RepayLoanModal from 'src/components/modals/repay-loan-modal';
+import AddCollateralModal from 'src/components/modals/add-collateral-modal';
+import WithdrawCollateralModal from 'src/components/modals/withdraw-collateral-modal';
 
 import SessionComponent from 'src/components/commons/session-service';
 
@@ -69,16 +78,24 @@ function MyApp({ Component, pageProps }) {
                 <meta name="description" content={appConfig.description} />
             </Head>
 
-            <ToastContainer />
-
             <Loading isRouteChanging={state.isRouteChanging} key={state.loadingKey} />
 
+            <ToastContainer />
             <Provider store={store}>
                 <Script src={`https://kit.fontawesome.com/${FONT_AWESOME_KEY}.js`} />
                 <SessionComponent />
 
                 <CoinManagerModal />
                 <QRCodeGeneratorModal />
+                <SubscribeToSavingOfferModal />
+                <SubscribedSuccesfullyModal />
+                <RedeemSavingModal />
+                <RedeemSuccessfullModal />
+                <ConfirmLoanApplicationModal />
+                <LoanGivenModal />
+                <RepayLoanModal />
+                <AddCollateralModal />
+                <WithdrawCollateralModal />
 
                 {getLayout(<Component {...pageProps} />)}
             </Provider>

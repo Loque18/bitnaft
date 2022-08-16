@@ -6,32 +6,28 @@ import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
 import LoanedAssetsCard from 'src/components/internal/assets-cards/assests-loan-card';
 
+import api from 'src/api';
+
 import { open_modal } from 'src/redux/actions';
 
 import modals from 'src/static/app.modals';
 
 import requirePageAuth from 'src/functions/require-page-auth';
 
-const Dashboard = ({ session }) => {
+import getBalances from 'src/utils/get-balances/indes';
+
+// eslint-disable-next-line no-unused-vars
+const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     const dispatch = useDispatch();
 
     const { user } = session;
 
-    const handleCoinManagerModal = () => {
-        dispatch(
-            open_modal({
-                modalName: modals.coinManagerModal,
-            })
-        );
-    };
-
-    const handleQRCodeGeneratorModal = () => {
-        dispatch(
-            open_modal({
-                modalName: modals.qrCodeGeneratorModal,
-            })
-        );
-    };
+    const noneZeroBalancesWallet = walletAssets.filter(asset => asset.usdValue > 0);
+    const noneZeroSavingAssets = savingsAssets.filter(asset => asset.usdValue > 0);
+    const userWalletBalance = getBalances(noneZeroBalancesWallet);
+    const userSavingsBalance = getBalances(savingsAssets.filter(asset => asset.savingsBalance > 0));
+    // const sbalances = getUserBalances(savingsAssets);
+    // const lbalances = getUserBalances(loansAssets);
 
     return (
         <section className="section">
@@ -50,14 +46,9 @@ const Dashboard = ({ session }) => {
                             title="Wallet"
                             to="/dashboard/wallet"
                             icon="fas fa-wallet"
-                            amount={8800.003}
-                            cryptoIcons={[
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                            ]}
-                            numberOfAssets={15}
+                            amount={userWalletBalance}
+                            cryptoIcons={noneZeroBalancesWallet.slice(0, 4).map(asset => asset.icon)}
+                            numberOfAssets={noneZeroBalancesWallet.length}
                         />
                     </div>
                     <div className="column is-narrow">
@@ -65,14 +56,9 @@ const Dashboard = ({ session }) => {
                             title="Savings"
                             to="/dashboard/savings"
                             icon="fa-solid fa-sack-dollar"
-                            amount={50523.001}
-                            cryptoIcons={[
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                                'https://bitcoin.org/img/icons/opengraph.png?1657703267',
-                            ]}
-                            numberOfAssets={4}
+                            amount={userSavingsBalance}
+                            cryptoIcons={noneZeroSavingAssets.slice(0, 4).map(asset => asset.icon)}
+                            numberOfAssets={noneZeroSavingAssets.length}
                         />
                     </div>
                     <div className="column is-narrow">
@@ -92,9 +78,15 @@ const Dashboard = ({ session }) => {
                         <button
                             type="button"
                             className="button is-primary is-fullwidth"
-                            onClick={handleCoinManagerModal}
+                            onClick={() => {
+                                dispatch(
+                                    open_modal({
+                                        modalName: modals.withdrawCollateralModal,
+                                    })
+                                );
+                            }}
                         >
-                            Manage Coins
+                            Repay loan
                         </button>
                     </div>
                 </div>
@@ -103,7 +95,13 @@ const Dashboard = ({ session }) => {
                         <button
                             type="button"
                             className="button is-primary is-fullwidth"
-                            onClick={handleQRCodeGeneratorModal}
+                            onClick={() => {
+                                dispatch(
+                                    open_modal({
+                                        modalName: modals.qrCodeGeneratorModal,
+                                    })
+                                );
+                            }}
                         >
                             Generate QR Code
                         </button>
@@ -118,4 +116,51 @@ Dashboard.getLayout = page => getPageTitleLayout(getMainLayout(page), 'Dashboard
 
 export default Dashboard;
 
-export const getServerSideProps = requirePageAuth();
+export const getServerSideProps = requirePageAuth(async (ctx, sessionWithToken) => {
+    const { user, token } = sessionWithToken;
+    const { email } = user;
+
+    const session = { ...sessionWithToken };
+    delete session.token;
+
+    const balancesFunctions = [api.get.balances, api.get.savingsBalances, api.get.loansBalances];
+
+    const assets = [];
+    try {
+        const responses = await Promise.all(balancesFunctions.map(func => func({ email, token })));
+
+        responses.forEach((response, i) => {
+            if (!response.data.success) {
+                if (response.data.code.toString() === '603') {
+                    return {
+                        props: {},
+                        redirect: {
+                            destination: '/sessionexpired',
+                            permanent: false,
+                        },
+                    };
+                }
+
+                throw new Error(response.data.message);
+            }
+
+            assets[i] = response.data.data;
+            return null;
+        });
+
+        // balances = res.data.data;
+    } catch (error) {
+        return {
+            props: { error: true, errorMessage: error.message, balances: [] },
+        };
+    }
+
+    return {
+        props: {
+            session,
+            walletAssets: assets[0],
+            savingsAssets: assets[1],
+            loansAssets: assets[2],
+        },
+    };
+});

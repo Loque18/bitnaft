@@ -84,7 +84,7 @@ const Modal = props => {
         <div className="modal is-active">
             <div
                 id="____modal-bg"
-                className="modal-background has-background-a-o-5 has-bg-blur-2"
+                className="modal-background has-bg-md-source-primary-o-2 has-bg-blur-1"
                 onClick={handleClick}
                 role="button"
                 aria-label="Close modal"

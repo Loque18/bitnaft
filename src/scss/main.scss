@@ -9,6 +9,7 @@
 @import './user-select-helper';
 @import './globals.scss';
 @import './button-helper';
+@import './input-helper.scss';
 @import './border-helper';
 @import './vars';
 @import './bulma-helper';
@@ -35,8 +36,7 @@ body {
     position: relative;
 }
 
-
-.has-bg-earn-banner{
+.has-bg-earn-banner {
     background-image: url('/media/pages/earn/earn-banner.webp');
     background-repeat: no-repeat;
     background-size: cover;

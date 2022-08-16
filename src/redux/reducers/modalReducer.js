@@ -4,7 +4,7 @@ import { OPEN_MODAL, PLAY_CLOSE_ANIMATION, CLOSE_MODAL } from '../constants';
 
 const defaultModalStructure = {
     isOpen: false,
-    data: null,
+    data: {},
 };
 
 const defaultState = {
@@ -22,7 +22,7 @@ const reducer = (state = defaultState, action) => {
         case OPEN_MODAL:
             return {
                 ...state,
-                [state.currentModal]: { isOpen: false, data: null },
+                [state.currentModal]: { isOpen: false, data: {} },
                 [action.payload.modalName]: { isOpen: true, data: action.payload.data },
                 currentModal: action.payload.modalName,
                 animation: 'open',

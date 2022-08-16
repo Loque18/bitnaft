@@ -1,15 +1,21 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 
+import { open_modal } from 'src/redux/actions';
+
+import modals from 'src/static/app.modals';
+
 import formatBigNumber from 'src/utils/format-bignumber';
 
 const SavingsTable = ({ assets }) => {
+    const dispatch = useDispatch();
     // const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
@@ -57,14 +63,21 @@ const SavingsTable = ({ assets }) => {
     };
 
     useEffect(() => {
-        // fetch('https://restcountries.com/v3.1/all')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         setAssets(data);
-        //         // setLoading(false);
-        //     });
         initFilter();
     }, []);
+
+    const handleOpenModalClick = e => {
+        const asset = JSON.parse(e.target.dataset.asset);
+
+        dispatch(
+            open_modal({
+                modalName: modals.redeemSavingModal,
+                modalData: {
+                    asset,
+                },
+            })
+        );
+    };
 
     const renderHeader = () => {
         return (
@@ -126,9 +139,42 @@ const SavingsTable = ({ assets }) => {
         );
     };
 
+    const balanceUsdValueTemplate = rowData => {
+        return (
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.usdValue}</p>
+        );
+    };
+
     const apyBodyTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.apr} %</p>
+        );
+    };
+
+    const actionsBodyTemplate = rowData => {
+        if (rowData.savingsBalance <= 0) {
+            return (
+                <div className="columns is-flex is-flex-direction-flex-end is-align-items-center">
+                    <div className="column is-narrow">
+                        <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-roboto">
+                            No Savings
+                        </p>
+                    </div>
+                </div>
+            );
+        }
+
+        return (
+            <div className="buttons is-flex is-justify-content-flex-start is-align-items-center">
+                <button
+                    type="button"
+                    className="button has-bg-md-source-primary-o-2 has-text-md-source-primary"
+                    onClick={handleOpenModalClick}
+                    data-asset={JSON.stringify(rowData)}
+                >
+                    Redeem
+                </button>
+            </div>
         );
     };
 
@@ -163,12 +209,28 @@ const SavingsTable = ({ assets }) => {
                 />
                 <Column
                     sortable
-                    field="sacvingsBalance"
+                    field="savingsBalance"
                     header="Balance"
                     body={balanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
                 />
+                <Column
+                    sortable
+                    field="usdValue"
+                    header="USD Value"
+                    body={balanceUsdValueTemplate}
+                    style={{ verticalAlign: 'middle' }}
+                    className="min-w-150"
+                />
+
                 <Column sortable field="area" header="APY" body={apyBodyTemplate} style={{ verticalAlign: 'middle' }} />
+
+                <Column
+                    header="Actions"
+                    body={actionsBodyTemplate}
+                    style={{ verticalAlign: 'middle' }}
+                    className="min-w-200"
+                />
             </DataTable>
         </div>
     );

@@ -10,6 +10,8 @@ import { InputText } from 'primereact/inputtext';
 
 import formatBigNumber from 'src/utils/format-bignumber';
 
+import { toast } from 'react-toastify';
+
 const AssetsTable = ({ assets }) => {
     // const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
@@ -65,6 +67,10 @@ const AssetsTable = ({ assets }) => {
         //     });
         initFilter();
     }, []);
+
+    const displayWarningMessage = () => {
+        toast.warn('Unfortunately, this feature is not available in the beta version.');
+    };
 
     const renderHeader = () => {
         return (
@@ -134,11 +140,12 @@ const AssetsTable = ({ assets }) => {
 
     const actionsBodyTemplate = () => {
         return (
-            <div className="buttons is-flex is-justify-content-flex-start is-align-items-center">
+            <div className="is-flex is-justify-content-flex-start is-align-items-center">
                 <button
                     type="button"
                     className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6"
                     style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={displayWarningMessage}
                 >
                     Withdraw
                 </button>
@@ -146,6 +153,7 @@ const AssetsTable = ({ assets }) => {
                     type="button"
                     className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-5"
                     style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={displayWarningMessage}
                 >
                     Deposit
                 </button>
@@ -179,7 +187,8 @@ const AssetsTable = ({ assets }) => {
                     filter
                     filterPlaceholder="Search by assets"
                     body={assetsNameTemplate}
-                    className="min-w-250"
+                    style={{ verticalAlign: 'middle' }}
+                    className="min-w-300"
                 />
                 <Column
                     sortable
@@ -187,6 +196,7 @@ const AssetsTable = ({ assets }) => {
                     header="Balance"
                     body={balanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-100"
                 />
                 <Column
                     sortable
@@ -194,6 +204,7 @@ const AssetsTable = ({ assets }) => {
                     header="USD Value"
                     body={usdBalanceBodyTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-150"
                 />
                 <Column
                     header="Actions"

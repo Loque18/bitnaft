@@ -11,6 +11,10 @@
 
     overflow: hidden;
 
+    @include from($tablet) {
+        max-height: 561px !important;
+    }
+
     // height: unset !important;
 
     .box_column {
