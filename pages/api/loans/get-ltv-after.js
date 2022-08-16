@@ -4,7 +4,7 @@ import { decrypt } from 'src/utils/hash';
 
 const { SESSION_KEY } = process.env;
 
-export default async function WithdrawCollateral(req, res) {
+export default async function get_ltv(req, res) {
     const session = req.cookies[SESSION_KEY];
 
     if (!session) {
@@ -15,10 +15,10 @@ export default async function WithdrawCollateral(req, res) {
     const { token, user } = sessionData;
     const { email } = user;
 
-    const { amount, loanHash } = req.body;
+    const { amount, loanHash, type } = req.body;
 
     try {
-        const response = await api.post.withdrawCollateral({
+        const response = await api.get[type]({
             email,
             token,
             loanId: loanHash,
@@ -34,10 +34,10 @@ export default async function WithdrawCollateral(req, res) {
 
         return res.status(200).send({
             status: 'success',
-            data: response.data,
+            data: response.data.data,
         });
     } catch (err) {
-        return res.status(200).send({
+        return res.status(500).send({
             status: 'error',
             message: err.message,
         });

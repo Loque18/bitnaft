@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { InputNumber } from 'primereact/inputnumber';
@@ -11,11 +12,66 @@ import { toast } from 'react-toastify';
 import Modal from 'src/components/commons/modal';
 import CardLayout from 'src/layouts/card';
 
+import useDebounce from 'src/hooks/useDebounce';
+
 import modals from 'src/static/app.modals';
 
 import { start_close_modal } from 'src/redux/actions';
 import formatBigNumber from 'src/utils/format-bignumber';
 import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
+
+const Ltv = ({ amount, asset, loanHash }) => {
+    const [loading, setLoading] = useState(false);
+    const [ltv, setLtv] = useState(0);
+
+    const debouncedLtv = useDebounce(amount, 1000);
+
+    useEffect(() => {
+        if (!debouncedLtv) {
+            setLtv(0);
+            return;
+        }
+
+        (async () => {
+            setLoading(true);
+
+            try {
+                const res = await axios({
+                    method: 'post',
+                    url: '/api/loans/get-ltv-after',
+                    data: {
+                        amount: formatNormalNumber(debouncedLtv, asset.decimals),
+                        loanHash,
+                        type: 'ltvAfterWithdrawal',
+                    },
+                });
+
+                if (res.data.status === 'fail') {
+                    toast.error(res.data.message);
+                    setLoading(false);
+                    return;
+                }
+                setLtv(res.data.data.ltv);
+            } catch (err) {
+                toast.error('System was not able to determine LTV');
+            }
+
+            setLoading(false);
+        })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedLtv]);
+
+    return loading ? (
+        <ProgressSpinner
+            style={{ width: '20px', height: '20px' }}
+            strokeWidth="4"
+            fill="var(--surface-ground)"
+            animationDuration=".5s"
+        />
+    ) : (
+        <span>{ltv}</span>
+    );
+};
 
 const WithdrawCollateralModal = () => {
     const dispatch = useDispatch();
@@ -34,7 +90,6 @@ const WithdrawCollateralModal = () => {
         }),
 
         onSubmit: async values => {
-            console.log('si');
             setLoading(true);
             try {
                 const response = await axios({
@@ -46,18 +101,21 @@ const WithdrawCollateralModal = () => {
                     },
                 });
 
-                if (!response.data.success) {
+                console.log(response);
+
+                if (response.data.status === 'fail') {
+                    toast.error(response.data.data.message);
                     setLoading(false);
-                    return toast.error(response.data.message);
+                    return;
                 }
 
-                setLoading(false);
+                toast.success(response.data.data.message);
+
                 dispatch(start_close_modal(modals.repayLoanModal));
-                return toast.success(response.data.message);
             } catch (error) {
-                setLoading(false);
-                return toast.error('Something went wrong');
+                toast.error('Something went wrong');
             }
+            setLoading(false);
         },
     });
 
@@ -68,6 +126,12 @@ const WithdrawCollateralModal = () => {
     const closeModal = () => {
         dispatch(start_close_modal());
     };
+
+    useEffect(() => {
+        if (!data || !data.loan) return;
+
+        (async () => {})();
+    }, [data]);
 
     if (!data || !data.loan) return null;
 
@@ -151,6 +215,25 @@ const WithdrawCollateralModal = () => {
                                         <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
                                             {formatBigNumber(data.loan.collateralAmount, data.loan.collateralDecimals)}{' '}
                                             <span className="has-font-roboto">{data.loan.collateralSymbol}</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="columns mb-0 is-mobile">
+                                    <div className="column is-flex is-flex-direction-flex-start is-align-items-center">
+                                        <h1 className="title has-font-roboto has-text-md-black is-size-6 has-text-weight-medium">
+                                            Ltv after withdrawal
+                                        </h1>
+                                    </div>
+                                    <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
+                                        <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
+                                            <Ltv
+                                                amount={formik.values.amount}
+                                                asset={{
+                                                    decimals: data.loan.borrowDecimals,
+                                                }}
+                                                loanHash={data.loan.loanHash}
+                                            />
                                         </p>
                                     </div>
                                 </div>

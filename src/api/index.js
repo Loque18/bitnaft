@@ -53,6 +53,31 @@ const api = {
                 url: `${endpoint}/collateralNeeded/${params}`,
             });
         },
+
+        // ltv
+        ltvAfterWithdrawal({ email, token, loanId, amount }) {
+            const params = `?email=${email}&sessionToken=${token}&loanHash=${loanId}&amount=${amount}`;
+            return axios({
+                method: 'get',
+                url: `${endpoint}/ltvAfterWithdrawal/${params}`,
+            });
+        },
+
+        ltvAfterRepaying({ email, token, loanId, amount }) {
+            const params = `?email=${email}&sessionToken=${token}&loanHash=${loanId}&amount=${amount}`;
+            return axios({
+                method: 'get',
+                url: `${endpoint}/ltvAfterRepaying/${params}`,
+            });
+        },
+
+        ltvAfterAddingCollateral({ email, token, loanId, amount }) {
+            const params = `?email=${email}&sessionToken=${token}&loanHash=${loanId}&amount=${amount}`;
+            return axios({
+                method: 'get',
+                url: `${endpoint}/ltvAfterAddingCollateral/${params}`,
+            });
+        },
     },
     post: {
         signup: ({ email, password }) => {
