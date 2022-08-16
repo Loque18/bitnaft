@@ -50,18 +50,19 @@ const RepayLoanModal = () => {
                     },
                 });
 
-                if (!response.data.success) {
+                if (response.data.status === 'fail') {
                     setLoading(false);
-                    return toast.error(response.data.message);
+                    toast.error(response.data.message);
+                    return;
                 }
 
-                setLoading(false);
+                toast.success(response.data.data.message);
                 dispatch(start_close_modal(modals.repayLoanModal));
-                return toast.success(response.data.message);
             } catch (error) {
-                setLoading(false);
-                return toast.error('Something went wrong, please try again later');
+                toast.error('Something went wrong, please try again later');
             }
+
+            setLoading(false);
         },
     });
 
