@@ -10,6 +10,8 @@ import { InputText } from 'primereact/inputtext';
 
 import formatBigNumber from 'src/utils/format-bignumber';
 
+import { toast } from 'react-toastify';
+
 const AssetsTable = ({ assets }) => {
     // const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
@@ -65,6 +67,10 @@ const AssetsTable = ({ assets }) => {
         //     });
         initFilter();
     }, []);
+
+    const displayWarningMessage = () => {
+        toast.warn('Unfortunately, this feature is not available in the beta version.');
+    };
 
     const renderHeader = () => {
         return (
@@ -139,6 +145,7 @@ const AssetsTable = ({ assets }) => {
                     type="button"
                     className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6"
                     style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={displayWarningMessage}
                 >
                     Withdraw
                 </button>
@@ -146,6 +153,7 @@ const AssetsTable = ({ assets }) => {
                     type="button"
                     className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-5"
                     style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={displayWarningMessage}
                 >
                     Deposit
                 </button>
