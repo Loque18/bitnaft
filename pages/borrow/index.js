@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';

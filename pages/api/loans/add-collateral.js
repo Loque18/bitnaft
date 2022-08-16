@@ -32,8 +32,6 @@ export default async function addCollateral(req, res) {
             });
         }
 
-        console.log(response.data.message);
-
         return res.status(200).send({
             status: 'success',
             data: {

@@ -101,8 +101,6 @@ const WithdrawCollateralModal = () => {
                     },
                 });
 
-                console.log(response);
-
                 if (response.data.status === 'fail') {
                     toast.error(response.data.data.message);
                     setLoading(false);

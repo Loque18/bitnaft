@@ -25,7 +25,6 @@ const Navbar = () => {
 
     //  local state
     const [mobileActive, setMobileActive] = useState(false);
-    console.log('🚀 ~ file: index.js ~ line 28 ~ Navbar ~ mobileActive', mobileActive);
     const [burgerActive, setBurgerActive] = useState(false);
     const [scrolledBgColor, setScrolledBgColor] = useState(false);
     const [scrollingDown, setScrollingDown] = useState(false);

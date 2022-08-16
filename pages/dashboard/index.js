@@ -16,6 +16,7 @@ import requirePageAuth from 'src/functions/require-page-auth';
 
 import getBalances from 'src/utils/get-balances/indes';
 
+// eslint-disable-next-line no-unused-vars
 const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     const dispatch = useDispatch();
 
