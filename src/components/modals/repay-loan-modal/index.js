@@ -23,6 +23,7 @@ import modals from 'src/static/app.modals';
 
 import formatBigNumber from 'src/utils/format-bignumber';
 import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
+import formatNumber from 'src/utils/format-number';
 
 const Ltv = ({ amount, asset, loanHash }) => {
     const [loading, setLoading] = useState(false);
@@ -199,7 +200,9 @@ const RepayLoanModal = () => {
                                         <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
                                             {data &&
                                                 data.loan &&
-                                                formatBigNumber(data.loan.borrowAmount, data.loan.borrowDecimals)}{' '}
+                                                formatNumber(
+                                                    formatBigNumber(data.loan.borrowAmount, data.loan.borrowDecimals)
+                                                )}{' '}
                                             <span className="has-font-roboto">
                                                 {' '}
                                                 {data && data.loan && data.loan.borrowSymbol}
@@ -217,9 +220,11 @@ const RepayLoanModal = () => {
                                         <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
                                             {data &&
                                                 data.loan &&
-                                                formatBigNumber(
-                                                    data.loan.collateralAmount,
-                                                    data.loan.collateralDecimals
+                                                formatNumber(
+                                                    formatBigNumber(
+                                                        data.loan.collateralAmount,
+                                                        data.loan.collateralDecimals
+                                                    )
                                                 )}{' '}
                                             <span className="has-font-roboto">
                                                 {' '}
@@ -290,9 +295,11 @@ const RepayLoanModal = () => {
                                                                         asset => asset.name === data.loan.borrowName
                                                                     );
 
-                                                                    const balance = formatBigNumber(
-                                                                        borrowAsset.balance,
-                                                                        borrowAsset.decimals
+                                                                    const balance = formatNumber(
+                                                                        formatBigNumber(
+                                                                            borrowAsset.balance,
+                                                                            borrowAsset.decimals
+                                                                        )
                                                                     );
 
                                                                     return balance;
