@@ -16,6 +16,7 @@ import modals from 'src/static/app.modals';
 
 import { open_modal } from 'src/redux/actions';
 import styles from '../styles.module.scss';
+import formatNumber from 'src/utils/format-number';
 
 const { green_circle } = styles;
 
@@ -182,7 +183,7 @@ const LoansTable = ({ assets, walletAssets }) => {
                         <div className="columns mt-0">
                             <div className="column">
                                 <p className="has-text-md-black has-font-pt-mono is-size-7 has-text-weight-bold">
-                                    {rowData.yearlyInterestRate}%
+                                    {formatNumber(rowData.yearlyInterestRate)}%
                                 </p>
                                 <div className="columns mt-0">
                                     <div className="column">
@@ -192,7 +193,7 @@ const LoansTable = ({ assets, walletAssets }) => {
                                         <div className="columns mt-0">
                                             <div className="column">
                                                 <p className="has-text-md-black has-font-pt-mono is-size-7 has-text-weight-bold">
-                                                    {rowData.hourlyInterestRate} %
+                                                    {formatNumber(rowData.hourlyInterestRate)} %
                                                 </p>
                                             </div>
                                         </div>
@@ -247,7 +248,7 @@ const LoansTable = ({ assets, walletAssets }) => {
                                         <div className="columns mt-0">
                                             <div className="column">
                                                 <p className="has-text-hgreen has-font-pt-mono is-size-7 has-text-weight-bold">
-                                                    {rowData.ltv} %
+                                                    {formatNumber(rowData.ltv)} %
                                                 </p>
                                             </div>
                                         </div>
@@ -263,10 +264,12 @@ const LoansTable = ({ assets, walletAssets }) => {
                         <div className="columns mt-0">
                             <div className="column">
                                 <p className="has-text-md-black has-font-pt-mono is-size-7 has-text-weight-bold">
-                                    {formatBigNumber(
-                                        rowData.remainingPrinciple,
-                                        rowData.borrowDecimals,
-                                        rowData.borrowDecimals
+                                    {formatNumber(
+                                        formatBigNumber(
+                                            rowData.remainingPrinciple,
+                                            rowData.borrowDecimals,
+                                            rowData.borrowDecimals
+                                        )
                                     )}
                                 </p>
                                 <div className="columns mt-0">
@@ -355,7 +358,7 @@ const LoansTable = ({ assets, walletAssets }) => {
     const loanAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {formatBigNumber(rowData.borrowAmount, rowData.borrowDecimals, rowData.borrowDecimals)}
+                {formatNumber(formatBigNumber(rowData.borrowAmount, rowData.borrowDecimals, rowData.borrowDecimals))}
             </p>
         );
     };
@@ -363,7 +366,9 @@ const LoansTable = ({ assets, walletAssets }) => {
     const collateralAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {formatBigNumber(rowData.collateralAmount, rowData.collateralDecimals, rowData.collateralDecimals)}
+                {formatNumber(
+                    formatBigNumber(rowData.collateralAmount, rowData.collateralDecimals, rowData.collateralDecimals)
+                )}
             </p>
         );
     };

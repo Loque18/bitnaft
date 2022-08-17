@@ -19,6 +19,7 @@ import modals from 'src/static/app.modals';
 import { start_close_modal } from 'src/redux/actions';
 import formatBigNumber from 'src/utils/format-bignumber';
 import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
+import formatNumber from 'src/utils/format-number';
 
 const Ltv = ({ amount, asset, loanHash }) => {
     const [loading, setLoading] = useState(false);
@@ -211,7 +212,12 @@ const WithdrawCollateralModal = () => {
                                     </div>
                                     <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
                                         <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
-                                            {formatBigNumber(data.loan.collateralAmount, data.loan.collateralDecimals)}{' '}
+                                            {formatNumber(
+                                                formatBigNumber(
+                                                    data.loan.collateralAmount,
+                                                    data.loan.collateralDecimals
+                                                )
+                                            )}{' '}
                                             <span className="has-font-roboto">{data.loan.collateralSymbol}</span>
                                         </p>
                                     </div>
