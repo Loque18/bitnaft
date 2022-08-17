@@ -21,7 +21,7 @@ import formatBigNumber from 'src/utils/format-bignumber';
 import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
 import formatNumber from 'src/utils/format-number';
 
-const Ltv = ({ amount, asset, loanHash }) => {
+const Ltv = ({ amount, asset, loanHash, onChangeCB }) => {
     const [loading, setLoading] = useState(false);
     const [ltv, setLtv] = useState(0);
 
@@ -30,6 +30,7 @@ const Ltv = ({ amount, asset, loanHash }) => {
     useEffect(() => {
         if (!debouncedLtv) {
             setLtv(0);
+            onChangeCB(0);
             return;
         }
 
@@ -48,11 +49,12 @@ const Ltv = ({ amount, asset, loanHash }) => {
                 });
 
                 if (res.data.status === 'fail') {
-                    toast.error(res.data.message);
+                    toast.error(res.data.data.message);
                     setLoading(false);
                     return;
                 }
                 setLtv(res.data.data.ltv);
+                onChangeCB(res.data.data.ltv);
             } catch (err) {
                 toast.error('System was not able to determine LTV');
             }
@@ -70,7 +72,7 @@ const Ltv = ({ amount, asset, loanHash }) => {
             animationDuration=".5s"
         />
     ) : (
-        <span>{ltv}</span>
+        <span className={`${ltv <= 65 ? 'has-text-success' : 'has-text-danger'}`}>{ltv}%</span>
     );
 };
 
@@ -82,12 +84,22 @@ const WithdrawCollateralModal = () => {
 
     const { data } = withdrawCollateralModal;
 
+    const [lvt, setLvt] = useState(0);
+    console.log(lvt);
+
+    const onChangeCB = value => {
+        setLvt(value);
+    };
+
     const formik = useFormik({
         initialValues: {
             amount: '',
         },
         validationSchema: yup.object().shape({
-            amount: yup.number().required('Amount is required'),
+            amount: yup
+                .number()
+                .max(data && data.loan && formatBigNumber(data.loan.collateralAmount, data.loan.collateralDecimals))
+                .required('Amount is required'),
         }),
 
         onSubmit: async values => {
@@ -98,7 +110,7 @@ const WithdrawCollateralModal = () => {
                     url: `/api/loans/withdraw-collateral`,
                     data: {
                         loanHash: data.loan.loanHash,
-                        amount: formatNormalNumber(values.amount, data.loan.collateralDecimals),
+                        amount: formatBigNumber(values.amount, data.loan.collateralDecimals),
                     },
                 });
 
@@ -234,9 +246,10 @@ const WithdrawCollateralModal = () => {
                                             <Ltv
                                                 amount={formik.values.amount}
                                                 asset={{
-                                                    decimals: data.loan.borrowDecimals,
+                                                    decimals: data.loan.collateralDecimals,
                                                 }}
                                                 loanHash={data.loan.loanHash}
+                                                onChangeCB={onChangeCB}
                                             />
                                         </p>
                                     </div>
@@ -265,6 +278,10 @@ const WithdrawCollateralModal = () => {
                                                             onChange={e => formik.setFieldValue('amount', e.value)}
                                                         />
                                                     </div>
+
+                                                    {formik.errors.amount ? (
+                                                        <p className="help is-danger">{formik.errors.amount}</p>
+                                                    ) : null}
                                                 </div>
                                             </div>
                                         </form>
@@ -282,6 +299,7 @@ const WithdrawCollateralModal = () => {
                                         className={`button is-hblue ${loading ? 'is-loading' : ''}`}
                                         type="button"
                                         onClick={handleSubmit}
+                                        disabled={lvt > 65 || Object.keys(formik.errors).length > 0}
                                     >
                                         Confirm
                                     </button>
