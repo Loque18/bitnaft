@@ -20,7 +20,7 @@ import { start_close_modal } from 'src/redux/actions';
 import formatBigNumber from 'src/utils/format-bignumber';
 import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
 
-const Ltv = ({ amount, asset, loanHash }) => {
+const Ltv = ({ amount, asset, loanHash, onChangeCB }) => {
     const [loading, setLoading] = useState(false);
     const [ltv, setLtv] = useState(0);
 
@@ -29,6 +29,7 @@ const Ltv = ({ amount, asset, loanHash }) => {
     useEffect(() => {
         if (!debouncedLtv) {
             setLtv(0);
+            onChangeCB(0);
             return;
         }
 
@@ -52,6 +53,7 @@ const Ltv = ({ amount, asset, loanHash }) => {
                     return;
                 }
                 setLtv(res.data.data.ltv);
+                onChangeCB(res.data.data.ltv);
             } catch (err) {
                 toast.error('System was not able to determine LTV');
             }
@@ -80,6 +82,13 @@ const WithdrawCollateralModal = () => {
     const [loading, setLoading] = useState(false);
 
     const { data } = withdrawCollateralModal;
+
+    const [lvt, setLvt] = useState(0);
+    console.log(lvt);
+
+    const onChangeCB = value => {
+        setLvt(value);
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -234,6 +243,7 @@ const WithdrawCollateralModal = () => {
                                                     decimals: data.loan.collateralDecimals,
                                                 }}
                                                 loanHash={data.loan.loanHash}
+                                                onChangeCB={onChangeCB}
                                             />
                                         </p>
                                     </div>
@@ -283,6 +293,7 @@ const WithdrawCollateralModal = () => {
                                         className={`button is-hblue ${loading ? 'is-loading' : ''}`}
                                         type="button"
                                         onClick={handleSubmit}
+                                        disabled={lvt > 65 || Object.keys(formik.errors).length > 0}
                                     >
                                         Confirm
                                     </button>
