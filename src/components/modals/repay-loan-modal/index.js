@@ -1,27 +1,79 @@
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { InputNumber } from 'primereact/inputnumber';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import { useFormik } from 'formik';
+import axios from 'axios';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 
 import Modal from 'src/components/commons/modal';
 import CardLayout from 'src/layouts/card';
 
-import { InputNumber } from 'primereact/inputnumber';
-
 import formatDate from 'src/utils/format-date';
 
-import Image from 'next/image';
+import useDebounce from 'src/hooks/useDebounce';
 
 import { start_close_modal } from 'src/redux/actions';
 
 import modals from 'src/static/app.modals';
 
 import formatBigNumber from 'src/utils/format-bignumber';
-import axios from 'axios';
 import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
+
+const Ltv = ({ amount, asset, loanHash }) => {
+    const [loading, setLoading] = useState(false);
+    const [ltv, setLtv] = useState(0);
+
+    const debouncedLtv = useDebounce(amount, 1000);
+
+    useEffect(() => {
+        if (!debouncedLtv) {
+            setLtv(0);
+            return;
+        }
+
+        (async () => {
+            setLoading(true);
+
+            try {
+                const res = await axios({
+                    method: 'post',
+                    url: '/api/loans/get-ltv-after',
+                    data: {
+                        amount: formatNormalNumber(debouncedLtv, asset.decimals),
+                        loanHash,
+                        type: 'ltvAfterRepaying',
+                    },
+                });
+
+                if (res.data.status === 'fail') {
+                    return;
+                }
+                setLtv(res.data.data.ltv);
+            } catch (err) {
+                toast.error(err.message);
+            }
+
+            setLoading(false);
+        })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedLtv]);
+
+    return loading ? (
+        <ProgressSpinner
+            style={{ width: '20px', height: '20px' }}
+            strokeWidth="4"
+            fill="var(--surface-ground)"
+            animationDuration=".5s"
+        />
+    ) : (
+        <span>{ltv}</span>
+    );
+};
 
 const RepayLoanModal = () => {
     const dispatch = useDispatch();
@@ -50,18 +102,19 @@ const RepayLoanModal = () => {
                     },
                 });
 
-                if (!response.data.success) {
+                if (response.data.status === 'fail') {
                     setLoading(false);
-                    return toast.error(response.data.message);
+                    toast.error(response.data.message);
+                    return;
                 }
 
-                setLoading(false);
+                toast.success(response.data.data.message);
                 dispatch(start_close_modal(modals.repayLoanModal));
-                return toast.success(response.data.message);
             } catch (error) {
-                setLoading(false);
-                return toast.error('Something went wrong, please try again later');
+                toast.error('Something went wrong, please try again later');
             }
+
+            setLoading(false);
         },
     });
 
@@ -73,6 +126,8 @@ const RepayLoanModal = () => {
     const closeModal = () => {
         dispatch(start_close_modal());
     };
+
+    if (!data || !data.loan) return null;
 
     return (
         <Modal isOpen={repayLoanModal.isOpen}>
@@ -194,6 +249,24 @@ const RepayLoanModal = () => {
                                     <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
                                         <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
                                             {data && data.loan && formatDate(data.loan.returningDate)}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="columns mb-0 is-mobile">
+                                    <div className="column is-flex is-flex-direction-flex-start is-align-items-center">
+                                        <h1 className="title has-font-roboto has-text-md-black is-size-6 has-text-weight-medium">
+                                            Ltv after repay
+                                        </h1>
+                                    </div>
+                                    <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
+                                        <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
+                                            <Ltv
+                                                amount={formik.values.amount}
+                                                asset={{
+                                                    decimals: data.loan.borrowDecimals,
+                                                }}
+                                                loanHash={data.loan.loanHash}
+                                            />
                                         </p>
                                     </div>
                                 </div>

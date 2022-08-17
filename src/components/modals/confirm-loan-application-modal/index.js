@@ -36,8 +36,6 @@ const ConfirmLoanApplicationModal = () => {
                 borrowAmount: formatNormalNumber(data.loanAmount, data.loanAsset.decimals),
             };
 
-            console.log(data);
-
             const res = await axios({
                 method: 'post',
                 url: '/api/loans/application',

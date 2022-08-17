@@ -1,6 +1,9 @@
+/* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -8,6 +11,8 @@ import { toast } from 'react-toastify';
 
 import Modal from 'src/components/commons/modal';
 import CardLayout from 'src/layouts/card';
+
+import useDebounce from 'src/hooks/useDebounce';
 
 import { InputNumber } from 'primereact/inputnumber';
 
@@ -18,7 +23,59 @@ import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
 import modals from 'src/static/app.modals';
 
 import { start_close_modal } from 'src/redux/actions';
-import axios from 'axios';
+
+const Ltv = ({ amount, asset, loanHash }) => {
+    const [loading, setLoading] = useState(false);
+    const [ltv, setLtv] = useState(0);
+
+    const debouncedLtv = useDebounce(amount, 1000);
+
+    useEffect(() => {
+        if (!debouncedLtv) {
+            setLtv(0);
+            return;
+        }
+
+        (async () => {
+            setLoading(true);
+
+            try {
+                const res = await axios({
+                    method: 'post',
+                    url: '/api/loans/get-ltv-after',
+                    data: {
+                        amount: formatNormalNumber(debouncedLtv, asset.decimals),
+                        loanHash,
+                        type: 'ltvAfterAddingCollateral',
+                    },
+                });
+
+                if (res.data.status === 'fail') {
+                    toast.error(res.data.message);
+                    setLoading(false);
+                    return;
+                }
+                setLtv(res.data.data.ltv);
+            } catch (err) {
+                toast.error('System was not able to determine LTV');
+            }
+
+            setLoading(false);
+        })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedLtv]);
+
+    return loading ? (
+        <ProgressSpinner
+            style={{ width: '20px', height: '20px' }}
+            strokeWidth="4"
+            fill="var(--surface-ground)"
+            animationDuration=".5s"
+        />
+    ) : (
+        <span>{ltv}</span>
+    );
+};
 
 const AddCollateralModal = () => {
     const dispatch = useDispatch();
@@ -48,18 +105,21 @@ const AddCollateralModal = () => {
                     },
                 });
 
-                if (!response.data.success) {
+                if (response.data.status === 'fail') {
                     setLoading(false);
-                    return toast.error(response.data.message);
+                    toast.error(response.data.data.message);
+                    return;
                 }
 
-                setLoading(false);
+                toast.success(response.data.data.message);
+
                 dispatch(start_close_modal(modals.repayLoanModal));
-                return toast.success(response.data.message);
+                resetForm();
             } catch (error) {
-                setLoading(false);
-                return toast.error('Something went wrong');
+                toast.error('Something went wrong');
             }
+
+            setLoading(false);
         },
     });
 
@@ -179,6 +239,24 @@ const AddCollateralModal = () => {
                                         <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
                                             {formatDate(data.loan.returningDate)}
                                         </p>
+                                    </div>
+                                </div>
+                                <div className="columns mb-0 is-mobile">
+                                    <div className="column is-flex is-flex-direction-flex-start is-align-items-center">
+                                        <h1 className="title has-font-roboto has-text-md-black is-size-6 has-text-weight-medium">
+                                            Ltv after repay
+                                        </h1>
+                                    </div>
+                                    <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
+                                        <div className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
+                                            <Ltv
+                                                amount={formik.values.collateralAmount}
+                                                asset={{
+                                                    decimals: data.loan.borrowDecimals,
+                                                }}
+                                                loanHash={data.loan.loanHash}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="columns mb-0 is-mobile">

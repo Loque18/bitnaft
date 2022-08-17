@@ -3,7 +3,7 @@ import Modal from 'src/components/commons/modal';
 import CardLayout from 'src/layouts/card';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { start_close_modal } from 'src/redux/actions';
 import modals from 'src/static/app.modals';
@@ -22,9 +22,9 @@ const CoinManagerModal = () => {
 
     // local state
 
-    const [isSearching, setIsSearching] = useState(false);
+    const [isSearching] = useState(false);
     // const [searchText, setSearchText] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     // const [searchType, setSearchType] = useState('');
     // const [filteredTokens, setFilteredTokens] = useState([]);
 

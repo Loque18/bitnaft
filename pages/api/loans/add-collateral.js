@@ -25,8 +25,6 @@ export default async function addCollateral(req, res) {
             amount,
         });
 
-        console.log(response);
-
         if (!response.data.success) {
             return res.status(200).send({
                 status: 'fail',
@@ -36,10 +34,11 @@ export default async function addCollateral(req, res) {
 
         return res.status(200).send({
             status: 'success',
-            data: response.data.data,
+            data: {
+                message: response.data.message,
+            },
         });
     } catch (err) {
-        console.log(err);
         return res.status(200).send({
             status: 'error',
             message: err.message,
