@@ -94,7 +94,7 @@ const RepayLoanModal = () => {
                 .number()
                 .max(
                     data && data.loan && formatBigNumber(data.loan.borrowAmount, data.loan.borrowDecimals),
-                    'amount must be less than or equal to the borrowed amount'
+                    'Insufficient balance'
                 )
                 .required('Amount is required'),
         }),

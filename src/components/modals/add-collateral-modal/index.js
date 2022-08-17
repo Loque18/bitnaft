@@ -85,13 +85,14 @@ const AddCollateralModal = () => {
     const { data } = addCollateralModal;
 
     const [loading, setLoading] = useState(false);
+    const [balance, setBalance] = useState(0);
 
     const formik = useFormik({
         initialValues: {
             collateralAmount: '',
         },
         validationSchema: Yup.object({
-            collateralAmount: Yup.number().required('Required'),
+            collateralAmount: Yup.number().max(balance, 'Insufficient balance').required('Required'),
         }),
 
         onSubmit: async (values, { resetForm }) => {
@@ -131,6 +132,16 @@ const AddCollateralModal = () => {
     const closeModal = () => {
         dispatch(start_close_modal());
     };
+
+    useEffect(() => {
+        if (!data || !data.loan || !data.walletAssets) return;
+
+        const collateralAsset = data.walletAssets.find(asset => asset.name === data.loan.collateralName);
+
+        const baalance = formatNumber(formatBigNumber(collateralAsset.balance, collateralAsset.decimals));
+
+        setBalance(baalance);
+    }, [data]);
 
     if (!data || !data.loan) return null;
 
@@ -260,7 +271,7 @@ const AddCollateralModal = () => {
                                             <Ltv
                                                 amount={formik.values.collateralAmount}
                                                 asset={{
-                                                    decimals: data.loan.borrowDecimals,
+                                                    decimals: data.loan.collateralDecimals,
                                                 }}
                                                 loanHash={data.loan.loanHash}
                                             />
@@ -271,12 +282,19 @@ const AddCollateralModal = () => {
                                     <div className="column">
                                         <form onSubmit={formik.handleSubmit}>
                                             <div className="field">
-                                                <label
-                                                    className="has-font-roboto has-text-md-black"
-                                                    htmlFor="minmaxfraction"
-                                                >
-                                                    Amount
-                                                </label>
+                                                <div className="is-flex is-flex-direction-row is-justify-content-space-between">
+                                                    <label
+                                                        className="has-font-roboto has-text-md-black"
+                                                        htmlFor="minmaxfraction"
+                                                    >
+                                                        Amount
+                                                    </label>
+                                                    <div className="">
+                                                        {data.loan.collateralSymbol} balance:{' '}
+                                                        <span className="has-font-pt-mono">{balance}</span>
+                                                    </div>
+                                                </div>
+
                                                 <div className="control ">
                                                     <div className="p-inputgroup pt-2">
                                                         <InputNumber
@@ -292,6 +310,14 @@ const AddCollateralModal = () => {
                                                             }
                                                         />
                                                     </div>
+
+                                                    {formik.errors.collateralAmount ? (
+                                                        <div className="p-inputgroup pt-2">
+                                                            <span className="has-text-danger">
+                                                                {formik.errors.collateralAmount}
+                                                            </span>
+                                                        </div>
+                                                    ) : null}
                                                 </div>
                                             </div>
                                         </form>
@@ -309,6 +335,7 @@ const AddCollateralModal = () => {
                                         className={`button is-hblue ${loading ? 'is-loading' : ''}`}
                                         type="button"
                                         onClick={handleSubmit}
+                                        disabled={Object.keys(formik.errors).length > 0}
                                     >
                                         Confirm
                                     </button>
