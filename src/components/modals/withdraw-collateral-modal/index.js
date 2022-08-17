@@ -47,7 +47,7 @@ const Ltv = ({ amount, asset, loanHash }) => {
                 });
 
                 if (res.data.status === 'fail') {
-                    toast.error(res.data.message);
+                    toast.error(res.data.data.message);
                     setLoading(false);
                     return;
                 }
@@ -69,7 +69,7 @@ const Ltv = ({ amount, asset, loanHash }) => {
             animationDuration=".5s"
         />
     ) : (
-        <span>{ltv}</span>
+        <span className={`${ltv <= 65 ? 'has-text-success' : 'has-text-danger'}`}>{ltv}%</span>
     );
 };
 
@@ -86,7 +86,10 @@ const WithdrawCollateralModal = () => {
             amount: '',
         },
         validationSchema: yup.object().shape({
-            amount: yup.number().required('Amount is required'),
+            amount: yup
+                .number()
+                .max(data && data.loan && formatBigNumber(data.loan.collateralAmount, data.loan.collateralDecimals))
+                .required('Amount is required'),
         }),
 
         onSubmit: async values => {
@@ -97,7 +100,7 @@ const WithdrawCollateralModal = () => {
                     url: `/api/loans/withdraw-collateral`,
                     data: {
                         loanHash: data.loan.loanHash,
-                        amount: formatNormalNumber(values.amount, data.loan.collateralDecimals),
+                        amount: formatBigNumber(values.amount, data.loan.collateralDecimals),
                     },
                 });
 
@@ -228,7 +231,7 @@ const WithdrawCollateralModal = () => {
                                             <Ltv
                                                 amount={formik.values.amount}
                                                 asset={{
-                                                    decimals: data.loan.borrowDecimals,
+                                                    decimals: data.loan.collateralDecimals,
                                                 }}
                                                 loanHash={data.loan.loanHash}
                                             />
@@ -259,6 +262,10 @@ const WithdrawCollateralModal = () => {
                                                             onChange={e => formik.setFieldValue('amount', e.value)}
                                                         />
                                                     </div>
+
+                                                    {formik.errors.amount ? (
+                                                        <p className="help is-danger">{formik.errors.amount}</p>
+                                                    ) : null}
                                                 </div>
                                             </div>
                                         </form>

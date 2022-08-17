@@ -73,40 +73,6 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                         />
                     </div>
                 </div>
-                <div className="columns pt-5">
-                    <div className="column">
-                        <button
-                            type="button"
-                            className="button is-primary is-fullwidth"
-                            onClick={() => {
-                                dispatch(
-                                    open_modal({
-                                        modalName: modals.withdrawCollateralModal,
-                                    })
-                                );
-                            }}
-                        >
-                            Repay loan
-                        </button>
-                    </div>
-                </div>
-                <div className="columns pt-5">
-                    <div className="column">
-                        <button
-                            type="button"
-                            className="button is-primary is-fullwidth"
-                            onClick={() => {
-                                dispatch(
-                                    open_modal({
-                                        modalName: modals.qrCodeGeneratorModal,
-                                    })
-                                );
-                            }}
-                        >
-                            Generate QR Code
-                        </button>
-                    </div>
-                </div>
             </div>
         </section>
     );
