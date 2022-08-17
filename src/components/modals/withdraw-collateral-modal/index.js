@@ -85,7 +85,6 @@ const WithdrawCollateralModal = () => {
     const { data } = withdrawCollateralModal;
 
     const [lvt, setLvt] = useState(0);
-    console.log(lvt);
 
     const onChangeCB = value => {
         setLvt(value);
@@ -110,7 +109,7 @@ const WithdrawCollateralModal = () => {
                     url: `/api/loans/withdraw-collateral`,
                     data: {
                         loanHash: data.loan.loanHash,
-                        amount: formatBigNumber(values.amount, data.loan.collateralDecimals),
+                        amount: formatNormalNumber(values.amount, data.loan.collateralDecimals),
                     },
                 });
 

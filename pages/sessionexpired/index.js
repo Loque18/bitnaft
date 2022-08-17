@@ -9,6 +9,7 @@ const SessionexpiredPage = () => {
 
     useEffect(() => {
         dispatch(clear_session());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
