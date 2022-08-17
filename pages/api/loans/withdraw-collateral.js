@@ -25,6 +25,8 @@ export default async function WithdrawCollateral(req, res) {
             amount,
         });
 
+        console.log(response);
+
         if (!response.data.success) {
             return res.status(200).send({
                 status: 'fail',
