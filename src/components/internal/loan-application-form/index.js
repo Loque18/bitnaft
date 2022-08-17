@@ -11,6 +11,8 @@ import { open_modal } from 'src/redux/actions';
 
 import useDebounce from 'src/hooks/useDebounce';
 
+import api from 'src/api';
+
 import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
 import formatBigNumber from 'src/utils/format-bignumber';
 
@@ -24,7 +26,13 @@ import modals from 'src/static/app.modals';
 //     { label: '2 Years', value: 24 },
 // ];
 
-const LoanApplicationForm = ({ availableAssets, walletAssets }) => {
+const LoanApplicationForm = ({
+    availableAssets,
+    walletAssets,
+    setHourlyInterest,
+    setDailyInterest,
+    setLiquidationPrice,
+}) => {
     const dispatch = useDispatch();
 
     const defaultLoanToken = availableAssets.find(asset => asset.symbol === 'USDT');
@@ -99,6 +107,33 @@ const LoanApplicationForm = ({ availableAssets, walletAssets }) => {
 
     const debouncedLoanAmount = useDebounce(formik.values.loanAmount, 1000);
 
+    const reqLiquidationPrice = async () => {
+        try {
+            const res = await api.get.liquidationPrice({
+                collateral: formik.values.collateralAsset.name,
+                borrow: formik.values.loanAsset.name,
+            });
+
+            const { liquidationPrice } = res.data.data;
+
+            setLiquidationPrice(liquidationPrice);
+        } catch (err) {
+            setLiquidationPrice(0);
+        }
+    };
+
+    const reqInterest = async () => {
+        try {
+            const res = await api.get.interestRate({ crypto: formik.values.loanAsset.name });
+            const { hourlyInterest: hi, yearlyInterest: yi } = res.data.data;
+            setHourlyInterest(hi);
+            setDailyInterest(yi);
+        } catch (err) {
+            setHourlyInterest(0);
+            setDailyInterest(0);
+        }
+    };
+
     const reqCollateralNeeded = async (borrowName, borrowAmount, collateralName) => {
         const params = `?borrowName=${borrowName}&borrowAmount=${borrowAmount}&collateralName=${collateralName}`;
 
@@ -120,6 +155,13 @@ const LoanApplicationForm = ({ availableAssets, walletAssets }) => {
             const collateralName = formik.values.collateralAsset.name;
 
             reqCollateralNeeded(borrowName, borrowAmount, collateralName);
+
+            reqInterest();
+            reqLiquidationPrice();
+        } else {
+            setHourlyInterest(0);
+            setDailyInterest(0);
+            setLiquidationPrice(0);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedLoanAmount]);
@@ -131,6 +173,8 @@ const LoanApplicationForm = ({ availableAssets, walletAssets }) => {
             const collateralName = formik.values.collateralAsset.name;
 
             reqCollateralNeeded(borrowName, borrowAmount, collateralName);
+            reqInterest();
+            reqLiquidationPrice();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formik.values.loanAsset, formik.values.collateralAsset]);
