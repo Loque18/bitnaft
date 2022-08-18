@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import axios from 'axios';
@@ -79,6 +80,7 @@ const Ltv = ({ amount, asset, loanHash }) => {
 };
 
 const AddCollateralModal = () => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const addCollateralModal = useSelector(state => state.modalReducer[modals.addCollateralModal]);
 
@@ -114,7 +116,7 @@ const AddCollateralModal = () => {
                 }
 
                 toast.success(response.data.data.message);
-
+                router.replace(router.asPath);
                 dispatch(start_close_modal(modals.repayLoanModal));
                 resetForm();
             } catch (error) {

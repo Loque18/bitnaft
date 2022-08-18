@@ -126,10 +126,8 @@ const SavingsOfferTable = ({ assets, walletAssets }) => {
         return <p className="is-size-6 has-text-hgreen has-text-weight-semi-bold has-font-pt-mono">{rowData.apr} %</p>;
     };
 
-    const durationBodyTemplate = rowData => {
-        return (
-            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-roboto">{rowData.capital}</p>
-        );
+    const durationBodyTemplate = () => {
+        return <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-roboto">Flexible</p>;
     };
 
     const actionsBodyTemplate = rowData => {

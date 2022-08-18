@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
@@ -18,6 +19,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const RedeemSavingModal = () => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const redeemSavingModal = useSelector(state => state.modalReducer[modals.redeemSavingModal]);
 
@@ -56,6 +58,8 @@ const RedeemSavingModal = () => {
                 if (!res.data.status === 'success') {
                     throw new Error(res.data.message);
                 }
+
+                router.replace(router.asPath);
 
                 dispatch(
                     open_modal({

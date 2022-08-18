@@ -16,7 +16,7 @@ import formatBigNumber from 'src/utils/format-bignumber';
 import formatCurrency from 'src/utils/format-currency';
 import formatNumber from 'src/utils/format-number';
 
-const SavingsTable = ({ assets }) => {
+const SavingsTable = ({ assets, walletAssets }) => {
     const dispatch = useDispatch();
     // const [assets, setAssets] = useState([]);
     const [filter, setFilter] = useState(null);
@@ -68,14 +68,24 @@ const SavingsTable = ({ assets }) => {
         initFilter();
     }, []);
 
-    const handleOpenModalClick = e => {
-        const asset = JSON.parse(e.target.dataset.asset);
-
+    const handleRedeemClick = (e, asset) => {
         dispatch(
             open_modal({
                 modalName: modals.redeemSavingModal,
                 modalData: {
                     asset,
+                },
+            })
+        );
+    };
+
+    const handleAddClick = (e, asset) => {
+        dispatch(
+            open_modal({
+                modalName: modals.subscribeToSavingOfferModal,
+                modalData: {
+                    asset,
+                    balance: walletAssets.find(a => a.symbol === asset.symbol).balance,
                 },
             })
         );
@@ -174,11 +184,19 @@ const SavingsTable = ({ assets }) => {
             <div className="buttons is-flex is-justify-content-flex-start is-align-items-center">
                 <button
                     type="button"
-                    className="button has-bg-md-source-primary-o-2 has-text-md-source-primary"
-                    onClick={handleOpenModalClick}
-                    data-asset={JSON.stringify(rowData)}
+                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6"
+                    style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={e => handleRedeemClick(e, rowData)}
                 >
-                    Redeem
+                    Reedem
+                </button>
+                <button
+                    type="button"
+                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-5"
+                    style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={e => handleAddClick(e, rowData)}
+                >
+                    Add
                 </button>
             </div>
         );
