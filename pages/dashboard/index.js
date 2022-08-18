@@ -1,5 +1,3 @@
-import { useDispatch } from 'react-redux';
-
 import { getLayout as getMainLayout } from 'src/layouts/main';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
@@ -8,18 +6,12 @@ import LoanedAssetsCard from 'src/components/internal/assets-cards/assests-loan-
 
 import api from 'src/api';
 
-import { open_modal } from 'src/redux/actions';
-
-import modals from 'src/static/app.modals';
-
 import requirePageAuth from 'src/functions/require-page-auth';
 
 import getBalances from 'src/utils/get-balances/indes';
 
 // eslint-disable-next-line no-unused-vars
 const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
-    const dispatch = useDispatch();
-
     const { user } = session;
 
     const noneZeroBalancesWallet = walletAssets.filter(asset => asset.usdValue > 0);
