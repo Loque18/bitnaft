@@ -14,6 +14,10 @@ import requirePageAuth from 'src/functions/require-page-auth';
 
 import getBalances from 'src/utils/get-balances/indes';
 
+import AssetsTable from 'src/components/tables/assets-table';
+import SavingsTable from 'src/components/tables/savings-table';
+import LoansTable from 'src/components/tables/loans-table';
+
 // eslint-disable-next-line no-unused-vars
 const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     const { user } = session;
