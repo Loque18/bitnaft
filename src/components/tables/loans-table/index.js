@@ -18,6 +18,8 @@ import { open_modal } from 'src/redux/actions';
 import formatNumber from 'src/utils/format-number';
 import styles from '../styles.module.scss';
 
+import styles from '../styles.module.scss';
+
 const { green_circle } = styles;
 
 const LoansTable = ({ assets, walletAssets }) => {
