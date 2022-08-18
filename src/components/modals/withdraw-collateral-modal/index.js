@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -77,6 +78,7 @@ const Ltv = ({ amount, asset, loanHash, onChangeCB }) => {
 };
 
 const WithdrawCollateralModal = () => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const withdrawCollateralModal = useSelector(state => state.modalReducer[modals.withdrawCollateralModal]);
 
@@ -120,7 +122,7 @@ const WithdrawCollateralModal = () => {
                 }
 
                 toast.success(response.data.data.message);
-
+                router.replace(router.asPath);
                 dispatch(start_close_modal(modals.repayLoanModal));
             } catch (error) {
                 toast.error('Something went wrong');

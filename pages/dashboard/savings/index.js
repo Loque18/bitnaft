@@ -8,12 +8,12 @@ import api from 'src/api';
 
 import requirePageAuth from 'src/functions/require-page-auth';
 
-const SavingsPage = ({ error, errorMessage, savingsAssets }) => {
+const SavingsPage = ({ error, errorMessage, walletAssets, savingsAssets }) => {
     if (error) {
         toast.error(errorMessage);
     }
 
-    return <SavingsTable assets={savingsAssets} />;
+    return <SavingsTable assets={savingsAssets} walletAssets={walletAssets} />;
 };
 
 SavingsPage.getLayout = page =>

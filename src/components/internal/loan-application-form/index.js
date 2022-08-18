@@ -32,11 +32,16 @@ const LoanApplicationForm = ({
     setHourlyInterest,
     setDailyInterest,
     setLiquidationPrice,
+    setBorrowAsset,
+    setCollateralAsset,
 }) => {
     const dispatch = useDispatch();
 
     const defaultLoanToken = availableAssets.find(asset => asset.symbol === 'USDT');
     const defaultCollateralToken = walletAssets.find(asset => asset.symbol === 'BTC');
+
+    setBorrowAsset(defaultLoanToken);
+    setCollateralAsset(defaultCollateralToken);
 
     const formik = useFormik({
         initialValues: {
@@ -99,6 +104,7 @@ const LoanApplicationForm = ({
                     ],
                     onSelect: asset => {
                         formik.setFieldValue('collateralAsset', asset);
+                        setCollateralAsset(asset);
                     },
                 },
             })

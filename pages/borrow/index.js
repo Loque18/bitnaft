@@ -21,6 +21,9 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
     const [dailyInterest, setDailyInterest] = useState(0);
     const [liquidationPrice, setLiquidationPrice] = useState(0);
 
+    const [borrowAsset, setBorrowAsset] = useState(null);
+    const [collateralAsset, setCollateralAsset] = useState(null);
+
     if (error) {
         toast.error(errorMessage);
         return null;
@@ -30,8 +33,8 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
         <div>
             <BitnaftBanner
                 title="Bitnaft loans"
-                description="Lorem ipsum dolor sit amet consectetur adipiscing elit."
-                background="earn-banner"
+                description="Borrow crypto and fiat for your own use case"
+                background="borrow-banner"
             />
             <section className="section">{/* <Tabs tabs={portfolioTabList} /> */}</section>
             <section className="section is-hidden-mobile pt-0">
@@ -103,6 +106,8 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                                 setHourlyInterest={setHourlyInterest}
                                 setDailyInterest={setDailyInterest}
                                 setLiquidationPrice={setLiquidationPrice}
+                                setBorrowAsset={setBorrowAsset}
+                                setCollateralAsset={setCollateralAsset}
                             />
                         </div>
                         <div className="column is-5 is-offset-1">
@@ -128,7 +133,7 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                                     <div className="columns is-mobile">
                                         <div className="column">
                                             <p className="is-size-5 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
-                                                {hourlyInterest > 0 ? hourlyInterest : '-'}
+                                                {hourlyInterest > 0 ? hourlyInterest : '-'} %
                                             </p>
                                         </div>
                                     </div>
@@ -140,16 +145,17 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                                     <div className="columns is-mobile">
                                         <div className="column">
                                             <p className="is-size-5 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
-                                                {dailyInterest > 0 ? dailyInterest : '-'}
+                                                {dailyInterest > 0 ? dailyInterest : '-'} %
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="columns mt-5">
-                                <div className="column">
+                                <div className="column is-narrow">
                                     <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
-                                        liquidationPrice
+                                        Liquidation Price ({collateralAsset && collateralAsset.symbol} /{' '}
+                                        {borrowAsset && borrowAsset.symbol})
                                     </h1>
                                     <div className="columns is-mobile">
                                         <div className="column">
