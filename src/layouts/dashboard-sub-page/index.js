@@ -4,6 +4,7 @@ import { dashboardTabList } from 'src/static/tab-list';
 import BalanceDisplayer from 'src/components/internal/balance-displayer';
 
 import getBalances from 'src/utils/get-balances/indes';
+import AssetsPieChart from 'src/components/internal/assets-pie-chart';
 
 const DashboardSubPage = ({ title, children, walletAssets, savingsAssets }) => {
     const balance = getBalances(walletAssets);
@@ -29,8 +30,11 @@ const DashboardSubPage = ({ title, children, walletAssets, savingsAssets }) => {
                     </h1>
                 </div>
                 <div className="columns pt-4">
-                    <div className="column is-one-fifth">
+                    <div className="column is-flex is-align-items-flex-start is-justify-content-flex-start">
                         <BalanceDisplayer balance={balance} totalBalance={totalBalance} />
+                    </div>
+                    <div className="column is-flex is-align-items-flex-start is-justify-content-flex-end">
+                        <AssetsPieChart />
                     </div>
                 </div>
                 <div className="columns py-4">

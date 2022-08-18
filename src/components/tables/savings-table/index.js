@@ -13,6 +13,8 @@ import { open_modal } from 'src/redux/actions';
 import modals from 'src/static/app.modals';
 
 import formatBigNumber from 'src/utils/format-bignumber';
+import formatCurrency from 'src/utils/format-currency';
+import formatNumber from 'src/utils/format-number';
 
 const SavingsTable = ({ assets }) => {
     const dispatch = useDispatch();
@@ -134,20 +136,24 @@ const SavingsTable = ({ assets }) => {
     const balanceBodyTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {formatBigNumber(rowData.savingsBalance, rowData.decimals)}
+                {formatNumber(formatBigNumber(rowData.savingsBalance, rowData.decimals))}
             </p>
         );
     };
 
     const balanceUsdValueTemplate = rowData => {
         return (
-            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.usdValue}</p>
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
+                {formatCurrency(rowData.usdValue)}
+            </p>
         );
     };
 
     const apyBodyTemplate = rowData => {
         return (
-            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.apr} %</p>
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
+                {formatNumber(rowData.apr)} %
+            </p>
         );
     };
 

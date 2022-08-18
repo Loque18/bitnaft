@@ -78,6 +78,22 @@ const api = {
                 url: `${endpoint}/ltvAfterAddingCollateral/${params}`,
             });
         },
+
+        interestRate({ crypto }) {
+            const params = `?crypto=${crypto}`;
+            return axios({
+                method: 'get',
+                url: `${endpoint}/interestRate/${params}`,
+            });
+        },
+
+        liquidationPrice({ borrow, collateral }) {
+            const params = `?borrow=${borrow}&collateral=${collateral}`;
+            return axios({
+                method: 'get',
+                url: `${endpoint}/liquidationPrice/${params}`,
+            });
+        },
     },
     post: {
         signup: ({ email, password }) => {

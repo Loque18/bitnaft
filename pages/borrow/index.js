@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
@@ -16,6 +17,10 @@ import styles from './styles.module.scss';
 const { bordered_hr } = styles;
 
 const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
+    const [hourlyInterest, setHourlyInterest] = useState(0);
+    const [dailyInterest, setDailyInterest] = useState(0);
+    const [liquidationPrice, setLiquidationPrice] = useState(0);
+
     if (error) {
         toast.error(errorMessage);
         return null;
@@ -92,7 +97,13 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                 <div className="box">
                     <div className="columns is-reverse">
                         <div className="column is-6">
-                            <LoanApplicationForm availableAssets={availableAssets} walletAssets={walletAssets} />
+                            <LoanApplicationForm
+                                availableAssets={availableAssets}
+                                walletAssets={walletAssets}
+                                setHourlyInterest={setHourlyInterest}
+                                setDailyInterest={setDailyInterest}
+                                setLiquidationPrice={setLiquidationPrice}
+                            />
                         </div>
                         <div className="column is-5 is-offset-1">
                             <div className="columns">
@@ -112,24 +123,24 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                             <div className="columns mt-5">
                                 <div className="column">
                                     <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
-                                        Liquidation price
+                                        Hourly interest
                                     </h1>
                                     <div className="columns is-mobile">
                                         <div className="column">
                                             <p className="is-size-5 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
-                                                -
+                                                {hourlyInterest > 0 ? hourlyInterest : '-'}
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="column">
                                     <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
-                                        Interest rate
+                                        Daily interest
                                     </h1>
                                     <div className="columns is-mobile">
                                         <div className="column">
                                             <p className="is-size-5 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
-                                                -
+                                                {dailyInterest > 0 ? dailyInterest : '-'}
                                             </p>
                                         </div>
                                     </div>
@@ -138,18 +149,18 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                             <div className="columns mt-5">
                                 <div className="column">
                                     <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
-                                        Total interest amount
+                                        liquidationPrice
                                     </h1>
                                     <div className="columns is-mobile">
                                         <div className="column">
                                             <p className="is-size-5 has-font-pt-mono has-text-weight-medium has-text-hdarkgray">
-                                                -
+                                                {liquidationPrice !== 0 ? liquidationPrice : '-'}
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="column">
-                                    <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
+                                    {/* <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
                                         Repayment amount
                                     </h1>
                                     <div className="columns is-mobile">
@@ -158,7 +169,7 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                                                 -
                                             </p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

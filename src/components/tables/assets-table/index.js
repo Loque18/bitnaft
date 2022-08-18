@@ -11,6 +11,8 @@ import { InputText } from 'primereact/inputtext';
 import formatBigNumber from 'src/utils/format-bignumber';
 
 import { toast } from 'react-toastify';
+import formatCurrency from 'src/utils/format-currency';
+import formatNumber from 'src/utils/format-number';
 
 const AssetsTable = ({ assets }) => {
     // const [assets, setAssets] = useState([]);
@@ -127,14 +129,16 @@ const AssetsTable = ({ assets }) => {
     const balanceBodyTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {formatBigNumber(rowData.balance, rowData.decimals)}
+                {formatNumber(formatBigNumber(rowData.balance, rowData.decimals))}
             </p>
         );
     };
 
     const usdBalanceBodyTemplate = rowData => {
         return (
-            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">{rowData.usdValue}</p>
+            <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
+                {formatCurrency(rowData.usdValue)}
+            </p>
         );
     };
 

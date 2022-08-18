@@ -23,6 +23,7 @@ import modals from 'src/static/app.modals';
 
 import formatBigNumber from 'src/utils/format-bignumber';
 import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
+import formatNumber from 'src/utils/format-number';
 
 const Ltv = ({ amount, asset, loanHash }) => {
     const [loading, setLoading] = useState(false);
@@ -80,6 +81,7 @@ const RepayLoanModal = () => {
     const repayLoanModal = useSelector(state => state.modalReducer[modals.repayLoanModal]);
 
     const [loading, setLoading] = useState(false);
+    const [balance, setBalance] = useState(0);
 
     const { data } = repayLoanModal;
 
@@ -88,7 +90,13 @@ const RepayLoanModal = () => {
             amount: '',
         },
         validationSchema: yup.object({
-            amount: yup.number().required('Amount is required'),
+            amount: yup
+                .number()
+                .max(
+                    data && data.loan && formatBigNumber(data.loan.borrowAmount, data.loan.borrowDecimals),
+                    'Insufficient balance'
+                )
+                .required('Amount is required'),
         }),
         onSubmit: async values => {
             setLoading(true);
@@ -126,6 +134,16 @@ const RepayLoanModal = () => {
     const closeModal = () => {
         dispatch(start_close_modal());
     };
+
+    useEffect(() => {
+        if (!data || !data.loan || !data.walletAssets) return;
+
+        const borrowAsset = data.walletAssets.find(asset => asset.name === data.loan.borrowName);
+
+        const baalance = formatNumber(formatBigNumber(borrowAsset.balance, borrowAsset.decimals));
+
+        setBalance(baalance);
+    }, [data]);
 
     if (!data || !data.loan) return null;
 
@@ -199,7 +217,9 @@ const RepayLoanModal = () => {
                                         <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
                                             {data &&
                                                 data.loan &&
-                                                formatBigNumber(data.loan.borrowAmount, data.loan.borrowDecimals)}{' '}
+                                                formatNumber(
+                                                    formatBigNumber(data.loan.borrowAmount, data.loan.borrowDecimals)
+                                                )}{' '}
                                             <span className="has-font-roboto">
                                                 {' '}
                                                 {data && data.loan && data.loan.borrowSymbol}
@@ -217,12 +237,13 @@ const RepayLoanModal = () => {
                                         <p className="is-size-6 has-text-md-black-o-5 has-text-weight-light has-font-pt-mono">
                                             {data &&
                                                 data.loan &&
-                                                formatBigNumber(
-                                                    data.loan.collateralAmount,
-                                                    data.loan.collateralDecimals
+                                                formatNumber(
+                                                    formatBigNumber(
+                                                        data.loan.collateralAmount,
+                                                        data.loan.collateralDecimals
+                                                    )
                                                 )}{' '}
                                             <span className="has-font-roboto">
-                                                {' '}
                                                 {data && data.loan && data.loan.collateralSymbol}
                                             </span>
                                         </p>
@@ -283,22 +304,7 @@ const RepayLoanModal = () => {
                                                     </label>
                                                     <div className="">
                                                         {data && data.loan && data.loan.borrowName} balance:{' '}
-                                                        <span className="has-font-pt-mono">
-                                                            {(() => {
-                                                                if (data && data.loan && data.walletAssets) {
-                                                                    const borrowAsset = data.walletAssets.find(
-                                                                        asset => asset.name === data.loan.borrowName
-                                                                    );
-
-                                                                    const balance = formatBigNumber(
-                                                                        borrowAsset.balance,
-                                                                        borrowAsset.decimals
-                                                                    );
-
-                                                                    return balance;
-                                                                }
-                                                            })()}{' '}
-                                                        </span>
+                                                        <span className="has-font-pt-mono">{balance}</span>
                                                     </div>
                                                 </div>
 
@@ -309,12 +315,21 @@ const RepayLoanModal = () => {
                                                             name="amount"
                                                             minFractionDigits={0}
                                                             maxFractionDigits={18}
+                                                            min={0}
                                                             placeholder="Amount"
                                                             allowEmpty
                                                             value={formik.values.email}
                                                             onChange={e => formik.setFieldValue('amount', e.value)}
                                                         />
                                                     </div>
+
+                                                    {formik.errors.amount ? (
+                                                        <div className="p-inputgroup pt-2">
+                                                            <span className="has-text-danger">
+                                                                {formik.errors.amount}
+                                                            </span>
+                                                        </div>
+                                                    ) : null}
                                                 </div>
                                             </div>
                                         </form>
@@ -332,6 +347,7 @@ const RepayLoanModal = () => {
                                         className={`button is-hblue ${loading ? 'is-loading' : ''}`}
                                         type="button"
                                         onClick={handleSubmit}
+                                        disabled={Object.keys(formik.errors).length > 0}
                                     >
                                         Repay
                                     </button>
