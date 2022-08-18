@@ -115,7 +115,7 @@ const SavingsTable = ({ assets, walletAssets }) => {
                         </span>
                     ) : null}
                 </div>
-                <div>Savings</div>
+                {/* <div>Savings</div> */}
             </div>
         );
     };

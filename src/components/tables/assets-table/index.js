@@ -98,7 +98,7 @@ const AssetsTable = ({ assets }) => {
                         </span>
                     ) : null}
                 </div>
-                <div>Wallet</div>
+                {/* <div>Wallet</div> */}
             </div>
         );
     };
