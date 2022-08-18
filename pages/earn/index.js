@@ -21,7 +21,7 @@ const EarnPage = ({ savingOffers, error, errorMessage, walletAssets }) => {
         <div>
             <BitnaftBanner
                 title="Bitnaft earn"
-                description="Lorem ipsum dolor sit amet consectetur adipiscing elit."
+                description="Deposit and earn while you sleep"
                 background="earn-banner"
             />
             <div className="container">

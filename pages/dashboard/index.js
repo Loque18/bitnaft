@@ -21,6 +21,8 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     // const sbalances = getUserBalances(savingsAssets);
     // const lbalances = getUserBalances(loansAssets);
 
+    console.log(loansAssets);
+
     return (
         <section className="section">
             <div className="container">
@@ -58,10 +60,11 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                             title="Loans"
                             to="/dashboard/loans"
                             icon="fa-solid fa-hand-holding-dollar"
-                            amount={1.5}
-                            cryptoIcon="https://bitcoin.org/img/icons/opengraph.png?1657703267"
-                            numberOfLoanedAssets={1}
-                            payBeforeDate={1659603600}
+                            lastLoan={loansAssets[0]}
+                            // amount={1.5}
+                            // cryptoIcon="https://bitcoin.org/img/icons/opengraph.png?1657703267"
+                            numberOfLoanedAssets={loansAssets.length}
+                            // payBeforeDate={1659603600}
                         />
                     </div>
                 </div>
