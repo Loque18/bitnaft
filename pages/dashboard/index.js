@@ -21,7 +21,7 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     // const sbalances = getUserBalances(savingsAssets);
     // const lbalances = getUserBalances(loansAssets);
 
-    console.log(loansAssets);
+    // console.log(loansAssets);
 
     return (
         <section className="section">

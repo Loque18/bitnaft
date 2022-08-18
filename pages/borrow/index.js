@@ -34,7 +34,7 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
             <BitnaftBanner
                 title="Bitnaft loans"
                 description="Borrow crypto and fiat for your own use case"
-                background="earn-banner"
+                background="borrow-banner"
             />
             <section className="section">{/* <Tabs tabs={portfolioTabList} /> */}</section>
             <section className="section is-hidden-mobile pt-0">

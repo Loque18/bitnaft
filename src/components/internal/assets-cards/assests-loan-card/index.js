@@ -7,8 +7,6 @@ import formatBigNumber from 'src/utils/format-bignumber';
 const LoanedAssetsCard = props => {
     const { title, icon, to, lastLoan, numberOfLoanedAssets } = props;
 
-    console.log('numberOfLoanedAssets', numberOfLoanedAssets);
-
     return (
         <Link href={to}>
             <div className="box rounded-shadowed-box is-clickable min-w-250">

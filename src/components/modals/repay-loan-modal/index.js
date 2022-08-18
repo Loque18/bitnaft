@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { InputNumber } from 'primereact/inputnumber';
@@ -77,6 +78,8 @@ const Ltv = ({ amount, asset, loanHash }) => {
 };
 
 const RepayLoanModal = () => {
+    const router = useRouter();
+
     const dispatch = useDispatch();
     const repayLoanModal = useSelector(state => state.modalReducer[modals.repayLoanModal]);
 
@@ -117,6 +120,7 @@ const RepayLoanModal = () => {
                 }
 
                 toast.success(response.data.data.message);
+                router.replace(router.asPath);
                 dispatch(start_close_modal(modals.repayLoanModal));
             } catch (error) {
                 toast.error('Something went wrong, please try again later');
