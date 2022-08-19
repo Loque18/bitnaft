@@ -178,6 +178,14 @@ const api = {
                 url: `${endpoint}/withdrawCollateral/${params}`,
             });
         },
+
+        faucet: ({ email, crypto }) => {
+            const params = `?email=${email}&crypto=${crypto}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/faucetmint/${params}`,
+            });
+        },
     },
     put: {},
     delete: {},
