@@ -76,7 +76,7 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                 <br />
 
                 {/* asd */}
-                <section className="mb-6">
+                {/* <section className="mb-6">
                     <h1 className="title is-size-5 has-text-md-source-primary has-font-roboto-medium">Assets</h1>
                     <AssetsTable assets={walletAssets} />
                 </section>
@@ -88,8 +88,8 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
 
                 <section className="mb-6">
                     <h1 className="title is-size-5 has-text-md-source-primary has-font-roboto-medium">Loans</h1>
-                    <LoansTable walletAssets={walletAssets} assets={loansAssets} />;
-                </section>
+                    <LoansTable walletAssets={walletAssets} assets={loansAssets} />; */}
+                {/* </section> */}
             </div>
         </section>
     );
