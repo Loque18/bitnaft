@@ -40,9 +40,6 @@ const LoanApplicationForm = ({
     const defaultLoanToken = availableAssets.find(asset => asset.symbol === 'USDT');
     const defaultCollateralToken = walletAssets.find(asset => asset.symbol === 'BTC');
 
-    setBorrowAsset(defaultLoanToken);
-    setCollateralAsset(defaultCollateralToken);
-
     const formik = useFormik({
         initialValues: {
             loanAmount: '',
@@ -173,6 +170,10 @@ const LoanApplicationForm = ({
     }, [debouncedLoanAmount]);
 
     useEffect(() => {
+        setBorrowAsset(formik.values.loanAsset);
+        setCollateralAsset(formik.values.collateralAsset);
+
+        console.log(formik.values.collateralAsset);
         if (formik.values.loanAmount) {
             const borrowName = formik.values.loanAsset.name;
             const borrowAmount = formatNormalNumber(formik.values.loanAmount, formik.values.loanAsset.decimals);

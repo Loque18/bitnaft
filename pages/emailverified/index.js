@@ -48,6 +48,6 @@ const VerifyEmailPage = () => {
     );
 };
 
-VerifyEmailPage.getLayout = page => getPageTitleLayout(page, 'Please verify your email');
+VerifyEmailPage.getLayout = page => getPageTitleLayout(page, 'Email verified');
 
 export default VerifyEmailPage;

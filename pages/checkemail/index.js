@@ -43,7 +43,8 @@ const VerifyEmailPage = () => {
                         <section id="verify_email_title mb-6">
                             <h1 className="title is-4 has-text-hblue has-text-centered">Verify your email</h1>
                             <p className="has-text-centered">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.{' '}
+                                Check your emails for a verification message. If you don&apos;t see it click on{' '}
+                                <code style={{ color: 'black' }}>Resend Email</code>
                             </p>
                         </section>
                         <section className="has-text-centered is-flex-grow-1">

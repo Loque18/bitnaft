@@ -17,6 +17,8 @@ export default async function takeLoan(req, res) {
 
     const { collateralName, collateralAmount, borrowName, borrowAmount } = req.body;
 
+    console.log(req.body);
+
     try {
         const response = await api.post.takeLoan({
             email,

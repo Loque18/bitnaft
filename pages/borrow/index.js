@@ -24,6 +24,8 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
     const [borrowAsset, setBorrowAsset] = useState(null);
     const [collateralAsset, setCollateralAsset] = useState(null);
 
+    console.log('collat', collateralAsset);
+
     if (error) {
         toast.error(errorMessage);
         return null;
