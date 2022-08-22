@@ -28,8 +28,8 @@ const DashboardSubPage = ({ title, children, walletAssets, savingsAssets }) => {
                         Dashboard / {title}
                     </h1>
                 </div>
-                <div className="columns pt-4">
-                    <div className="column is-flex is-align-items-flex-start is-justify-content-flex-start">
+                <div className="columns is-gapless pt-4">
+                    <div className="column is-clipped is-flex is-align-items-flex-start is-justify-content-flex-start">
                         <BalanceDisplayer balance={balance} totalBalance={totalBalance} />
                     </div>
                     <div className="column is-flex is-align-items-flex-start is-justify-content-flex-end">
