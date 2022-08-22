@@ -1,3 +1,6 @@
+import { useRef } from 'react';
+import { Element } from 'react-scroll';
+
 import { getLayout as getMainLayout } from 'src/layouts/main';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
@@ -9,6 +12,10 @@ import api from 'src/api';
 import requirePageAuth from 'src/functions/require-page-auth';
 
 import getBalances from 'src/utils/get-balances/indes';
+
+import AssetsTable from 'src/components/tables/assets-table';
+import SavingsTable from 'src/components/tables/savings-table';
+import LoansTable from 'src/components/tables/loans-table';
 
 // eslint-disable-next-line no-unused-vars
 const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
@@ -22,6 +29,10 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     // const lbalances = getUserBalances(loansAssets);
 
     // console.log(loansAssets);
+
+    const walletRef = useRef(null);
+    const savingsRef = useRef(null);
+    const loansRef = useRef(null);
 
     return (
         <section className="section">
@@ -38,7 +49,7 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                     <div className="column is-narrow">
                         <OwnedAssetsCard
                             title="Wallet"
-                            to="/dashboard/wallet"
+                            to="walletelement"
                             icon="fas fa-wallet"
                             amount={userWalletBalance}
                             cryptoIcons={noneZeroBalancesWallet.slice(0, 4).map(asset => asset.icon)}
@@ -48,17 +59,19 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                     <div className="column is-narrow">
                         <OwnedAssetsCard
                             title="Savings"
-                            to="/dashboard/savings"
+                            to="savingselement"
                             icon="fa-solid fa-sack-dollar"
                             amount={userSavingsBalance}
                             cryptoIcons={noneZeroSavingAssets.slice(0, 4).map(asset => asset.icon)}
                             numberOfAssets={noneZeroSavingAssets.length}
+                            ref={savingsRef}
+                            element={savingsRef.current}
                         />
                     </div>
                     <div className="column is-narrow">
                         <LoanedAssetsCard
                             title="Loans"
-                            to="/dashboard/loans"
+                            to="loanselement"
                             icon="fa-solid fa-hand-holding-dollar"
                             lastLoan={loansAssets[0]}
                             // amount={1.5}
@@ -72,18 +85,36 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                 <br />
 
                 {/* asd */}
-                {/* <section className="mb-6">
+                <section className="mb-6">
+                    <Element
+                        name="walletelement"
+                        className="title is-size-5 has-text-md-source-primary has-font-roboto-medium"
+                    >
+                        Wallet
+                    </Element>
+
                     <AssetsTable assets={walletAssets} />
                 </section>
 
                 <section className="mb-6">
-                    <h1 className="title is-size-5 has-text-md-source-primary has-font-roboto-medium">Savings</h1>
+                    <Element
+                        name="savingselement"
+                        className="title is-size-5 has-text-md-source-primary has-font-roboto-medium"
+                    >
+                        Savings
+                    </Element>
                     <SavingsTable assets={savingsAssets} walletAssets={walletAssets} />
                 </section>
 
-                <section className="mb-6">
-                    <LoansTable walletAssets={walletAssets} assets={loansAssets} />;
-                </section> */}
+                <section id="loans" className="mb-6">
+                    <Element
+                        name="loanselement"
+                        className="title is-size-5 has-text-md-source-primary has-font-roboto-medium"
+                    >
+                        Loans
+                    </Element>
+                    <LoansTable walletAssets={walletAssets} assets={loansAssets} />
+                </section>
             </div>
         </section>
     );

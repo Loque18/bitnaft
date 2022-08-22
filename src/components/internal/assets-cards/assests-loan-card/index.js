@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import Link from 'next/link';
+
+import { Link } from 'react-scroll';
 
 import formatDate from 'src/utils/format-date';
 import formatBigNumber from 'src/utils/format-bignumber';
@@ -8,7 +9,7 @@ const LoanedAssetsCard = props => {
     const { title, icon, to, lastLoan, numberOfLoanedAssets } = props;
 
     return (
-        <Link href={to}>
+        <Link to={to} smooth offset={-80}>
             <div className="box rounded-shadowed-box is-clickable min-w-250">
                 <div className="columns mb-0">
                     <div className="column is-flex is-justify-content-flex-start is-align-items-center">

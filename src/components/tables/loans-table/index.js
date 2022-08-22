@@ -318,10 +318,12 @@ const LoansTable = ({ assets, walletAssets }) => {
                         </span>
                     ) : null}
                 </div>
-                <div className="table-header-container is-hidden-mobile">
-                    <Button icon="pi pi-plus" label="Expand All" onClick={expandAll} className="mr-2" />
-                    <Button icon="pi pi-minus" label="Collapse All" onClick={collapseAll} />
-                </div>
+                {assets.length > 0 ? (
+                    <div className="table-header-container is-hidden-mobile">
+                        <Button icon="pi pi-plus" label="Expand All" onClick={expandAll} className="mr-2" />
+                        <Button icon="pi pi-minus" label="Collapse All" onClick={collapseAll} />
+                    </div>
+                ) : null}
             </div>
         );
     };
