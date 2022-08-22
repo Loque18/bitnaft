@@ -16,7 +16,6 @@ import modals from 'src/static/app.modals';
 
 import { open_modal } from 'src/redux/actions';
 import formatNumber from 'src/utils/format-number';
-
 import styles from '../styles.module.scss';
 
 const { green_circle } = styles;

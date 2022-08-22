@@ -17,6 +17,7 @@ import formatNormalNumber from 'src/utils/fortmat-normal-number.js';
 import modals from 'src/static/app.modals';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import formatNumber from 'src/utils/format-number';
 
 const SubscribeToSavingOffer = () => {
     const router = useRouter();
@@ -127,13 +128,16 @@ const SubscribeToSavingOffer = () => {
                                     <div className="is-flex is-justify-content-space-between">
                                         <h1 className="title is-size-6">Minimun</h1>
                                         <h1 className="is-size-6 has-text-right">
-                                            {asset && formatBigNumber(asset.minimumAmount, asset.decimals)}{' '}
+                                            {asset &&
+                                                formatNumber(formatBigNumber(asset.minimumAmount, asset.decimals))}{' '}
                                             {asset && asset.symbol}
                                         </h1>
                                     </div>
                                     <div className="is-flex is-justify-content-space-between">
                                         <h1 className="title is-size-6">APR</h1>
-                                        <h1 className="is-size-6 has-text-right">{asset && asset.apr} %</h1>
+                                        <h1 className="is-size-6 has-font-pt-mono has-text-right">
+                                            {asset && formatNumber(asset.apr)} %
+                                        </h1>
                                     </div>
                                 </section>
                                 <section className="">
@@ -141,13 +145,14 @@ const SubscribeToSavingOffer = () => {
                                         <div className="field">
                                             <div className="is-flex is-flex-direction-row is-justify-content-space-between">
                                                 <label className="label is-size-7">Amount</label>
-                                                <div className="is-size-7">
-                                                    Asset balance: {asset && formatBigNumber(balance, asset.decimals)}
+                                                <div className="is-size-7 has-font-pt-mono">
+                                                    Asset balance:{' '}
+                                                    {asset && formatNumber(formatBigNumber(balance, asset.decimals))}
                                                 </div>
                                             </div>
                                             <div className="control has-icons-right">
                                                 <input
-                                                    className={`input arrowless${
+                                                    className={`input has-font-pt-mono arrowless${
                                                         formik.touched.amount && formik.errors.amount ? 'is-danger' : ''
                                                     } `}
                                                     type="number"
@@ -161,9 +166,7 @@ const SubscribeToSavingOffer = () => {
                                                 <p className="help is-flex is-flex-direction-row is-justify-content-space-between">
                                                     {formik.touched.amount && formik.errors.amount ? (
                                                         <span className="has-text-danger">{formik.errors.amount}</span>
-                                                    ) : (
-                                                        '⠀'
-                                                    )}
+                                                    ) : null}
                                                 </p>
 
                                                 {/* <button

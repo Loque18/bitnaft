@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Tabs from 'src/layouts/tabs';
 import { dashboardTabList } from 'src/static/tab-list';
 import BalanceDisplayer from 'src/components/internal/balance-displayer';
+import AssetsPieChart from 'src/components/internal/assets-pie-chart';
 
 import getBalances from 'src/utils/get-balances/indes';
 
@@ -28,12 +29,14 @@ const DashboardSubPage = ({ title, children, walletAssets, savingsAssets }) => {
                         Dashboard / {title}
                     </h1>
                 </div>
-                <div className="columns pt-4">
-                    <div className="column is-flex is-align-items-flex-start is-justify-content-flex-start">
+                <div className="columns is-gapless pt-4">
+                    <div className="column is-clipped is-flex is-align-items-flex-start is-justify-content-flex-start">
                         <BalanceDisplayer balance={balance} totalBalance={totalBalance} />
                     </div>
-                    <div className="column is-flex is-align-items-flex-start is-justify-content-flex-end">
-                        {/* <AssetsPieChart /> */}
+                    <div className="column is-hidden-mobile is-flex is-justify-content-flex-end">
+                        <div className="chart-container">
+                            <AssetsPieChart />
+                        </div>
                     </div>
                 </div>
                 <div className="columns py-4">

@@ -11,7 +11,7 @@ import api from 'src/api';
 
 import styles from 'src/scss/common_modules/form_utils.module.scss';
 
-const { eye_button } = styles;
+const { eye_button, input_reset } = styles;
 
 const Eye = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
 const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
@@ -100,7 +100,7 @@ const Form = () => {
                             <input
                                 className={`input ${
                                     formik.touched.password && formik.errors.password ? 'is-danger' : ''
-                                }`}
+                                } ${input_reset}`}
                                 type={passwordVisible ? 'text' : 'password'}
                                 placeholder="Password"
                                 value={formik.values.password}
@@ -136,7 +136,7 @@ const Form = () => {
                             <input
                                 className={`input ${
                                     formik.touched.confirmPassword && formik.errors.confirmPassword ? 'is-danger' : ''
-                                }`}
+                                } ${input_reset}`}
                                 type={passwordVisible ? 'text' : 'password'}
                                 placeholder="Confirm password"
                                 value={formik.values.confirmPassword}

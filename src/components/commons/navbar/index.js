@@ -164,11 +164,6 @@ const Navbar = () => {
                                 <span className="has-text-md-black has-font-roboto">{user.email}</span>
                             </div>
                             <div className="navbar-dropdown">
-                                <div className="navbar-item">Overview</div>
-                                <a href="profile/settings" className="navbar-item">
-                                    User Settings
-                                </a>
-
                                 <a className="navbar-item" onClick={handleLogoutClick}>
                                     Log out
                                 </a>

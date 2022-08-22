@@ -1,6 +1,6 @@
 export const dashboardTabList = [
     {
-        name: 'Your assets',
+        name: 'Wallet',
         to: '/dashboard/wallet',
     },
     {

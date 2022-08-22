@@ -3,6 +3,10 @@ import { change_balance_visibility } from 'src/redux/actions';
 import formatCurrency from 'src/utils/format-currency';
 import DisplayAsteriks from 'src/utils/display-asteriks';
 
+import styles from './styles.module.scss';
+
+const { square1, square2 } = styles;
+
 const Eye = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30" />;
 const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
 
@@ -16,8 +20,10 @@ const BalanceDisplayer = ({ balance, totalBalance }) => {
     };
 
     return (
-        <div className="py-4 px-6 has-bg-hblue2-o-1">
-            <div>
+        <div className="is-relative min-w-300">
+            <div className={`has-bg-hblue2-o-1 ${square1}`} />
+            <div className={`has-bg-hblue2-o-1 ${square2}`} />
+            <div className="py-4 px-6">
                 <div className="columns mb-1 is-gapless is-mobile">
                     <div className="column is-narrow is-flex is-align-items-center">
                         <p className="is-size-5 has-text-md-source-primary has-font-roboto has-text-weight-medium">

@@ -4,10 +4,6 @@ import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
 import LoanedAssetsCard from 'src/components/internal/assets-cards/assests-loan-card';
 
-import AssetsTable from 'src/components/tables/assets-table';
-import SavingsTable from 'src/components/tables/savings-table';
-import LoansTable from 'src/components/tables/loans-table';
-
 import api from 'src/api';
 
 import requirePageAuth from 'src/functions/require-page-auth';
@@ -77,7 +73,6 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
 
                 {/* asd */}
                 {/* <section className="mb-6">
-                    <h1 className="title is-size-5 has-text-md-source-primary has-font-roboto-medium">Assets</h1>
                     <AssetsTable assets={walletAssets} />
                 </section>
 
@@ -87,9 +82,8 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                 </section>
 
                 <section className="mb-6">
-                    <h1 className="title is-size-5 has-text-md-source-primary has-font-roboto-medium">Loans</h1>
-                    <LoansTable walletAssets={walletAssets} assets={loansAssets} />; */}
-                {/* </section> */}
+                    <LoansTable walletAssets={walletAssets} assets={loansAssets} />;
+                </section> */}
             </div>
         </section>
     );
