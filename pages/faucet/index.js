@@ -43,10 +43,10 @@ const FaucetPage = ({ user }) => {
 
     return (
         <div style={{ height: '100vh' }}>
-            <div className="hero is-primary">
+            <div className="hero is-hblue">
                 <div className="hero-body">
                     <div className="container">
-                        <h1 className="title">Faucet</h1>
+                        <h1 className="title has-text-white">Faucet</h1>
                     </div>
                 </div>
             </div>

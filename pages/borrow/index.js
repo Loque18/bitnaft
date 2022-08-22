@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+
+import { useRouter } from 'next/router';
 
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import { getLayout as getMainLayout } from 'src/layouts/main';
@@ -21,10 +23,18 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
     const [dailyInterest, setDailyInterest] = useState(0);
     const [liquidationPrice, setLiquidationPrice] = useState(0);
 
+    const [loanType, setLoanType] = useState('conventional');
+
+    const { query } = useRouter();
+
     const [borrowAsset, setBorrowAsset] = useState(null);
     const [collateralAsset, setCollateralAsset] = useState(null);
 
-    console.log('collat', collateralAsset);
+    useEffect(() => {
+        if (query.type) {
+            setLoanType(query.type);
+        }
+    }, [query]);
 
     if (error) {
         toast.error(errorMessage);
@@ -37,6 +47,7 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                 title="Bitnaft loans"
                 description="Borrow crypto and fiat for your own use case"
                 background="borrow-banner"
+                loanType={loanType}
             />
             <section className="section">{/* <Tabs tabs={portfolioTabList} /> */}</section>
             <section className="section is-hidden-mobile pt-0">
@@ -100,6 +111,9 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
             </section>
             <section className="section pt-0">
                 <div className="box">
+                    <h1 className="subtitle">
+                        <span className="is-capitalized">{loanType} </span>loan
+                    </h1>
                     <div className="columns is-reverse">
                         <div className="column is-6">
                             <LoanApplicationForm

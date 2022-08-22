@@ -136,16 +136,34 @@ const Navbar = () => {
                             Earn
                         </a>
                     </Link>
-                    <Link href="/borrow">
+                    <div className="navbar-item is-size-6 has-font-roboto has-dropdown is-hoverable">
+                        <a className="navbar-link">
+                            <span className="has-text-md-source-primary">borrow</span>
+                        </a>
+                        <div className="navbar-dropdown">
+                            <Link href="/borrow?type=conventional">
+                                <a className="navbar-item">
+                                    <span className="has-text-md-source-primary">conventional</span>
+                                </a>
+                            </Link>
+                            <Link href="/borrow?type=islamic">
+                                <a className="navbar-item">
+                                    <span className="has-text-md-source-primary">islamic</span>
+                                </a>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <Link href="/faucet">
                         <a
                             className={`navbar-item is-size-6 has-font-roboto ${
-                                router.pathname === '/borrow' ? 'is-active' : ''
+                                router.pathname === '/faucet' ? 'is-active' : ''
                             }`}
                             onClick={handleNavbarItemClick}
                             role="button"
                             tabIndex={0}
                         >
-                            Borrow
+                            Faucet
                         </a>
                     </Link>
                 </div>

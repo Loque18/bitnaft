@@ -16,6 +16,7 @@ import getBalances from 'src/utils/get-balances/indes';
 import AssetsTable from 'src/components/tables/assets-table';
 import SavingsTable from 'src/components/tables/savings-table';
 import LoansTable from 'src/components/tables/loans-table';
+import Link from 'next/link';
 
 // eslint-disable-next-line no-unused-vars
 const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
@@ -99,9 +100,22 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                 <section className="mb-6">
                     <Element
                         name="savingselement"
-                        className="title is-size-5 has-text-md-source-primary has-font-roboto-medium"
+                        className="is-flex is-flex-direction-row is-justify-content-space-between"
                     >
-                        Savings
+                        <h1 className="title is-size-5 has-text-md-source-primary has-font-roboto-medium">Savings</h1>
+                        <h1 className="title is-size-5 has-text-md-source-primary has-font-roboto-medium is-clickable">
+                            <Link
+                                className='className="title is-size-5 has-text-md-source-primary has-font-roboto-medium'
+                                href="/earn"
+                            >
+                                <span>
+                                    Savings offers{' '}
+                                    <span className="icon">
+                                        <i className="fa-solid fa-arrow-up-right-from-square" />
+                                    </span>
+                                </span>
+                            </Link>
+                        </h1>
                     </Element>
                     <SavingsTable assets={savingsAssets} walletAssets={walletAssets} />
                 </section>
@@ -109,9 +123,22 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                 <section id="loans" className="mb-6">
                     <Element
                         name="loanselement"
-                        className="title is-size-5 has-text-md-source-primary has-font-roboto-medium"
+                        className="is-flex is-flex-direction-row is-justify-content-space-between"
                     >
-                        Loans
+                        <h1 className="title is-size-5 has-text-md-source-primary has-font-roboto-medium">Loans</h1>
+                        <h1 className="title is-size-5 has-text-md-source-primary has-font-roboto-medium is-clickable">
+                            <Link
+                                className='className="title is-size-5 has-text-md-source-primary has-font-roboto-medium'
+                                href="/borrow"
+                            >
+                                <span>
+                                    Loan application{' '}
+                                    <span className="icon">
+                                        <i className="fa-solid fa-arrow-up-right-from-square" />
+                                    </span>
+                                </span>
+                            </Link>
+                        </h1>
                     </Element>
                     <LoansTable walletAssets={walletAssets} assets={loansAssets} />
                 </section>
