@@ -32,7 +32,7 @@ const OwnedAssetsCard = props => {
                     </div>
                     <div className="column is-flex is-justify-content-flex-end is-align-items-center">
                         <p className="is-size-7 has-text-md-black-o-7 has-text-weight-bold has-font-roboto">
-                            {numberOfAssets === 0 ? 'No assets' : `${numberOfAssets} assets`}
+                            {numberOfAssets !== 0 ? 'No assets' : `${numberOfAssets} assets`}
                         </p>
                     </div>
                 </div>
