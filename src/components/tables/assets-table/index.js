@@ -113,7 +113,7 @@ const AssetsTable = ({ assets }) => {
                 </div>
                 <div className="media-content is-clipped">
                     <div className="columns is-mobile">
-                        <div className="column is-4-desktop is-6-mobile is-flex is-flex-direction-flex-start is-align-items-center">
+                        <div className="column is-5-desktop is-6-mobile is-flex is-flex-direction-flex-start is-align-items-center">
                             <p className="title has-text-md-black is-size-6 has-text-weight-medium">{rowData.name}</p>
                         </div>
                         <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">

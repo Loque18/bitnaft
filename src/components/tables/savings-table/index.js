@@ -130,7 +130,7 @@ const SavingsTable = ({ assets, walletAssets }) => {
                 </div>
                 <div className="media-content is-clipped">
                     <div className="columns">
-                        <div className="column is-3 is-flex is-flex-direction-flex-start is-align-items-center">
+                        <div className="column is-5 is-flex is-flex-direction-flex-start is-align-items-center">
                             <p className="title has-text-md-black is-size-6 has-text-weight-medium">{rowData.name}</p>
                         </div>
                         <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
