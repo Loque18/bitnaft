@@ -13,6 +13,8 @@ const AssetsPieChart = () => {
     });
 
     const [options] = useState({
+        maintainAspectRatio: false,
+        responsive: true,
         plugins: {
             legend: {
                 display: true,
@@ -25,7 +27,6 @@ const AssetsPieChart = () => {
                     font: {
                         color: '#000',
                         weight: 'bold',
-                        // size: '11',
                     },
                 },
 
