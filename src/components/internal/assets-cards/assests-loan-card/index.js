@@ -69,9 +69,14 @@ const LoanedAssetsCard = props => {
                             </p>
                         </div>
                     ) : (
-                        <p className="is-size-7 has-text-md-black-o-7 has-text-weight-bold has-font-roboto has-text-right">
-                            No loans
-                        </p>
+                        <div
+                            className="column is-align-items-flex-end is-flex is-justify-content-flex-end"
+                            style={{ height: '112px' }}
+                        >
+                            <p className="is-size-7 has-text-md-black-o-7 has-text-weight-bold has-font-roboto">
+                                No loans
+                            </p>
+                        </div>
                     )}
                 </div>
             </div>
