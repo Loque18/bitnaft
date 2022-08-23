@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
-import LoginForm from 'src/sub-components/login/form';
+import ResetPassForm from 'src/sub-components/resetpass/form';
 
 import requirePageAunauth from 'src/functions/require-page-anauth';
 
@@ -48,10 +48,16 @@ const LoginPage = () => {
                             <div className="is-flex-grow-1" style={{ display: 'grid', placeItems: 'center' }}>
                                 <div>
                                     <section className="mb-5">
-                                        <h1 className="title is-4 has-text-hblue has-text-centered">Welcome back!</h1>
+                                        <h1 className="title is-4 has-text-hblue has-text-centered">
+                                            Reset your password
+                                        </h1>
+                                        {/* <p className="has-text-centered">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis
+                                        mauris.{' '}
+                                    </p> */}
                                     </section>
                                     <section>
-                                        <LoginForm />
+                                        <ResetPassForm />
                                     </section>
                                 </div>
                             </div>
@@ -70,7 +76,7 @@ const LoginPage = () => {
     );
 };
 
-LoginPage.getLayout = page => getPageTitleLayout(page, 'Login');
+LoginPage.getLayout = page => getPageTitleLayout(page, 'Reset password');
 
 export default LoginPage;
 

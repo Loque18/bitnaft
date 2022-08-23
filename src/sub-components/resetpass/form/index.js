@@ -5,12 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
 
-import { update_session } from 'src/redux/actions';
+import api from 'src/api';
 
 import styles from 'src/scss/common_modules/form_utils.module.scss';
 
@@ -20,8 +18,6 @@ const Eye = () => <i className="fa-solid fa-eye-slash has-text-md-ref-primary-30
 const EyeSlash = () => <i className="fa-solid fa-eye has-text-md-ref-primary-30" />;
 
 const Form = () => {
-    const dispatch = useDispatch();
-
     const [loading, setLoading] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [success, setSuccess] = useState(false);
@@ -34,25 +30,34 @@ const Form = () => {
 
     const formik = useFormik({
         initialValues: {
-            email: '',
             password: '',
+            confirmPassword: '',
         },
         validationSchema: yup.object({
-            email: yup.string().email('invalid email').required('Enter your email'),
-            password: yup.string().required('Enter your password'),
+            password: yup
+                .string()
+                .test('len', 'Password must be at least 8 characters long', val => val && val.length >= 8)
+                .required('Enter your new password'),
+            confirmPassword: yup
+                .string()
+                .oneOf([yup.ref('password'), null], 'Passwords must match')
+                .required('confirm your password'),
         }),
         onSubmit: async values => {
             setSuccess(false);
             setFailure(false);
             setLoading(true);
-            const { email, password } = values;
+            const { password } = values;
+
+            const { query } = router;
+            const { email, token } = query;
 
             try {
-                const res = await axios({ method: 'post', url: '/api/auth/login', data: { email, password } });
+                const res = await api.post.resetPassword({ email, resetToken: token, newPassword: password });
                 if (res.data.status === 'success') {
                     setSuccess(true);
-                    router.push('/dashboard');
-                    dispatch(update_session({ session: res.data.data }));
+                    // router.push('/dashboard');
+                    // dispatch(update_session({ session: res.data.data }));
                 } else {
                     setFailure(true);
                     setErrorMessage(res.data.data.message);
@@ -69,16 +74,6 @@ const Form = () => {
 
     const changePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
-    };
-
-    const handleResend = e => {
-        e.preventDefault();
-        if (formik.values.email && formik.errors.email === undefined) {
-            router.push(`/checkemail?email=${formik.values.email}`);
-        } else {
-            setFailure(true);
-            setErrorMessage('Enter your email');
-        }
     };
 
     // useEffect(() => {
@@ -104,42 +99,12 @@ const Form = () => {
                 </div>
             ) : null}
             <div className="field">
-                <label className="label is-size-7">Email</label>
+                <label className="label is-size-7">New Password</label>
                 <div className="control has-icons-left">
                     <input
-                        className={`input ${formik.errors.email && formik.touched.email ? 'is-danger' : ''}`}
-                        type="email"
-                        placeholder="Email"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        name="email"
-                    />
-
-                    <span className="icon is-small is-left">
-                        <i className="fas fa-at" />
-                    </span>
-
-                    <p className="help is-danger">
-                        {formik.touched.email && formik.errors.email ? formik.errors.email : ''}
-                        <a href="checkemail" onClick={handleResend}>
-                            <h1 className="has-text-right is-clickable">
-                                <u>Resend verification email</u>
-                            </h1>
-                        </a>
-                    </p>
-                </div>
-            </div>
-
-            <div className="field">
-                <label className="label is-size-7">Password</label>
-                <div className="control has-icons-left has-icons-right">
-                    <input
-                        className={`input ${
-                            formik.touched.password && formik.errors.password ? 'is-danger' : ''
-                        } ${input_reset}`}
+                        className={`input ${formik.errors.password && formik.touched.password ? 'is-danger' : ''}`}
                         type={passwordVisible ? 'text' : 'password'}
-                        placeholder="Password"
+                        placeholder="password"
                         value={formik.values.password}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -147,18 +112,53 @@ const Form = () => {
                     />
 
                     <span className="icon is-small is-left">
+                        <i className="fas fa-at" />
+                    </span>
+
+                    <p className="help is-danger">
+                        {formik.touched.password && formik.errors.password ? formik.errors.password : ''}
+                    </p>
+
+                    <br />
+
+                    <button
+                        aria-label={passwordVisible ? 'Hide password' : 'Show password'}
+                        className={`unstyled-button ${eye_button}`}
+                        type="button"
+                        onClick={changePasswordVisibility}
+                        style={{ zIndex: '5' }}
+                        tabIndex="-1"
+                    >
+                        <span className="icon is-small">{passwordVisible ? <EyeSlash /> : <Eye />}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div className="field">
+                <label className="label is-size-7">Confirm password</label>
+                <div className="control has-icons-left has-icons-right">
+                    <input
+                        className={`input ${
+                            formik.touched.confirmPassword && formik.errors.confirmPassword ? 'is-danger' : ''
+                        } ${input_reset}`}
+                        type={passwordVisible ? 'text' : 'password'}
+                        placeholder="confirmPassword"
+                        value={formik.values.confirmPassword}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        name="confirmPassword"
+                    />
+
+                    <span className="icon is-small is-left">
                         <i className="fa-solid fa-lock" />
                     </span>
 
                     <p className="help is-flex is-flex-direction-row is-justify-content-space-between">
-                        {formik.touched.password && formik.errors.password ? (
-                            <span className="has-text-danger">{formik.errors.password}</span>
+                        {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+                            <span className="has-text-danger">{formik.errors.confirmPassword}</span>
                         ) : (
                             '⠀'
                         )}
-                        <Link href="/login/requestpassreset">
-                            <u className="is-clickable">Forgot password ?</u>
-                        </Link>
                     </p>
 
                     <br />
@@ -183,18 +183,10 @@ const Form = () => {
                         className={`button is-hblue is-fullwidth ${loading ? 'is-loading' : ''}`}
                         type="submit"
                     >
-                        Login
+                        Reset
                     </button>
                 </div>
                 <br />
-                <div className="has-text-centered">
-                    Not a member yet?{' '}
-                    <Link href="/signup" passHref>
-                        <a href="replace">
-                            <u>Sign up</u>
-                        </a>
-                    </Link>
-                </div>
             </div>
         </form>
     );
