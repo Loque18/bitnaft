@@ -132,7 +132,7 @@ const api = {
             });
         },
         resetPassword: ({ email, resetToken, newPassword }) => {
-            const params = `?email=${email}&token=${resetToken}&newpass=${newPassword}`;
+            const params = `?email=${email}&token=${resetToken}&newPass=${newPassword}`;
             return axios({
                 method: 'post',
                 url: `${endpoint}/resetpass/${params}`,
