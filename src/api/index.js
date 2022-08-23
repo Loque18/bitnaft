@@ -131,6 +131,13 @@ const api = {
                 url: `${endpoint}/requestpassreset/${params}`,
             });
         },
+        resetPassword: ({ email, resetToken, newPassword }) => {
+            const params = `?email=${email}&token=${resetToken}&newpass=${newPassword}`;
+            return axios({
+                method: 'post',
+                url: `${endpoint}/resetpass/${params}`,
+            });
+        },
 
         // savings
         subscribeToSavingOffer: ({ email, token, cryptoName, amount }) => {

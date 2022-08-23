@@ -26,6 +26,7 @@ const FaucetPage = ({ user }) => {
 
             if (!res.data.success) {
                 toast.error(res.data.message);
+                setLoading(false);
                 return;
             }
 
@@ -93,14 +94,6 @@ const FaucetPage = ({ user }) => {
                                                 type="button"
                                             >
                                                 Tether
-                                            </button>
-                                            <button
-                                                href="#"
-                                                className="dropdown-item unstyled-button is-clickable"
-                                                onClick={e => handleTokenClick(e, 'solana')}
-                                                type="button"
-                                            >
-                                                Solana
                                             </button>
                                         </div>
                                     </div>
