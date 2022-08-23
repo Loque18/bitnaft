@@ -23,7 +23,7 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
     const [dailyInterest, setDailyInterest] = useState(0);
     const [liquidationPrice, setLiquidationPrice] = useState(0);
 
-    const [loanType, setLoanType] = useState('conventional');
+    const [loanType, setLoanType] = useState('Conventional');
 
     const { query } = useRouter();
 
@@ -144,7 +144,11 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                             <div className="columns mt-5">
                                 <div className="column">
                                     <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
-                                        Hourly interest
+                                        {loanType === 'Conventional' ? (
+                                            <span>Hourly interest</span>
+                                        ) : (
+                                            <span>Hourly profit</span>
+                                        )}
                                     </h1>
                                     <div className="columns is-mobile">
                                         <div className="column">
@@ -156,7 +160,11 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                                 </div>
                                 <div className="column">
                                     <h1 className="is-size-5 has-font-roboto has-text-weight-medium has-text-hdarkgray">
-                                        Daily interest
+                                        {loanType === 'Conventional' ? (
+                                            <span>Daily interest</span>
+                                        ) : (
+                                            <span>Daily profit</span>
+                                        )}
                                     </h1>
                                     <div className="columns is-mobile">
                                         <div className="column">

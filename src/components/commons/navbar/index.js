@@ -138,17 +138,17 @@ const Navbar = () => {
                     </Link>
                     <div className="navbar-item is-size-6 has-font-roboto has-dropdown is-hoverable">
                         <a className="navbar-link">
-                            <span className="has-text-md-source-primary">borrow</span>
+                            <span className="has-text-md-source-primary">Borrow</span>
                         </a>
                         <div className="navbar-dropdown">
-                            <Link href="/borrow?type=conventional">
+                            <Link href="/borrow?type=Conventional">
                                 <a className="navbar-item">
-                                    <span className="has-text-md-source-primary">conventional</span>
+                                    <span className="has-text-md-source-primary">Conventional</span>
                                 </a>
                             </Link>
-                            <Link href="/borrow?type=islamic">
+                            <Link href="/borrow?type=Islamic">
                                 <a className="navbar-item">
-                                    <span className="has-text-md-source-primary">islamic</span>
+                                    <span className="has-text-md-source-primary">Islamic</span>
                                 </a>
                             </Link>
                         </div>
