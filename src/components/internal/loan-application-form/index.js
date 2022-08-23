@@ -173,7 +173,6 @@ const LoanApplicationForm = ({
         setBorrowAsset(formik.values.loanAsset);
         setCollateralAsset(formik.values.collateralAsset);
 
-        console.log(formik.values.collateralAsset);
         if (formik.values.loanAmount) {
             const borrowName = formik.values.loanAsset.name;
             const borrowAmount = formatNormalNumber(formik.values.loanAmount, formik.values.loanAsset.decimals);

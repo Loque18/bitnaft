@@ -31,9 +31,9 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
 
     // console.log(loansAssets);
 
-    const walletRef = useRef(null);
+    // const walletRef = useRef(null);
     const savingsRef = useRef(null);
-    const loansRef = useRef(null);
+    // const loansRef = useRef(null);
 
     return (
         <section className="section">
