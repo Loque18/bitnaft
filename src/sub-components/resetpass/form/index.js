@@ -54,7 +54,6 @@ const Form = () => {
 
             try {
                 const res = await api.post.resetPassword({ email, resetToken: token, newPassword: password });
-                console.log(res);
                 if (res.data.status === 'success') {
                     setSuccess(true);
                     // router.push('/dashboard');
