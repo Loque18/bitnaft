@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useState } from 'react';
@@ -54,13 +53,13 @@ const Form = () => {
 
             try {
                 const res = await api.post.resetPassword({ email, resetToken: token, newPassword: password });
-                if (res.data.status === 'success') {
+                if (res.data.success) {
                     setSuccess(true);
                     // router.push('/dashboard');
                     // dispatch(update_session({ session: res.data.data }));
                 } else {
                     setFailure(true);
-                    setErrorMessage(res.data.data.message);
+                    setErrorMessage(res.data.message);
                 }
             } catch (err) {
                 setErrorMessage('Something went wrong, try again later');
@@ -86,16 +85,12 @@ const Form = () => {
         <form onSubmit={formik.handleSubmit}>
             {loading ? null : failure ? (
                 <div className="notification animate__animated animate__fadeInDown is-danger has-text-centered p-2">
-                    {errorMessage.toLowerCase() === 'email not verified' ? (
-                        <>
-                            {errorMessage}{' '}
-                            <Link href={`/checkemail?email=${formik.values.email}`}>
-                                <a>Resend email</a>
-                            </Link>
-                        </>
-                    ) : (
-                        errorMessage
-                    )}
+                    {errorMessage}
+                </div>
+            ) : null}
+            {loading ? null : success ? (
+                <div className="notification animate__animated animate__fadeInDown is-success has-text-centered p-2">
+                    Password reset successfully
                 </div>
             ) : null}
             <div className="field">
