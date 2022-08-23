@@ -20,7 +20,7 @@ const VerifyEmailPage = () => {
                     throw new Error(res.data.message);
                 }
 
-                window.location.href = '/emailverified';
+                window.location.href = '/home?verified=true';
             } catch (err) {
                 window.location.href = `/verifyerror?message=${err.message}`;
             }
