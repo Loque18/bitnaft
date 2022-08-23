@@ -15,7 +15,7 @@ const PortfolioCard = () => {
     const numberOfAssets = 4;
 
     return (
-        <section className="section">
+        <section className="section px-2">
             <h1 className="title is-size-4 has-text-md-black-o-7 has-font-roboto has-text-weight-light">Overview</h1>
             <div className="columns">
                 <div className="column">

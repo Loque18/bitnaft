@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button } from 'primereact/button';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
@@ -11,11 +12,16 @@ import { InputText } from 'primereact/inputtext';
 import formatDate from 'src/utils/format-date';
 import formatBigNumber from 'src/utils/format-bignumber';
 
+import modals from 'src/static/app.modals';
+
+import { open_modal } from 'src/redux/actions';
+import formatNumber from 'src/utils/format-number';
 import styles from '../styles.module.scss';
 
 const { green_circle } = styles;
 
-const LoansTable = ({ assets }) => {
+const LoansTable = ({ assets, walletAssets }) => {
+    const dispatch = useDispatch();
     const [filter, setFilter] = useState(null);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     // const [loading, setLoading] = useState(true);
@@ -23,6 +29,45 @@ const LoansTable = ({ assets }) => {
     const [expandedRows, setExpandedRows] = useState(null);
 
     // const isMounted = useRef(false);
+
+    const handleRepayClick = (e, loan) => {
+        e.preventDefault();
+        dispatch(
+            open_modal({
+                modalName: modals.repayLoanModal,
+                modalData: {
+                    loan,
+                    walletAssets,
+                },
+            })
+        );
+    };
+
+    const handleAddCollateralClick = (e, loan) => {
+        e.preventDefault();
+        dispatch(
+            open_modal({
+                modalName: modals.addCollateralModal,
+                modalData: {
+                    loan,
+                    walletAssets,
+                },
+            })
+        );
+    };
+
+    const handleWithdrawClick = (e, loan) => {
+        e.preventDefault();
+        dispatch(
+            open_modal({
+                modalName: modals.withdrawCollateralModal,
+                modalData: {
+                    loan,
+                    walletAssets,
+                },
+            })
+        );
+    };
 
     const initFilter = () => {
         setFilter({
@@ -115,7 +160,7 @@ const LoansTable = ({ assets }) => {
 
         return (
             <div className="has-font-roboto">
-                <div className="columns">
+                <div className="columns is-mobile">
                     <div className="column">
                         <div className="columns mb-0 is-mobile">
                             <div className="column is-flex is-align-items-center">
@@ -138,7 +183,7 @@ const LoansTable = ({ assets }) => {
                         <div className="columns mt-0">
                             <div className="column">
                                 <p className="has-text-md-black has-font-pt-mono is-size-7 has-text-weight-bold">
-                                    {rowData.yearlyInterestRate}%
+                                    {formatNumber(rowData.yearlyInterestRate)}%
                                 </p>
                                 <div className="columns mt-0">
                                     <div className="column">
@@ -148,7 +193,7 @@ const LoansTable = ({ assets }) => {
                                         <div className="columns mt-0">
                                             <div className="column">
                                                 <p className="has-text-md-black has-font-pt-mono is-size-7 has-text-weight-bold">
-                                                    {rowData.hourlyInterestRate} %
+                                                    {formatNumber(rowData.hourlyInterestRate)} %
                                                 </p>
                                             </div>
                                         </div>
@@ -203,7 +248,7 @@ const LoansTable = ({ assets }) => {
                                         <div className="columns mt-0">
                                             <div className="column">
                                                 <p className="has-text-hgreen has-font-pt-mono is-size-7 has-text-weight-bold">
-                                                    {rowData.ltv} %
+                                                    {formatNumber(rowData.ltv)} %
                                                 </p>
                                             </div>
                                         </div>
@@ -219,7 +264,13 @@ const LoansTable = ({ assets }) => {
                         <div className="columns mt-0">
                             <div className="column">
                                 <p className="has-text-md-black has-font-pt-mono is-size-7 has-text-weight-bold">
-                                    {rowData.remainingPrinciple}
+                                    {formatNumber(
+                                        formatBigNumber(
+                                            rowData.remainingPrinciple,
+                                            rowData.borrowDecimals,
+                                            rowData.borrowDecimals
+                                        )
+                                    )}
                                 </p>
                                 <div className="columns mt-0">
                                     <div className="column">
@@ -267,10 +318,12 @@ const LoansTable = ({ assets }) => {
                         </span>
                     ) : null}
                 </div>
-                <div className="table-header-container is-hidden-mobile">
-                    <Button icon="pi pi-plus" label="Expand All" onClick={expandAll} className="mr-2" />
-                    <Button icon="pi pi-minus" label="Collapse All" onClick={collapseAll} />
-                </div>
+                {assets.length > 0 ? (
+                    <div className="table-header-container is-hidden-mobile">
+                        <Button icon="pi pi-plus" label="Expand All" onClick={expandAll} className="mr-2" />
+                        <Button icon="pi pi-minus" label="Collapse All" onClick={collapseAll} />
+                    </div>
+                ) : null}
             </div>
         );
     };
@@ -303,10 +356,11 @@ const LoansTable = ({ assets }) => {
             </div>
         );
     };
+
     const loanAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {formatBigNumber(rowData.borrowAmount, rowData.borrowDecimals)}
+                {formatNumber(formatBigNumber(rowData.borrowAmount, rowData.borrowDecimals, rowData.borrowDecimals))}
             </p>
         );
     };
@@ -314,8 +368,41 @@ const LoansTable = ({ assets }) => {
     const collateralAmountTemplate = rowData => {
         return (
             <p className="is-size-6 has-text-md-black has-text-weight-semi-bold has-font-pt-mono">
-                {formatBigNumber(rowData.collateralAmount, rowData.collateralDecimals)}
+                {formatNumber(
+                    formatBigNumber(rowData.collateralAmount, rowData.collateralDecimals, rowData.collateralDecimals)
+                )}
             </p>
+        );
+    };
+
+    const actionsBodyTemplate = rawData => {
+        return (
+            <div className="is-flex is-justify-content-flex-start is-align-items-center">
+                <button
+                    type="button"
+                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6"
+                    style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={e => handleRepayClick(e, rawData)}
+                >
+                    Repay
+                </button>
+                <button
+                    type="button"
+                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-5"
+                    style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={e => handleAddCollateralClick(e, rawData)}
+                >
+                    Add
+                </button>
+                <button
+                    type="button"
+                    className="unstyled-button has-text-weight-medium has-font-roboto has-text-md-ref-primary-10 is-size-6 ml-5"
+                    style={{ borderBottom: '1px dashed #15195B' }}
+                    onClick={e => handleWithdrawClick(e, rawData)}
+                >
+                    Withdraw
+                </button>
+            </div>
         );
     };
 
@@ -350,7 +437,7 @@ const LoansTable = ({ assets }) => {
                     filter
                     filterPlaceholder="Search by assets"
                     body={assetsNameTemplate}
-                    className="min-w-250"
+                    className="min-w-400"
                     style={{ verticalAlign: 'middle' }}
                 />
                 <Column
@@ -359,6 +446,7 @@ const LoansTable = ({ assets }) => {
                     header="Loan Amount"
                     body={loanAmountTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-200"
                 />
                 <Column
                     sortable
@@ -366,6 +454,13 @@ const LoansTable = ({ assets }) => {
                     header="Collateral Amount"
                     body={collateralAmountTemplate}
                     style={{ verticalAlign: 'middle' }}
+                    className="min-w-200"
+                />
+                <Column
+                    header="Actions"
+                    body={actionsBodyTemplate}
+                    style={{ verticalAlign: 'middle' }}
+                    className="min-w-200"
                 />
                 <Column expander style={{ width: '3em' }} />
             </DataTable>

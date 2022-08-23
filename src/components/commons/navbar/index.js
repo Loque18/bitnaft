@@ -85,112 +85,123 @@ const Navbar = () => {
             role="navigation"
             aria-label="main navigation"
         >
-            <div className="container is-fluid">
-                <div className="navbar-brand">
-                    <Link href="/home">
-                        <a className="navbar-item" onClick={handleNavbarItemClick} role="button" tabIndex={0}>
-                            <h1
-                                className="navbar-item title is-italic is-size-4  has-text-md-ref-primary-10"
-                                style={{ fontWeight: '700' }}
-                            >
-                                Bitnaft
-                            </h1>
+            <div className="navbar-brand is-flex is-align-items-center">
+                <Link href="/home">
+                    <a className="navbar-item" onClick={handleNavbarItemClick} role="button" tabIndex={0}>
+                        <h1
+                            className="navbar-item title is-italic is-size-4  has-text-md-ref-primary-10"
+                            style={{ fontWeight: '700' }}
+                        >
+                            Bitnaft
+                        </h1>
+                    </a>
+                </Link>
+                <a
+                    role="button"
+                    className={`navbar-burger has-text-white ${burgerActive ? 'is-active' : ''}`}
+                    aria-label="menu"
+                    aria-expanded="false"
+                    data-target="navbarBasicExample"
+                    onClick={handleHamburgerClick}
+                    tabIndex={-1}
+                >
+                    <span className="has-text-md-source-primary" aria-hidden="true" />
+                    <span className="has-text-md-source-primary" aria-hidden="true" />
+                    <span className="has-text-md-source-primary" aria-hidden="true" />
+                </a>
+            </div>
+            <div className={`navbar-menu ${mobileActive ? 'is-active' : ''}`}>
+                <div className="navbar-start">
+                    <Link href="/dashboard">
+                        <a
+                            className={`navbar-item is-size-6 has-font-roboto ${
+                                router.pathname.includes('/dashboard') ? 'is-active' : ''
+                            }`}
+                            onClick={handleNavbarItemClick}
+                            role="button"
+                            tabIndex={0}
+                        >
+                            Dashboard
                         </a>
                     </Link>
-                    <a
-                        role="button"
-                        className={`navbar-burger has-text-white ${burgerActive ? 'is-active' : ''}`}
-                        aria-label="menu"
-                        aria-expanded="false"
-                        data-target="navbarBasicExample"
-                        onClick={handleHamburgerClick}
-                        tabIndex={-1}
-                    >
-                        <span aria-hidden="true" />
-                        <span aria-hidden="true" />
-                        <span aria-hidden="true" />
-                    </a>
+                    <Link href="/earn">
+                        <a
+                            className={`navbar-item is-size-6 has-font-roboto ${
+                                router.pathname === '/earn' ? 'is-active' : ''
+                            }`}
+                            onClick={handleNavbarItemClick}
+                            role="button"
+                            tabIndex={0}
+                        >
+                            Earn
+                        </a>
+                    </Link>
+                    <div className="navbar-item is-size-6 has-font-roboto has-dropdown is-hoverable">
+                        <a className="navbar-link">
+                            <span className="has-text-md-source-primary">Borrow</span>
+                        </a>
+                        <div className="navbar-dropdown">
+                            <Link href="/borrow?type=Conventional">
+                                <a className="navbar-item">
+                                    <span className="has-text-md-source-primary">Conventional</span>
+                                </a>
+                            </Link>
+                            <Link href="/borrow?type=Islamic">
+                                <a className="navbar-item">
+                                    <span className="has-text-md-source-primary">Islamic</span>
+                                </a>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <Link href="/faucet">
+                        <a
+                            className={`navbar-item is-size-6 has-font-roboto ${
+                                router.pathname === '/faucet' ? 'is-active' : ''
+                            }`}
+                            onClick={handleNavbarItemClick}
+                            role="button"
+                            tabIndex={0}
+                        >
+                            Faucet
+                        </a>
+                    </Link>
                 </div>
-                <div className={`navbar-menu ${mobileActive ? 'is-active' : ''}`}>
-                    <div className="navbar-start">
-                        <Link href="/dashboard">
-                            <a
-                                className={`navbar-item is-size-6 has-font-roboto ${
-                                    router.pathname.includes('/dashboard') ? 'is-active' : ''
-                                }`}
-                                onClick={handleNavbarItemClick}
-                                role="button"
-                                tabIndex={0}
-                            >
-                                Dashboard
+                {isLoggedIn ? (
+                    <div className="navbar-end">
+                        <div className="navbar-item has-dropdown is-hoverable">
+                            <div className="navbar-link is-flex is-align-items-center has-font-roboto has-text-md-black">
+                                <Image
+                                    src="/media/user.png"
+                                    alt="user"
+                                    width={64}
+                                    height={64}
+                                    className="is-rounded "
+                                />
+                                &nbsp;&nbsp;
+                                <span className="has-text-md-black has-font-roboto">{user.email}</span>
+                            </div>
+                            <div className="navbar-dropdown">
+                                <a className="navbar-item" onClick={handleLogoutClick}>
+                                    Log out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="navbar-end">
+                        <Link href="/login">
+                            <a className="navbar-item is-size-6 has-font-roboto " role="button" tabIndex={0}>
+                                Login
                             </a>
                         </Link>
-                        <Link href="/earn">
-                            <a
-                                className={`navbar-item is-size-6 has-font-roboto ${
-                                    router.pathname === '/earn' ? 'is-active' : ''
-                                }`}
-                                onClick={handleNavbarItemClick}
-                                role="button"
-                                tabIndex={0}
-                            >
-                                Earn
-                            </a>
-                        </Link>
-                        <Link href="/borrow">
-                            <a
-                                className={`navbar-item is-size-6 has-font-roboto ${
-                                    router.pathname === '/borrow' ? 'is-active' : ''
-                                }`}
-                                onClick={handleNavbarItemClick}
-                                role="button"
-                                tabIndex={0}
-                            >
-                                Borrow
+                        <Link href="/signup">
+                            <a className="navbar-item is-size-6 has-font-roboto " role="button" tabIndex={0}>
+                                Signup
                             </a>
                         </Link>
                     </div>
-                    {isLoggedIn ? (
-                        <div className="navbar-end">
-                            <div className="navbar-item has-dropdown is-hoverable">
-                                <div className="navbar-link has-font-roboto has-text-md-black">
-                                    <Image
-                                        src="/media/user.png"
-                                        alt="user"
-                                        width={64}
-                                        height={64}
-                                        className="is-rounded "
-                                    />
-                                    &nbsp;&nbsp;
-                                    <span className="has-text-md-black has-font-roboto">{user.email}</span>
-                                </div>
-                                <div className="navbar-dropdown">
-                                    <div className="navbar-item">Overview</div>
-                                    <a href="profile/settings" className="navbar-item">
-                                        User Settings
-                                    </a>
-
-                                    <a className="navbar-item" onClick={handleLogoutClick}>
-                                        Log out
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="navbar-end">
-                            <Link href="/login">
-                                <a className="navbar-item is-size-6 has-font-roboto " role="button" tabIndex={0}>
-                                    Login
-                                </a>
-                            </Link>
-                            <Link href="/signup">
-                                <a className="navbar-item is-size-6 has-font-roboto " role="button" tabIndex={0}>
-                                    Signup
-                                </a>
-                            </Link>
-                        </div>
-                    )}
-                </div>
+                )}
             </div>
         </nav>
     );

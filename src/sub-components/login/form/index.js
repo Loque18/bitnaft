@@ -54,11 +54,11 @@ const Form = () => {
                     router.push('/dashboard');
                     dispatch(update_session({ session: res.data.data }));
                 } else {
-                    throw new Error(res.data.data.message);
+                    setFailure(true);
+                    setErrorMessage(res.data.data.message);
                 }
             } catch (err) {
-                setFailure(true);
-                setErrorMessage(err.message);
+                setErrorMessage('Something went wrong, try again later');
             }
 
             setLoading(false);

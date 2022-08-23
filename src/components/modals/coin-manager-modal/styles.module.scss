@@ -19,15 +19,8 @@
 
     li {
         cursor: pointer;
-
-        &:hover {
-            background-color: rgba($md-ref-neutral-60, 0.5);
-        }
-
-        border-radius: 10px;
     }
 }
-
 
 .sbutton {
     background: none;
@@ -37,5 +30,17 @@
     font: inherit;
     cursor: pointer;
     outline: inherit;
-}
 
+    padding: 1rem 0;
+
+    border-radius: 10px;
+
+    &:hover:enabled {
+        background-color: rgba($md-ref-neutral-60, 0.5);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}

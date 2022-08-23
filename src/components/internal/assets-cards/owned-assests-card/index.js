@@ -1,13 +1,13 @@
 /* eslint-disable react/no-array-index-key */
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from 'react-scroll';
 import formatCurrency from 'src/utils/format-currency';
 
 const OwnedAssetsCard = props => {
     const { title, icon, amount, cryptoIcons, numberOfAssets, to } = props;
 
     return (
-        <Link href={to}>
+        <Link to={to} smooth offset={-80}>
             <div className="box rounded-shadowed-box is-clickable min-w-250">
                 <div className="columns">
                     <div className="column is-flex is-flex-direction-flex-start is-align-items-center">
@@ -32,7 +32,7 @@ const OwnedAssetsCard = props => {
                     </div>
                     <div className="column is-flex is-justify-content-flex-end is-align-items-center">
                         <p className="is-size-7 has-text-md-black-o-7 has-text-weight-bold has-font-roboto">
-                            {numberOfAssets === 0 ? 'No assets' : `${numberOfAssets} assets`}
+                            {numberOfAssets !== 0 ? 'No assets' : `${numberOfAssets} assets`}
                         </p>
                     </div>
                 </div>
