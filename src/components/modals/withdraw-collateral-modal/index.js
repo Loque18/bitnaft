@@ -208,7 +208,7 @@ const WithdrawCollateralModal = () => {
                                 <div className="columns mb-0 pt-5 is-mobile">
                                     <div className="column is-flex is-flex-direction-flex-start is-align-items-center">
                                         <h1 className="title has-font-roboto has-text-md-black is-size-6 has-text-weight-medium">
-                                            Current Lvt
+                                            Current Ltv
                                         </h1>
                                     </div>
                                     <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
@@ -239,7 +239,7 @@ const WithdrawCollateralModal = () => {
                                 <div className="columns mb-0 is-mobile">
                                     <div className="column is-flex is-flex-direction-flex-start is-align-items-center">
                                         <h1 className="title has-font-roboto has-text-md-black is-size-6 has-text-weight-medium">
-                                            Lvt after withdrawal
+                                            Ltv after withdrawal
                                         </h1>
                                     </div>
                                     <div className="column is-narrow is-flex is-flex-direction-flex-end is-align-items-center">
