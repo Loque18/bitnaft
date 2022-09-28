@@ -147,7 +147,7 @@ const BorrowPage = ({ error, errorMessage, availableAssets, walletAssets }) => {
                                         {loanType === 'Conventional' ? (
                                             <span>Hourly interest</span>
                                         ) : (
-                                            <span>Hourly interest</span>
+                                            <span>Hourly profit</span>
                                         )}
                                     </h1>
                                     <div className="columns is-mobile">
