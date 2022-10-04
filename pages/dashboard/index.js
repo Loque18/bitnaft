@@ -5,7 +5,6 @@ import { getLayout as getMainLayout } from 'src/layouts/main';
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 
 import OwnedAssetsCard from 'src/components/internal/assets-cards/owned-assests-card';
-import LoanedAssetsCard from 'src/components/internal/assets-cards/assests-loan-card';
 
 import api from 'src/api';
 
@@ -18,6 +17,8 @@ import SavingsTable from 'src/components/tables/savings-table';
 import LoansTable from 'src/components/tables/loans-table';
 import Link from 'next/link';
 
+import BigNumber from 'bignumber.js';
+
 // eslint-disable-next-line no-unused-vars
 const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     const { user } = session;
@@ -26,6 +27,15 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
     const noneZeroSavingAssets = savingsAssets.filter(asset => asset.usdValue > 0);
     const userWalletBalance = getBalances(noneZeroBalancesWallet);
     const userSavingsBalance = getBalances(savingsAssets.filter(asset => asset.savingsBalance > 0));
+    const userLoansBalanceBN = loansAssets.reduce(
+        (acc, asset) => BigNumber(acc).plus(BigNumber(asset.borrowAmount)),
+        0
+    );
+    const userLoansBalance = userLoansBalanceBN
+        .div(10 ** 18)
+        .toFixed(0)
+        .toString();
+    // const userLoansBalance = getBalances(loansAssets.filter(asset => asset.loansAssets))
     // const sbalances = getUserBalances(savingsAssets);
     // const lbalances = getUserBalances(loansAssets);
 
@@ -70,7 +80,15 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                         />
                     </div>
                     <div className="column is-narrow">
-                        <LoanedAssetsCard
+                        <OwnedAssetsCard
+                            title="Loans"
+                            to="loanselement"
+                            icon="fa-solid fa-sack-dollar"
+                            amount={+userLoansBalance}
+                            cryptoIcons={loansAssets.slice(0, 4).map(asset => asset.borrowIcon)}
+                            numberOfAssets={loansAssets.length}
+                        />
+                        {/* <LoanedAssetsCard
                             title="Loans"
                             to="loanselement"
                             icon="fa-solid fa-hand-holding-dollar"
@@ -79,7 +97,7 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
                             // cryptoIcon="https://bitcoin.org/img/icons/opengraph.png?1657703267"
                             numberOfLoanedAssets={loansAssets.length}
                             // payBeforeDate={1659603600}
-                        />
+                        /> */}
                     </div>
                 </div>
 
