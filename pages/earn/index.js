@@ -1,3 +1,6 @@
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+
 import { getLayout as getPageTitleLayout } from 'src/layouts/page-title';
 import { getLayout as getMainLayout } from 'src/layouts/main';
 
@@ -9,6 +12,10 @@ import api from 'src/api';
 import requirePageAuth from 'src/functions/require-page-auth';
 
 const EarnPage = ({ savingOffers, error, errorMessage, walletAssets }) => {
+    const { query } = useRouter();
+
+    const [type] = useState(query.type || 'conventional');
+
     if (error) {
         return (
             <div className="container">
@@ -20,7 +27,7 @@ const EarnPage = ({ savingOffers, error, errorMessage, walletAssets }) => {
     return (
         <div>
             <BitnaftBanner
-                title="Bitnaft earn"
+                title={`Bitnaft earn | ${type}`}
                 description="Deposit and earn while you sleep"
                 background="earn-banner"
             />

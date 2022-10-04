@@ -124,18 +124,24 @@ const Navbar = () => {
                             Dashboard
                         </a>
                     </Link>
-                    <Link href="/earn">
-                        <a
-                            className={`navbar-item is-size-6 has-font-roboto ${
-                                router.pathname === '/earn' ? 'is-active' : ''
-                            }`}
-                            onClick={handleNavbarItemClick}
-                            role="button"
-                            tabIndex={0}
-                        >
-                            Earn
+                    <div className="navbar-item is-size-6 has-font-roboto has-dropdown is-hoverable">
+                        <a className="navbar-link">
+                            <span className="has-text-md-source-primary">Earn</span>
                         </a>
-                    </Link>
+                        <div className="navbar-dropdown">
+                            <Link href="/earn?type=Conventional">
+                                <a className="navbar-item">
+                                    <span className="has-text-md-source-primary">Conventional</span>
+                                </a>
+                            </Link>
+                            <Link href="/earn?type=Islamic">
+                                <a className="navbar-item">
+                                    <span className="has-text-md-source-primary">Islamic</span>
+                                </a>
+                            </Link>
+                        </div>
+                    </div>
+
                     <div className="navbar-item is-size-6 has-font-roboto has-dropdown is-hoverable">
                         <a className="navbar-link">
                             <span className="has-text-md-source-primary">Borrow</span>
