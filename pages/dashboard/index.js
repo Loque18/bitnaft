@@ -31,7 +31,7 @@ const Dashboard = ({ session, walletAssets, savingsAssets, loansAssets }) => {
         (acc, asset) => BigNumber(acc).plus(BigNumber(asset.borrowAmount)),
         0
     );
-    const userLoansBalance = userLoansBalanceBN
+    const userLoansBalance = BigNumber(userLoansBalanceBN)
         .div(10 ** 18)
         .toFixed(0)
         .toString();
